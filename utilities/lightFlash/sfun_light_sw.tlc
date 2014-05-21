@@ -1,0 +1,48 @@
+%% File    : sfun_light_sw.tlc
+%%
+%% Abstract: Block for Light Sensor Switch of Lego Mindstorms NXT
+%%
+
+%%   Copyright 2010 The MathWorks, Inc.
+
+%implements "sfun_light_sw" "C"
+
+%% Function: BlockInstanceSetup
+%%
+%function BlockInstanceSetup(block, system) void
+  %openfile buffer
+  #include "ecrobot_interface.h"
+  %closefile buffer
+  %<LibCacheIncludes(buffer)>
+%endfunction %% BlockInstanceSetup
+
+%% Function: Outputs
+%%
+%function Outputs(block, system) Output
+  %assign port = SFcnParamSettings.port
+  %assign sw = SFcnParamSettings.sw
+
+  /* %<Type> Block: %<Name> */
+  %if sw == 1
+    %if port == 1
+      ecrobot_set_light_sensor_active(NXT_PORT_S1);
+    %elseif port == 2
+      ecrobot_set_light_sensor_active(NXT_PORT_S2);
+    %elseif port == 3
+      ecrobot_set_light_sensor_active(NXT_PORT_S3);
+    %elseif port == 4
+      ecrobot_set_light_sensor_active(NXT_PORT_S4);
+    %endif
+
+  %elseif sw == 2
+    %if port == 1
+      ecrobot_set_light_sensor_inactive(NXT_PORT_S1);
+    %elseif port == 2
+      ecrobot_set_light_sensor_inactive(NXT_PORT_S2);
+    %elseif port == 3
+      ecrobot_set_light_sensor_inactive(NXT_PORT_S3);
+    %elseif port == 4
+      ecrobot_set_light_sensor_inactive(NXT_PORT_S4);
+    %endif
+  %endif
+%endfunction %% Outputs
