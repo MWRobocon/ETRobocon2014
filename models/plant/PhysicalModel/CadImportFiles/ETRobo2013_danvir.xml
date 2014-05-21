@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimMechanicsImportXML version="1.0" xmlns="urn:mathworks:simmechanics:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="" on="08/19/13||17:09:53" using="SimMechanics Link Version 4.1" from="SolidWorks 20.3.0"/>
+<ModelUnits mass="kilogram" length="millimeter"/>
+<DataUnits mass="kilogram" length="meter"/>
+<RootAssembly name="ETRobo2013_danvir" uid="ETRobo2013_danvir" version="501">
+<AssemblyFile name="ETRobo2013_danvir.SLDASM" type="SolidWorks Assembly"/>
+<InstanceTree>
+<Instance name="Tabletop-1" uid="Tabletop-1" grounded="true" entityUid="Tabletop*:*Default">
+<Transform>
+<Rotation>1 0 0 0 0 1 0 -1 0</Rotation>
+<Translation>-0.073175 1.08552 -0.118364</Translation>
+</Transform>
+</Instance>
+<Instance name="wheel_and_axle-2" uid="wheel_and_axle-2" entityUid="wheel_and_axle" rigid="true">
+<Transform>
+<Rotation>0 -0.937002 0.349324 1 0 0 0 0.349324 0.937002</Rotation>
+<Translation>-0.031558 -0.127635 -0.0763945</Translation>
+</Transform>
+<Instance name="CrossTemplate-1" uid="CrossTemplate-1" entityUid="CrossTemplate*:*Nine">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X8__Template-1" uid="Light_Gray_X8__Template-1" entityUid="Light_Gray_X8__Template*:*one">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.00254 0 0.007874</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X8__Template-2" uid="Light_Gray_X8__Template-2" entityUid="Light_Gray_X8__Template*:*half">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.02286 0 0.007874</Translation>
+</Transform>
+</Instance>
+<Instance name="CrossComplementEnd_Small-1" uid="CrossComplementEnd_Small-1" entityUid="CrossComplementEnd_Small*:*Three">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.059054 0 0.001524</Translation>
+</Transform>
+</Instance>
+<Instance name="NXTWheel-1" uid="NXTWheel-1" entityUid="NXTWheel*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.013589 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="wheel_and_axle-1" uid="wheel_and_axle-1" entityUid="wheel_and_axle" rigid="true">
+<Transform>
+<Rotation>0 0.531924 0.846792 -1 0 0 0 -0.846792 0.531924</Rotation>
+<Translation>-0.031558 0.059309 -0.0763945</Translation>
+</Transform>
+<Instance name="CrossTemplate-1" uid="CrossTemplate-1" entityUid="CrossTemplate*:*Nine">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X8__Template-1" uid="Light_Gray_X8__Template-1" entityUid="Light_Gray_X8__Template*:*one">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.00254 0 0.007874</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X8__Template-2" uid="Light_Gray_X8__Template-2" entityUid="Light_Gray_X8__Template*:*half">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.02286 0 0.007874</Translation>
+</Transform>
+</Instance>
+<Instance name="CrossComplementEnd_Small-1" uid="CrossComplementEnd_Small-1" entityUid="CrossComplementEnd_Small*:*Three">
+<Transform>
+<Rotation>0 0 1 0 1 0 -1 0 0</Rotation>
+<Translation>0.059054 0 0.001524</Translation>
+</Transform>
+</Instance>
+<Instance name="NXTWheel-1" uid="NXTWheel-1" entityUid="NXTWheel*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.013589 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="Body-1" uid="Body-1" entityUid="Body" rigid="true">
+<Transform>
+<Rotation>-0.0106608 7.43758e-016 0.999943 1.6237e-015 1 -7.26489e-016 -0.999943 1.61586e-015 -0.0106608</Rotation>
+<Translation>-0.0113794 0 -0.0766096</Translation>
+</Transform>
+<Instance name="CPU-1" uid="CPU-1" entityUid="CPU*:*Default">
+<Transform>
+<Rotation>0.999943 2.27595e-015 -0.0106608 -2.2841e-015 1 -7.52423e-016 0.0106608 7.76731e-016 0.999943</Rotation>
+<Translation>-0.0768202 0.0118047 -0.0245103</Translation>
+</Transform>
+</Instance>
+<Instance name="Motor-1" uid="Motor-1" entityUid="Motor*:*Default">
+<Transform>
+<Rotation>-0.999943 -9.15875e-016 -0.0106608 9.19967e-016 -1 0 -0.0106608 0 0.999943</Rotation>
+<Translation>-0.070778 -0.093218 -0.0288088</Translation>
+</Transform>
+</Instance>
+<Instance name="Motor-2" uid="Motor-2" entityUid="Motor*:*Default">
+<Transform>
+<Rotation>-0.999943 -6.16868e-015 -0.0106608 6.16629e-015 -1 -7.77156e-016 -0.0106608 -9.4369e-016 0.999943</Rotation>
+<Translation>-0.070778 0.017018 -0.0288088</Translation>
+</Transform>
+</Instance>
+<Instance name="Rotor-1" uid="Rotor-1" entityUid="Rotor*:*Default">
+<Transform>
+<Rotation>1 0 2.20606e-015 -2.13286e-015 1.04548e-015 1 0 -1 1.01148e-015</Rotation>
+<Translation>0 0.028194 -0.0201797</Translation>
+</Transform>
+</Instance>
+<Instance name="Rotor-2" uid="Rotor-2" entityUid="Rotor*:*Default">
+<Transform>
+<Rotation>1 0 1.56689e-015 -1.62279e-015 -5.19817e-016 1 0 -1 0</Rotation>
+<Translation>0 -0.082042 -0.0201797</Translation>
+</Transform>
+</Instance>
+<Instance name="Motor-3" uid="Motor-3" entityUid="Motor*:*Default">
+<Transform>
+<Rotation>-0.999943 2.28463e-015 0.0106608 2.31999e-015 1 0 -0.0106608 0 -0.999943</Rotation>
+<Translation>-0.0706436 -0.033645 -0.0414131</Translation>
+</Transform>
+</Instance>
+<Instance name="Rotor-3" uid="Rotor-3" entityUid="Rotor*:*Default">
+<Transform>
+<Rotation>1 0 -1.31196e-015 -1.37498e-015 -2.47341e-015 -1 0 1 -2.57059e-015</Rotation>
+<Translation>0.000302267 -0.044821 -0.0485311</Translation>
+</Transform>
+</Instance>
+<Instance name="head-1" uid="head-1" entityUid="head" rigid="true">
+<Transform>
+<Rotation>-0.0106608 -0.999943 -3.19319e-015 9.4369e-016 3.18718e-015 -1 0.999943 -0.0106608 9.99201e-016</Rotation>
+<Translation>-0.191479 -0.0342687 -0.0150683</Translation>
+</Transform>
+<Instance name="ProximitySensor-1" uid="ProximitySensor-1" entityUid="ProximitySensor*:*Default">
+<Transform>
+<Rotation>1 0 -8.70658e-015 8.70311e-015 1.57131e-015 1 0 -1 1.56649e-015</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-3" uid="BlueConnectorLong-3" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>-7.15545e-016 1 0 0 0 -1 -1 -7.15545e-016 0</Rotation>
+<Translation>-0.0175045 0 0.0108063</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-4" uid="BlueConnectorLong-4" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>7.15545e-016 0 1 0 -1 0 1 0 -7.15545e-016</Rotation>
+<Translation>-0.00175645 0 -0.0123077</Translation>
+</Transform>
+</Instance>
+<Instance name="L_Three_Five_90degrees-1" uid="L_Three_Five_90degrees-1" entityUid="L_Three_Five_90degrees*:*Default">
+<Transform>
+<Rotation>2.88311e-015 1 -5.725e-016 1 -2.88311e-015 -1.25316e-015 -1.25316e-015 -5.725e-016 -1</Rotation>
+<Translation>-0.0175045 -0.007874 0.0108063</Translation>
+</Transform>
+</Instance>
+<Instance name="L_Three_Five_90degrees-3" uid="L_Three_Five_90degrees-3" entityUid="L_Three_Five_90degrees*:*Default">
+<Transform>
+<Rotation>2.8276e-015 1 -5.64856e-016 1 -2.8276e-015 -1.25348e-015 -1.25348e-015 -5.64856e-016 -1</Rotation>
+<Translation>-0.0175045 -0.007874 -0.00494172</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-5" uid="BlueConnectorLong-5" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>-5.23317e-016 1.22169e-015 1 -1.22034e-015 1 -1.22169e-015 -1 -1.22034e-015 -5.23317e-016</Rotation>
+<Translation>-0.0175045 -0.007874 0.0108063</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-6" uid="BlueConnectorLong-6" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>5.23317e-016 -1 0 1.22034e-015 0 -1 1 5.23317e-016 1.22034e-015</Rotation>
+<Translation>-0.0175045 -0.031496 -0.0123077</Translation>
+</Transform>
+</Instance>
+<Instance name="All_Straight-2" uid="All_Straight-2" entityUid="All_Straight*:*Nine">
+<Transform>
+<Rotation>2.99413e-015 -1 1.3543e-015 1 2.99413e-015 0 0 1.3543e-015 1</Rotation>
+<Translation>-0.0175045 -0.015748 -0.00468772</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="Light_sensor-1" uid="Light_sensor-1" entityUid="Light_sensor*:*Default">
+<Transform>
+<Rotation>-0.0106608 1.6237e-015 -0.999943 7.43758e-016 1 1.61586e-015 0.999943 -7.26489e-016 -0.0106608</Rotation>
+<Translation>-0.188013 -0.080096 -0.0521993</Translation>
+</Transform>
+</Instance>
+<Instance name="lower_horizontal_connector-1" uid="lower_horizontal_connector-1" entityUid="lower_horizontal_connector" rigid="true">
+<Transform>
+<Rotation>3.45514e-015 -0.999943 -0.0106608 1 3.45368e-015 0 0 -0.0106608 0.999943</Rotation>
+<Translation>-0.0355989 -0.002667 -0.00481038</Translation>
+</Transform>
+<Instance name="All_Straight-1" uid="All_Straight-1" entityUid="All_Straight*:*Eleven">
+<Transform>
+<Rotation>1 0 0 0 0 1 0 -1 0</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-1" uid="BlueConnectorLong-1" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>0.007874 0.007493 0</Translation>
+</Transform>
+</Instance>
+<Instance name="BlueConnectorLong-2" uid="BlueConnectorLong-2" entityUid="BlueConnectorLong*:*Default">
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>-0.070866 0.007493 0</Translation>
+</Transform>
+</Instance>
+<Instance name="All_Straight-2" uid="All_Straight-2" entityUid="All_Straight*:*Three">
+<Transform>
+<Rotation>1 0 0 0 0 1 0 -1 0</Rotation>
+<Translation>0.007874 -0.008001 0</Translation>
+</Transform>
+</Instance>
+<Instance name="All_Straight-3" uid="All_Straight-3" entityUid="All_Straight*:*Three">
+<Transform>
+<Rotation>1 0 0 0 0 1 0 -1 0</Rotation>
+<Translation>-0.070866 -0.008001 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X10-1" uid="Light_Gray_X10-1" entityUid="Light_Gray_X10*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.070866 -0.015621 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X10-3" uid="Light_Gray_X10-3" entityUid="Light_Gray_X10*:*Default">
+<Transform>
+<Rotation>-1 0 0 0 1 0 0 0 -1</Rotation>
+<Translation>0.007874 -0.015621 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_Gray_X10-4" uid="Light_Gray_X10-4" entityUid="Light_Gray_X10*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.015748 -0.008001 0</Translation>
+</Transform>
+</Instance>
+<Instance name="Light_sensor-1" uid="Light_sensor-1" entityUid="Light_sensor*:*Default">
+<Transform>
+<Rotation>-1 0 3.36661e-015 -3.36661e-015 0 -1 0 -1 0</Rotation>
+<Translation>-0.031904 -0.021981 0.01431</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="Lego NXT - Touch sensor-1" uid="Lego NXT - Touch sensor-1" entityUid="Lego NXT - Touch sensor" rigid="true">
+<Transform>
+<Rotation>-0.0106608 1.6237e-015 -0.999943 7.43758e-016 1 1.61586e-015 0.999943 -7.26489e-016 -0.0106608</Rotation>
+<Translation>-0.194445 0.00448711 -0.0725796</Translation>
+</Transform>
+<Instance name="Sensor NXT body-2" uid="Sensor NXT body-2" grounded="true" entityUid="Sensor NXT body*:*Sound sensor body">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.0101606 -0.00448711 0.0150506</Translation>
+</Transform>
+</Instance>
+<Instance name="Electric touch sensor NXT nose-1" uid="Electric touch sensor NXT nose-1" entityUid="Electric touch sensor NXT nose*:*Sound sensor body">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.0101606 -0.00448711 0.0155506</Translation>
+</Transform>
+</Instance>
+<Instance name="Electric touch sensor NXT plunger-2" uid="Electric touch sensor NXT plunger-2" entityUid="Electric touch sensor NXT plunger*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.0202606 0.00636289 0.0205506</Translation>
+</Transform>
+</Instance>
+<Instance name="Sensor NXT cover-1" uid="Sensor NXT cover-1" entityUid="Sensor NXT cover*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.0101606 0.00501289 -0.0219494</Translation>
+</Transform>
+</Instance>
+<Instance name="Sensor NXT body connector socket-2" uid="Sensor NXT body connector socket-2" entityUid="Sensor NXT body connector socket*:*Default">
+<Transform>
+<Rotation>-1 0 0 0 1 0 0 0 -1</Rotation>
+<Translation>0.0270337 -0.00288711 -0.0282494</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="NXT Lego - Liftarm bent-2" uid="NXT Lego - Liftarm bent-2" entityUid="NXT Lego - Liftarm bent*:*Liftarm 1 x 9 bent ">
+<Transform>
+<Rotation>0.0106608 0.999943 -2.69056e-015 2.22045e-015 -2.73722e-015 -1 -0.999943 0.0106608 -2.27596e-015</Rotation>
+<Translation>-0.16308 0.0074 -0.0176816</Translation>
+</Transform>
+</Instance>
+<Instance name="NXT Lego - Liftarm bent-3" uid="NXT Lego - Liftarm bent-3" entityUid="NXT Lego - Liftarm bent*:*Liftarm 1 x 9 bent ">
+<Transform>
+<Rotation>0.0106608 0.999943 -2.53747e-015 7.21645e-016 -2.54658e-015 -1 -0.999943 0.0106608 -8.32667e-016</Rotation>
+<Translation>-0.16308 -0.069596 -0.0176816</Translation>
+</Transform>
+</Instance>
+<Instance name="CrossTemplate-1" uid="CrossTemplate-1" entityUid="CrossTemplate*:*Nine">
+<Transform>
+<Rotation>0.998877 0.0473728 -2.26468e-015 -2.24126e-015 -7.77156e-016 -1 -0.0473728 0.998877 -6.66134e-016</Rotation>
+<Translation>-0.16308 0.00047 -0.0176816</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="NXT Lego - Liftarm bent-1" uid="NXT Lego - Liftarm bent-1" entityUid="NXT Lego - Liftarm bent*:*Liftarm 1 x 9 bent ">
+<Transform>
+<Rotation>-0.999785 -0.0207452 1.13941e-015 1.11523e-015 1.17701e-015 1 -0.0207452 0.999785 -1.15362e-015</Rotation>
+<Translation>-0.082746 -0.056539 -0.109236</Translation>
+</Transform>
+</Instance>
+<Instance name="NXT Lego - Liftarm bent-2" uid="NXT Lego - Liftarm bent-2" entityUid="NXT Lego - Liftarm bent*:*Liftarm 1 x 9 bent ">
+<Transform>
+<Rotation>-0.999785 -0.0207452 9.68243e-016 9.42928e-016 1.23005e-015 1 -0.0207452 0.999785 -1.21023e-015</Rotation>
+<Translation>-0.082746 -0.026025 -0.109236</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Concentric name="Concentric29">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>wheel_and_axle-1</Uid>
+<Uid>Light_Gray_X8__Template-1</Uid>
+</InstancePath>
+<Position>0.007874 0 0.003937</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-1</Uid>
+</InstancePath>
+<Position>0 0 0.004318</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident28">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-1</Uid>
+</InstancePath>
+<Position>0 0 0.004318</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>wheel_and_axle-1</Uid>
+<Uid>Light_Gray_X8__Template-2</Uid>
+</InstancePath>
+<Position>0 0 0.003937</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric31">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>wheel_and_axle-2</Uid>
+<Uid>Light_Gray_X8__Template-1</Uid>
+</InstancePath>
+<Position>0.007874 0 0.003937</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-2</Uid>
+</InstancePath>
+<Position>0 0 -0.018796</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident29">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-2</Uid>
+</InstancePath>
+<Position>0 0 -0.018796</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>wheel_and_axle-2</Uid>
+<Uid>Light_Gray_X8__Template-2</Uid>
+</InstancePath>
+<Position>0 0 0.003937</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident31">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>CPU-1</Uid>
+</InstancePath>
+<Position>-0.045947 0.00064129 0.0350694</Position>
+<Axis>-8.06432e-015 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>ETRobo2013_danvir</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident32">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>CPU-1</Uid>
+</InstancePath>
+<Position>-0.078205 -0.0118047 0.166728</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>ETRobo2013_danvir</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Tangent name="Tangent1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Tabletop-1</Uid>
+</InstancePath>
+<Position>0 0 -1.39955</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>wheel_and_axle-1</Uid>
+<Uid>NXTWheel-1</Uid>
+</InstancePath>
+<Position>-0.00079375 -0.000180154 -0.0419249</Position>
+<Axis>2.64011e-016 0.531924 0.846792</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Coincident name="Coincident33">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-1</Uid>
+</InstancePath>
+<Position>-0.0235114 0.0323607 0.0009</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>ETRobo2013_danvir</Uid>
+</InstancePath>
+<Position>-0.059911 -0.047869 -0.0763945</Position>
+<Axis>3.21618e-015 1 2.63678e-016</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident34">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-3</Uid>
+</InstancePath>
+<Position>0 0 0.004318</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-1</Uid>
+</InstancePath>
+<Position>0.024 0 0.0074</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric32">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-1</Uid>
+</InstancePath>
+<Position>-0.0235114 0.0323607 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-2</Uid>
+</InstancePath>
+<Position>-0.0235114 0.0323607 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric33">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-2</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident35">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Body-1</Uid>
+<Uid>Rotor-3</Uid>
+</InstancePath>
+<Position>0 0 -0.018796</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>NXT Lego - Liftarm bent-2</Uid>
+</InstancePath>
+<Position>0.024 0 0</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Coincident>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+<Assembly name="wheel_and_axle" uid="wheel_and_axle" version="201">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="wheel_and_axle.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="Body" uid="Body" version="208">
+<ModelUnits mass="kilogram" length="meter"/>
+<AssemblyFile name="Body.sldasm" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="head" uid="head" version="256">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="head.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="lower_horizontal_connector" uid="lower_horizontal_connector" version="199">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="lower_horizontal_connector.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="Lego NXT - Touch sensor" uid="Lego NXT - Touch sensor" version="198">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="Lego NXT - Touch sensor.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+</Assemblies>
+<Parts>
+<Part name="All_Straight" uid="All_Straight*:*Eleven" version="1510">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="All_Straight.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00289084</Mass>
+<CenterOfMass>-0.031496 0 0.003937</CenterOfMass>
+<Inertia>3.35797e-008 1.78876e-006 1.79651e-006 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="All_Straight_Eleven_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="All_Straight" uid="All_Straight*:*Nine" version="1483">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="All_Straight.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00235992</Mass>
+<CenterOfMass>-0.023622 0 0.003937</CenterOfMass>
+<Inertia>2.7323e-008 9.77873e-007 9.84122e-007 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="All_Straight_Nine_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="All_Straight" uid="All_Straight*:*Three" version="1512">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="All_Straight.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.000767166</Mass>
+<CenterOfMass>0 0 0.003937</CenterOfMass>
+<Inertia>8.55266e-009 3.76639e-008 3.93931e-008 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="All_Straight_Three_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.960784" g="0.960784" b="0.960784" a="1"/>
+<Diffuse r="0.960784" g="0.960784" b="0.960784" a="1"/>
+<Specular r="0.288235" g="0.288235" b="0.288235" a="1"/>
+<Emissive r="0.288235" g="0.288235" b="0.288235" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="BlueConnectorLong" uid="BlueConnectorLong*:*Default" version="183">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="BlueConnectorLong.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.000114243</Mass>
+<CenterOfMass>0.0107939 0 0</CenterOfMass>
+<Inertia>4.6866e-010 5.01778e-009 5.01778e-009 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="BlueConnectorLong_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0" g="0.533333" b="1" a="1"/>
+<Diffuse r="0" g="0.533333" b="1" a="1"/>
+<Specular r="0" g="0.16" b="0.3" a="1"/>
+<Emissive r="0" g="0.16" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="CPU" uid="CPU*:*Default" version="2934">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="CPU.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.27373</Mass>
+<CenterOfMass>-0.0228892 -0.0308547 0.0152264</CenterOfMass>
+<Inertia>4.21459e-005 8.22915e-005 0.000102738 2.09208e-011 5.81038e-007 5.36578e-011</Inertia>
+</MassProperties>
+<GeometryFile name="CPU_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Diffuse r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Specular r="0.633725" g="0.655686" b="0.746667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="CrossComplementEnd_Small" uid="CrossComplementEnd_Small*:*Three" version="1466">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="CrossComplementEnd_Small.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00107442</Mass>
+<CenterOfMass>0.001524 0 0.011811</CenterOfMass>
+<Inertia>5.47169e-008 5.47169e-008 9.51271e-009 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="CrossComplementEnd_Small_Three_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="CrossTemplate" uid="CrossTemplate*:*Nine" version="196">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="CrossTemplate.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00097801</Mass>
+<CenterOfMass>0 0 0.035433</CenterOfMass>
+<Inertia>4.10274e-007 4.10274e-007 1.95495e-009 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="CrossTemplate_Nine_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Electric touch sensor NXT nose" uid="Electric touch sensor NXT nose*:*Sound sensor body" version="342">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Electric touch sensor NXT nose.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00696671</Mass>
+<CenterOfMass>0.0102 0.01075 -0.00897251</CenterOfMass>
+<Inertia>4.41766e-007 4.11838e-007 5.66891e-007 0 0 -9.70966e-015</Inertia>
+</MassProperties>
+<GeometryFile name="Electric touch sensor NXT nose_Sound sensor body_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Electric touch sensor NXT plunger" uid="Electric touch sensor NXT plunger*:*Default" version="220">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Electric touch sensor NXT plunger.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00147734</Mass>
+<CenterOfMass>7.14173e-006 -1.21436e-006 -0.00540994</CenterOfMass>
+<Inertia>3.05968e-008 2.89197e-008 3.71669e-008 -2.54037e-012 1.49474e-011 1.24899e-014</Inertia>
+</MassProperties>
+<GeometryFile name="Electric touch sensor NXT plunger_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="L_Three_Five_90degrees" uid="L_Three_Five_90degrees*:*Default" version="185">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="L_Three_Five_90degrees.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00185746</Mass>
+<CenterOfMass>-0.00315321 0.00327386 0.003683</CenterOfMass>
+<Inertia>7.81581e-008 2.708e-007 3.3234e-007 0 0 6.70977e-008</Inertia>
+</MassProperties>
+<GeometryFile name="L_Three_Five_90degrees_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Diffuse r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Specular r="0.237647" g="0.245882" b="0.28" a="1"/>
+<Emissive r="0.237647" g="0.245882" b="0.28" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Light_Gray_X10" uid="Light_Gray_X10*:*Default" version="1012">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Light_Gray_X10.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00165438</Mass>
+<CenterOfMass>-0.00366292 -0.000401254 4.08189e-007</CenterOfMass>
+<Inertia>1.04097e-007 1.04099e-007 1.94371e-007 -2.25895e-012 2.51772e-013 4.17374e-008</Inertia>
+</MassProperties>
+<GeometryFile name="Light_Gray_X10_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Diffuse r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Specular r="0.225882" g="0.225882" b="0.225882" a="1"/>
+<Emissive r="0.225882" g="0.225882" b="0.225882" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Light_Gray_X8__Template" uid="Light_Gray_X8__Template*:*half" version="119">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Light_Gray_X8__Template.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.000140789</Mass>
+<CenterOfMass>0.007874 0 0.0019685</CenterOfMass>
+<Inertia>8.04162e-010 8.04162e-010 1.15818e-009 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Light_Gray_X8__Template_half_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Diffuse r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Specular r="0.602353" g="0.602353" b="0.602353" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Light_Gray_X8__Template" uid="Light_Gray_X8__Template*:*one" version="115">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Light_Gray_X8__Template.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.000211974</Mass>
+<CenterOfMass>0.007874 0 0.003937</CenterOfMass>
+<Inertia>2.27359e-009 2.27359e-009 1.5395e-009 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Light_Gray_X8__Template_one_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Diffuse r="0.752941" g="0.752941" b="0.752941" a="1"/>
+<Specular r="0.602353" g="0.602353" b="0.602353" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Light_sensor" uid="Light_sensor*:*Default" version="410">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Light_sensor.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0231757</Mass>
+<CenterOfMass>-9.38846e-007 -0.000274569 0.00141408</CenterOfMass>
+<Inertia>4.1479e-006 3.96766e-006 1.97669e-006 -3.43613e-008 2.4318e-010 -3.10024e-010</Inertia>
+</MassProperties>
+<GeometryFile name="Light_sensor_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Diffuse r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Specular r="0.237647" g="0.245882" b="0.28" a="1"/>
+<Emissive r="0.237647" g="0.245882" b="0.28" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Motor" uid="Motor*:*Default" version="4645">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Motor.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0889164</Mass>
+<CenterOfMass>-0.019769 -0.00393596 0.0180355</CenterOfMass>
+<Inertia>1.92926e-005 6.00452e-005 5.62611e-005 -9.42296e-010 1.03821e-005 9.68621e-010</Inertia>
+</MassProperties>
+<GeometryFile name="Motor_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="NXT Lego - Liftarm bent" uid="NXT Lego - Liftarm bent*:*Liftarm 1 x 9 bent " version="254">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="NXT Lego - Liftarm bent.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00323969</Mass>
+<CenterOfMass>-0.00512241 0.0134349 0.00370042</CenterOfMass>
+<Inertia>6.44296e-007 8.51094e-007 1.46974e-006 4.76897e-013 -2.03794e-012 -6.46604e-007</Inertia>
+</MassProperties>
+<GeometryFile name="NXT Lego - Liftarm bent_Liftarm 1 x 9 bent _sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="NXTWheel" uid="NXTWheel*:*Default" version="108">
+<ModelUnits mass="kilogram" length="meter"/>
+<PartFile name="NXTWheel.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0248972</Mass>
+<CenterOfMass>1.45418e-007 -7.39376e-008 7.06502e-008</CenterOfMass>
+<Inertia>2.71912e-005 1.39749e-005 1.39754e-005 -9.10992e-012 3.94095e-012 1.10294e-011</Inertia>
+</MassProperties>
+<GeometryFile name="NXTWheel_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Diffuse r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Specular r="0.633725" g="0.655686" b="0.746667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="ProximitySensor" uid="ProximitySensor*:*Default" version="386">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="ProximitySensor.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0292044</Mass>
+<CenterOfMass>0.00434338 0.000750718 0.0150518</CenterOfMass>
+<Inertia>5.47578e-006 4.17326e-006 7.61712e-006 0 2.74787e-007 0</Inertia>
+</MassProperties>
+<GeometryFile name="ProximitySensor_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Diffuse r="0.792157" g="0.819608" b="0.933333" a="1"/>
+<Specular r="0.633725" g="0.655686" b="0.746667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Rotor" uid="Rotor*:*Default" version="512">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Rotor.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0045365</Mass>
+<CenterOfMass>0 0 -0.007239</CenterOfMass>
+<Inertia>4.93712e-007 4.93712e-007 2.80535e-007 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Rotor_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="0.909804" g="0.443137" b="0.0313725" a="1"/>
+<Diffuse r="0.909804" g="0.443137" b="0.0313725" a="1"/>
+<Specular r="0.272941" g="0.132941" b="0.00941177" a="1"/>
+<Emissive r="0.272941" g="0.132941" b="0.00941176" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Sensor NXT body connector socket" uid="Sensor NXT body connector socket*:*Default" version="131">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Sensor NXT body connector socket.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00234508</Mass>
+<CenterOfMass>0.00663729 0.00726395 -0.00840484</CenterOfMass>
+<Inertia>1.01375e-007 8.48134e-008 9.83712e-008 -3.79947e-009 1.02592e-009 -1.62983e-009</Inertia>
+</MassProperties>
+<GeometryFile name="Sensor NXT body connector socket_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Sensor NXT body" uid="Sensor NXT body*:*Sound sensor body" version="181">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Sensor NXT body.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0112478</Mass>
+<CenterOfMass>0.0100769 0.0104607 -0.0278223</CenterOfMass>
+<Inertia>1.43749e-006 1.21759e-006 1.11965e-006 8.2616e-010 7.58663e-009 2.02312e-009</Inertia>
+</MassProperties>
+<GeometryFile name="Sensor NXT body_Sound sensor body_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Sensor NXT cover" uid="Sensor NXT cover*:*Default" version="193">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Sensor NXT cover.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00248826</Mass>
+<CenterOfMass>0.01025 0.00900569 0.0155</CenterOfMass>
+<Inertia>2.42646e-007 3.97148e-007 2.41258e-007 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Sensor NXT cover_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Tabletop" uid="Tabletop*:*Default" version="259">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Tabletop.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>1e-006</Mass>
+<CenterOfMass>1 0.0127 -1</CenterOfMass>
+<Inertia>42.4025 84.7909 42.4025 0 -3.38271e-015 0</Inertia>
+</MassProperties>
+<GeometryFile name="Tabletop_Default_sldprt.STL" type="STL"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.3" g="0.3" b="0.3" a="1"/>
+<Emissive r="0.3" g="0.3" b="0.3" a="1"/>
+<Shininess>0.5</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimMechanicsImportXML>

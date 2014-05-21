@@ -1,0 +1,277 @@
+Library {
+  Name			  "SimulinkExecutionControl"
+  Version		  6.4
+  MdlSubVersion		  0
+  SavedCharacterEncoding  "windows-1252"
+  LibraryType		  "BlockLibrary"
+  SaveDefaultBlockParams  on
+  SampleTimeColors	  off
+  LibraryLinkDisplay	  "none"
+  WideLines		  off
+  ShowLineDimensions	  off
+  ShowPortDataTypes	  off
+  ShowLoopsOnError	  on
+  IgnoreBidirectionalLines off
+  ShowStorageClass	  off
+  ShowTestPointIcons	  on
+  ShowViewerIcons	  on
+  SortedOrder		  off
+  ExecutionContextIcon	  off
+  ShowLinearizationAnnotations on
+  ScopeRefreshTime	  0.035000
+  OverrideScopeRefreshTime on
+  DisableAllScopes	  off
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  Created		  "Tue Jul 11 19:43:45 2006"
+  Creator		  "raarenst"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "raarenst"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Tue Jul 18 12:57:12 2006"
+  ModelVersionFormat	  "1.%<AutoIncrement:14>"
+  ConfigurationManager	  "None"
+  LinearizationMsg	  "none"
+  Profile		  off
+  ParamWorkspaceSource	  "MATLABWorkspace"
+  CovSaveName		  "covdata"
+  CovMetricSettings	  "dw"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  covSaveCumulativeToWorkspaceVar on
+  CovSaveSingleToWorkspaceVar on
+  CovCumulativeReport	  off
+  CovReportOnPause	  on
+  ExtModeBatchMode	  off
+  ExtModeEnableFloating	  on
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigDurationFloating "auto"
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeSkipDownloadWhenConnect off
+  ExtModeLogAll		  on
+  ExtModeAutoUpdateStatusClock on
+  ProdHWDeviceType	  "32-bit Generic"
+  ShowModelReferenceBlockVersion off
+  ShowModelReferenceBlockIO off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Arial"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  BlockParameterDefaults {
+    Block {
+      BlockType		      Outport
+      Port		      "1"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      BusOutputAsStruct	      off
+      PortDimensions	      "-1"
+      SampleTime	      "-1"
+      DataType		      "auto"
+      OutDataType	      "sfix(16)"
+      OutScaling	      "2^0"
+      SignalType	      "auto"
+      SamplingMode	      "auto"
+      OutputWhenDisabled      "held"
+      InitialOutput	      "[]"
+    }
+    Block {
+      BlockType		      "S-Function"
+      FunctionName	      "system"
+      SFunctionModules	      "''"
+      PortCounts	      "[]"
+    }
+    Block {
+      BlockType		      SubSystem
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      PermitHierarchicalResolution "All"
+      TreatAsAtomicUnit	      off
+      SystemSampleTime	      "-1"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      SimViewingDevice	      off
+      DataTypeOverride	      "UseLocalSettings"
+      MinMaxOverflowLogging   "UseLocalSettings"
+    }
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Arial"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Arial"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "SimulinkExecutionControl"
+    Location		    [59, 100, 430, 251]
+    Open		    on
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "A4"
+    PaperUnits		    "centimeters"
+    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+    TiledPageScale	    1
+    ShowPageBoundaries	    off
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      SubSystem
+      Name		      "Simulink\nExecution\nControl"
+      Ports		      [0, 1]
+      Position		      [35, 20, 85, 60]
+      FontSize		      10
+      MinAlgLoopOccurrences   off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      MaskHideContents	      off
+      MaskType		      "Simulink Execution Control V2.0"
+      MaskDescription	      "This block controls the execution of a Simulink"
+" model and allows you to run the simulation in real-time or a factor of real-"
+"time. Please note that the priorites selected will only be valud for the peri"
+"od of the simulation. After the simulation the priorites will be set to norma"
+"l.\n\nWARNING! If you select REAL_TIME_PRIORITY _CLASS and/or THREAD_PRIORITY"
+"_TIME_CRITICAL your computer can stop responding under certain conditions. If"
+" you do select these, please close all other applications first and don't int"
+"erfere with the model during execution.\n\n===== PARAMETERS =====\n[Process C"
+"lass Priority] Set the priority for Simulink process.\n[Thread Priority] Set "
+"the priority for the thread the model is executing in.\n[Real-Time Simulation"
+"] If selected the simulation will execute in real-time if possible. If desele"
+"cted the simulation will execute as a normal simulink simulation. The priorit"
+"ies set will still be valid for the duration of the simulation.\n[Real-Time F"
+"actor] A factor of 2 will, for example,  run the model twice the speed of rea"
+"l-time.\n[Overrun Behaviour] Could be set to Error or Continue execution. If "
+"Continue execution is selected the number of overruns occued will be present "
+"on the outport signal 0.\n[Sample Time] The sample time of this block. It is "
+"recommended to have the sample time of this block equal to the fundamental sa"
+"mple time of the model. If this block executes slower, in a multi-rate model,"
+" samples in between will not be executed on appropriate times. It is possible"
+" to select CONTINUOUS_SAMPLE_TIME (0) and INHERITED_SAMPLE_TIME (-1) for this"
+" block.\n\n===== RETURN VALUES =====\nIf Real-Time Simulation is selected the"
+" outputs will be:\nsignal 0: Number of overruns\nsignal 1: When this block ex"
+"ecutes realtively the sample step.\nsignal 2: The step execution time\notherw"
+"ise the outputs will be 0.0.\nPlease note that the above signals are compensa"
+"ted for the real-time factor."
+      MaskPromptString	      "Process Class Priority|Thread Priority|Real-Tim"
+"e Simulation|Real-Time Factor|Overrun Behaviour|Sample Time"
+      MaskStyleString	      "popup(IDLE_PRIORITY_CLASS|BELOW_NORMAL_PRIORITY"
+"_CLASS|NORMAL_PRIORITY_CLASS|ABOVE_NORMAL_PRIORITY_CLASS|HIGH_PRIORITY_CLASS|"
+"REALTIME_PRIORITY_CLASS),popup(THREAD_PRIORITY_IDLE|THREAD_PRIORITY_LOWEST|TH"
+"READ_PRIORITY_BELOW_NORMAL|THREAD_PRIORITY_NORMAL|THREAD_PRIORITY_ABOVE_NORMA"
+"L|THREAD_PRIORITY_HIGHEST|THREAD_PRIORITY_TIME_CRITICAL),checkbox,edit,popup("
+"Continue execution|Error),edit"
+      MaskTunableValueString  "off,off,off,off,off,off"
+      MaskCallbackString      "||rt_sim_callback|||"
+      MaskEnableString	      "on,on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,"
+      MaskVariables	      "proc_pri=@1;thread_pri=@2;rt_sim=@3;factor=@4;o"
+"vrrun=@5;Ts=@6;"
+      MaskDisplay	      "image(imread('timer_icon.jpg'))"
+      MaskIconFrame	      off
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      MaskValueString	      "NORMAL_PRIORITY_CLASS|THREAD_PRIORITY_NORMAL|on"
+"|1|Continue execution|1"
+      MaskTabNameString	      ",,,,,"
+      System {
+	Name			"Simulink\nExecution\nControl"
+	Location		[192, 158, 409, 257]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  "S-Function"
+	  Name			  "S-Function"
+	  Ports			  [0, 1]
+	  Position		  [25, 28, 105, 62]
+	  FunctionName		  "sfun_exec_contr"
+	  Parameters		  "1/factor ovrrun proc_pri thread_pri Ts rt_s"
+"im"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "overrun"
+	  Position		  [140, 38, 170, 52]
+	  IconDisplay		  "Port number"
+	  BusOutputAsStruct	  off
+	}
+	Line {
+	  SrcBlock		  "S-Function"
+	  SrcPort		  1
+	  Points		  [0, 0]
+	  DstBlock		  "overrun"
+	  DstPort		  1
+	}
+      }
+    }
+    Annotation {
+      Name		      "By Roger Aaresntrup\nThe MathWorks AB\n2006-07-"
+"18"
+      Position		      [241, 76]
+      UseDisplayTextAsClickCallback off
+    }
+    Annotation {
+      Name		      "Simulink Execution Control\nV2.0"
+      Position		      [241, 30]
+      UseDisplayTextAsClickCallback off
+      FontSize		      11
+      FontWeight	      "bold"
+    }
+  }
+}

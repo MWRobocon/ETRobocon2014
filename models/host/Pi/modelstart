@@ -1,0 +1,31 @@
+### BEGIN INIT INFO
+# Provides: modelstart
+# Required-Start: $remote_fs $syslog NXT_SPP_boot
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start Simulink model at boot time
+# Description: Start Simulink Model at boot time.
+### END INIT INFO
+
+#! /bin/sh
+# /etc/init.d/modelstart
+
+case "$1" in
+ start)
+   echo "Starting etrobocon_host"
+   /home/pi/etrobocon_host_rtt/MW/etrobocon_host
+   ;;
+
+ stop)
+   echo "Stopping etrobocon_host"
+   pkill etrobocon_host
+   ;;
+
+ *)
+   echo "Usage: /etc/init.d/modelstart {start|stop}"
+   exit 1
+   ;;
+esac
+
+exit 0
