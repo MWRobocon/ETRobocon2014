@@ -702,11 +702,11 @@ classdef ( ...
             
             versionString = version( '-release' );
             switch( versionString )
-                case { '2013b' }
+                case { '2014b' }
                     % Everything is cool.
                 otherwise
                     % Strengthen to "error" eventually.
-                    warning( 'The current version is NOT supported. In order to enable data dictionaries, you must use R2013b.' );
+                    warning( 'The current version is NOT supported. Use R2014b' );
             end
             return;
         end
