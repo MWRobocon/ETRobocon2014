@@ -536,9 +536,7 @@ classdef ( ...
             ETRoboconUtilities.confirmMATLABVersion( );
             
             ETRoboconUtilities.confirmROTHInstallation( );
-            
-            ETRoboconUtilities.enableDataDictionaryFeature( );
-            
+                     
             ETRoboconUtilities.setCodeGenerationDirectory( );
             
             ETRoboconUtilities.setSimulationCacheDirectory( );
@@ -750,19 +748,6 @@ classdef ( ...
             return;
         end
         
-        function [ ] = enableDataDictionaryFeature( )
-            %% [ ] = enableDataDictionaryFeature( ): Runs the "slfeature" commands to enable Simulink Data Dictionaries.
-            %   THESE COOMMANDS ONLY WORK IN R2013B
-            %
-            %==============================================================
-            
-            slfeature( 'SlDataDictionaryCore', 3 );
-            slfeature( 'SlDataDictionary', 2 );
-            slfeature( 'SlDataDictionaryExplorer', 2 );
-            
-            return;
-            
-        end
         
         function [ ] = generateRepositoryInstructions( )
             %% [ ] = generateRepositoryInstructions( ): Generates the HTML documentation for the repository instructions both as a PDF for distribution before people check out the repository, and as HTML for hyperlinking from inside the repository.
