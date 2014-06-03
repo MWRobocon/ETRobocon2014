@@ -1,2 +1,0 @@
-%build Video_Decode
-mex Video_Decode.cpp -I./3rdparty/opencv/include -I./3rdparty/ffmpeg/include -L./3rdparty/opencv/lib/vs2010 -L./3rdparty/ffmpeg/lib -I./3rdparty/pthread/include -L./3rdparty/pthread/lib -lavutil -lavformat -lavcodec
