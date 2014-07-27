@@ -532,21 +532,28 @@ classdef ( ...
             % * Sets the current directory to be the "work_area" folder
             %--------------------------------------------------------------
             
+            fprintf('Adding Project Paths\n');
             ETRoboconUtilities.addProjectPaths( );
             
+            fprintf('Confirming MATLAB Version\n');
             ETRoboconUtilities.confirmMATLABVersion( );
             
+            fprintf('Confirming ROTH Installation\n');
             ETRoboconUtilities.confirmROTHInstallation( );
-                     
+            
+            fprintf('Setting Code Generation Directory\n');
             ETRoboconUtilities.setCodeGenerationDirectory( );
             
+            fprintf('Setting Simulation Cache Directory\n');
             ETRoboconUtilities.setSimulationCacheDirectory( );
             
-            sl_refresh_customizations( );
+            fprintf('Skipping refreshing SL Customizations\n');
+            %sl_refresh_customizations( );
             
             workAreaAbsolutePath = ...
                 ETRoboconUtilities.getWorkAreaAbsolutePath( );
             
+            fprintf('CDing to work area\n');
             cd( workAreaAbsolutePath );
             
             return;
@@ -557,10 +564,13 @@ classdef ( ...
             %
             %
             %--------------------------------------------------------------
+            fprintf('Restoring Codegen directory\n');
             ETRoboconUtilities.restoreCodeGenerationDirectory( );
             
+            fprintf('Restoring Simulation Cache Directory\n');
             ETRoboconUtilities.restoreSimulationCacheDirectory( );
             
+            fprintf('Removing Project Paths\n');
             ETRoboconUtilities.removeProjectPaths( );
             
             return;
@@ -633,7 +643,7 @@ classdef ( ...
             pathsToAddCellStr = ...
                 ETRoboconUtilities.getETRoboconProjectPathCellStr( );
             
-            cellfun( @addpath, pathsToAddCellStr );
+            addpath(pathsToAddCellStr{:});
             return;
         end
         
@@ -823,7 +833,7 @@ classdef ( ...
             pathsToRemoveCellStr = ...
                 ETRoboconUtilities.getETRoboconProjectPathCellStr( );
             
-            cellfun( @rmpath, pathsToRemoveCellStr );
+            rmpath(pathsToRemoveCellStr{:});
             return;
         end
         
