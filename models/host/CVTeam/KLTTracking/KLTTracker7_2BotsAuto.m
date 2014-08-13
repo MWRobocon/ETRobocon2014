@@ -1,4 +1,3 @@
-function [Timing, botData] = KLTBotTrackerFunctionWrapper()
 %% Tracking an interesting part of the BOT using the Kanade-Lucas-Tomasi algorithm
 % NEED TO UPDATE
 %  
@@ -24,17 +23,13 @@ function [Timing, botData] = KLTBotTrackerFunctionWrapper()
 % transform the bounding box if necessary.
 
 %% Setup System objects and variables
-persistent firstTime
-persistent tracker r c oldPoints visiblePoints
-
-videoFileReader = vision.VideoFileReader('media/BookAndPouch1080p.mp4');
+videoFileReader = vision.VideoFileReader('media/BookAndPouch720p.mp4');
 videoPlayer = vision.VideoPlayer();
-videoWriter = vision.VideoFileWriter('media/BookAndPouch1080p_Tracked.mp4', 'FileFormat', 'MPEG4');
+videoWriter = vision.VideoFileWriter('media/BookAndPouch720p_Tracked.mp4', 'FileFormat', 'MPEG4');
 
-NFeaturesToTrack = 50;
+NFeaturesToTrack = 100; % Track strongest N features
+numFramesToSkip = 0; % Skip first few frames
 
-% Skip first few frames
-numFramesToSkip = 0;
 for i=1:numFramesToSkip
     step(videoFileReader);
 end
@@ -43,7 +38,7 @@ videoFrame = step(videoFileReader);
 r = size(videoFrame,1);
 c = size(videoFrame,2);
 
-% Get objectRegion from features and RegionOfInterest of template (Option 2 continued)
+% Get objectRegion from features and ROI of template (for Option 2)
 sceneImage = rgb2gray(videoFrame);
 % boxImage = rgb2gray(template);
 scenePoints = detectMinEigenFeatures(sceneImage);
@@ -115,7 +110,7 @@ objectImage2 = insertShape(videoFrame,'Rectangle',objectRegion2);
 % w = xmax - xmin;
 % h = ymax - ymin;
 % 
-% objectRegion = uint16([xmin, ymin, w, h]); % Use this to get SURFFeatures
+% objectRegion = uint16([xmin, ymin, w, h]); % Use this ROI to get features
 % 
 % mode = 11;
 
@@ -145,111 +140,61 @@ mode = 20; % mode = initializing
 %% Track (and re-detect if necessary) for the whole video
 disp('Press any key to start tic-toc');
 pause;
-% tic
-% while ~isDone(videoFileReader)
+
 NFrame = 810;
-TimeStepReader = zeros(NFrame,1);
-TimeStepTracker = zeros(NFrame,1);
-TimeStepPlayer = zeros(NFrame,1);
+TimeReader = zeros(NFrame,1);
+TimeTracker = zeros(NFrame,1);
+TimePlayer = zeros(NFrame,1);
 
 tstart = clock;
+% tic
+% while ~isDone(videoFileReader)
 for ii = 1:NFrame
     
     tic
+    % Get next frame of vide/camera
     videoFrame = step(videoFileReader);
-    TimeStepReader(ii) = toc;
+    TimeReader(ii) = toc;
     
-    
-    %     videoFrame = step(videoFileReader); % Step twice! Check at half the frame rate
+    % Track features in the new frame
     [points, isFound] = step(tracker,videoFrame);
     [points2, isFound2] = step(tracker2,videoFrame);
-    TimeStepTracker(ii) = toc;
+    TimeTracker(ii) = toc;   
     
-    
-    visiblePoints = points(isFound, :);
-    visiblePoints2 = points2(isFound2, :);
-    
-    xmin = round(min( visiblePoints(:,1))-5); ymax = round(max( visiblePoints(:,2)));
-    xmax = round(max(visiblePoints(:,1))); ymin = round(min( visiblePoints(:,2))-5);
-    scaleFactor = 1.36;
-    captureFrame = round([xmin ymin scaleFactor*(xmax-xmin) scaleFactor*(ymax-ymin)]);
-    
-%     if isempty(visiblePoints)
-%         isBotInFrame = [0 0 0 0];
-%     else
-%         isBotInFrame = [(xmin>10 && xmax>10) (ymin>10 && ymax>10) (xmin<c-10 && xmax<c-10) (ymin<r-10 && ymax<r-10)];
+%     % Get array of visible points
+%     visiblePoints = points(isFound, :);
+%     visiblePoints2 = points2(isFound2, :);
+%     
+%     % Display tracked points
+%     if ~isempty(visiblePoints)
+%         videoFrame = insertMarker(videoFrame, visiblePoints, '+', ...
+%             'Color', 'white');
 %     end
-    
-%     if size(visiblePoints, 1) >= 25 % need at least 25 points consistently
-%         
-%         % Reset the points, not necessary in this code
-%         % GS: Why reset points if you have 25+ visible points?
-%         %         oldPoints = visiblePoints;
-%         %         setPoints(tracker, oldPoints);
-%         mode = 21; %mode = tracking safely
-%     elseif size(visiblePoints, 1) >= 8 % atleast 8 points
-%         
-%         if xmin>0 && ymin>0 && scaleFactor*(xmax-xmin)+ xmin<c && scaleFactor*(ymax-ymin)+ ymin<r % if within image dimensions
-%             release(tracker);
-%             points = detectMinEigenFeatures(rgb2gray(videoFrame), 'ROI', captureFrame);
-%             points = points.Location;
-%             visiblePoints = points;
-%             oldPoints = points;
-%             initialize(tracker, points, videoFrame);
-%             mode = 22; %mode = tracking with difficulty
-%         end
-%         
-%     else
-%         
-%         points = detectMinEigenFeatures(rgb2gray(videoFrame));
-%         points = points.Location;
-%         [classifiedPoints,C] = kmeans(points,2,'distance','sqEuclidean','emptyaction','drop');
-%         points = points(logical(classifiedPoints-1),:);
-%         visiblePoints = points;
-%         oldPoints = points;
-%         
-%         xmin = round(min( visiblePoints(:,1))-5); ymax = round(max( visiblePoints(:,2)));
-%         xmax = round(max(visiblePoints(:,1))); ymin = round(min( visiblePoints(:,2))-5);
-%         
-%         if (xmax-xmin)*(ymax-ymin)<3600 %max threshold for num pixels in bot
-%             release(tracker);
-%             initialize(tracker, points, videoFrame);
-%             
-%         else
-%             visiblePoints = [];
-%             oldPoints = [];
-%         end
-%         mode = 23; %mode = unable to track, do setPoints() again
+%     
+%     if ~isempty(visiblePoints2)
+%         videoFrame = insertMarker(videoFrame, visiblePoints2, '+', ...
+%             'Color', 'yellow');
 %     end
-    
-    % Display tracked points
-    if ~isempty(visiblePoints)
-        videoFrame = insertMarker(videoFrame, visiblePoints, '+', ...
-            'Color', 'white');
-        videoFrame = insertShape(videoFrame,'rectangle', [xmin+5 ymin+5 xmax-xmin ymax-ymin]);
-    end
-    
-    if ~isempty(visiblePoints2)
-        videoFrame = insertMarker(videoFrame, visiblePoints2, '+', ...
-            'Color', 'yellow');
-%         videoFrame = insertShape(videoFrame,'rectangle', [xmin+5 ymin+5 xmax-xmin ymax-ymin]);
-    end
-    
-    botMean = mean(visiblePoints); % Mean of all the features
-    botMean2 = mean(visiblePoints2); % Mean of all the features
-    
-    position =  [50 50]; % [x y]
-    position2 =  [50 70]; % [x y]
-    videoFrame = insertText(videoFrame, position, int2str(botMean)); 
-    videoFrame = insertText(videoFrame, position2, int2str(botMean2)); 
-    
-    % Display the annotated video frame using the video player object
-    step(videoPlayer, videoFrame);
-    TimeStepPlayer(ii) = toc;
+%     
+%     botMean = mean(visiblePoints); % Mean of all visible features
+%     botMean2 = mean(visiblePoints2); % Mean of all visible features
+% 
+% %     position =  [50 50]; % [x y]
+% %     position2 =  [50 70]; % [x y]
+% %     videoFrame = insertText(videoFrame, position, int2str(botMean)); 
+% %     videoFrame = insertText(videoFrame, position2, int2str(botMean2)); 
+% 
+%     % Show the centroids on the output video
+%     videoFrame = insertMarker(videoFrame, botMean , 'x', 'Color', 'red', 'Size', 5);
+%     videoFrame = insertMarker(videoFrame, botMean2 , 'x', 'Color', 'red', 'Size', 5);
+%     
+%     % Display the annotated video frame using the video player object
+%     step(videoPlayer, videoFrame);
+    TimePlayer(ii) = toc;
 %     step(videoWriter, videoFrame);
-%     botData = [sum(isFound) botMean  isBotInFrame]; % Display num features and output for debugging
+
 end
-% tend = tic;
+% tend = toc;
 tLoop = etime(clock, tstart)
 
 %% Release system objects
@@ -258,21 +203,21 @@ release(videoFileReader);
 release(videoWriter);
 
 mode = 30;
-botData = [0 0 0 0];
-Timing = struct('TimeStepReader', TimeStepReader, 'TimeStepTracker', (TimeStepTracker - TimeStepReader), 'TimeStepPlayer', (TimeStepPlayer - TimeStepTracker));
-% Temp = struct2cell(Timing);
-% Temp = [Temp{:}];
+
+Timing = struct('TimeReader', TimeReader, 'TimeTracker', (TimeTracker - TimeReader), 'TimePlayer', (TimePlayer - TimeTracker));
 figure
-plot(1:NFrame, Timing.TimeStepReader, 1:NFrame,Timing.TimeStepTracker,1:NFrame, Timing.TimeStepPlayer);
+plot(1:NFrame, Timing.TimeReader, 1:NFrame,Timing.TimeTracker,1:NFrame, Timing.TimePlayer);
 title('Timing for Reader, Tracker, Player');
-legend('TimeStepReader', 'TimeStepTracker', 'TimeStepPlayer');
+legend('TimeReader', 'TimeTracker', 'TimePlayer');
 
 figure
-plot(1:NFrame, Timing.TimeStepReader, 1:NFrame, (Timing.TimeStepReader + Timing.TimeStepTracker));
+plot(1:NFrame, Timing.TimeReader, 1:NFrame, (Timing.TimeReader + Timing.TimeTracker));
 legend('Reader', 'Reader + Tracker');
 title('Timing for Reader, Reader+Tracker');
 
-AvgComputationPerFrame = sum(Timing.TimeStepReader + Timing.TimeStepTracker)/NFrame
-ComputationFrameRate = 1/AvgComputationPerFrame
+% Avg computation time with reader and tracker ONLY; display not counted
+% removing initial overhead of first few frames. this is steady state avg
+AvgComputationPerFrame = sum(Timing.TimeReader(21:end) + Timing.TimeTracker(21:end))/(NFrame-20)
 
-end
+% Computational fps for reading and tracking ONLY
+ComputationFrameRate = 1/AvgComputationPerFrame

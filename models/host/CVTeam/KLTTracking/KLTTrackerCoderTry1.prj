@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.matlabcoder" plugin-version="R2014a_nu">
-  <configuration build-checksum="1548108215" file="\\home-00-ah\gsalhotr\Documents\MATLAB\ETRobocon2014Files\Repository\models\host\CVTeam\KLTTracking\KLTTrackerCoderTry1.prj" location="\\home-00-ah\gsalhotr\Documents\MATLAB\ETRobocon2014Files\Repository\models\host\CVTeam\KLTTracking" name="KLTTrackerCoderTry1" target="target.matlab.coder" target-name="MEX, C, and C++ Code Generation">
+  <configuration build-checksum="3295771284" file="\\home-00-ah\gsalhotr\Documents\MATLAB\ETRobocon2014Files\Repository\models\host\CVTeam\KLTTracking\KLTTrackerCoderTry1.prj" location="\\home-00-ah\gsalhotr\Documents\MATLAB\ETRobocon2014Files\Repository\models\host\CVTeam\KLTTracking" name="KLTTrackerCoderTry1" target="target.matlab.coder" target-name="MEX, C, and C++ Code Generation">
     <profile key="profile.mex">
       <param.MergeInstrumentationResults>false</param.MergeInstrumentationResults>
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
@@ -168,11 +168,11 @@
       <param.HardwareSizeWord.Production>32</param.HardwareSizeWord.Production>
       <param.HardwareSizePointer.Production>32</param.HardwareSizePointer.Production>
       <param.HardwareEndianness.Production>option.HardwareEndianness.Little</param.HardwareEndianness.Production>
-      <param.HardwareArithmeticRightShift.Production>false</param.HardwareArithmeticRightShift.Production>
-      <param.HardwareLongLongMode.Production>false</param.HardwareLongLongMode.Production>
+      <param.HardwareArithmeticRightShift.Production>true</param.HardwareArithmeticRightShift.Production>
+      <param.HardwareLongLongMode.Production>true</param.HardwareLongLongMode.Production>
       <param.HardwareAtomicIntegerSize.Production>option.HardwareAtomicIntegerSize.Char</param.HardwareAtomicIntegerSize.Production>
       <param.HardwareAtomicFloatSize.Production>option.HardwareAtomicFloatSize.None</param.HardwareAtomicFloatSize.Production>
-      <param.HardwareDivisionRounding.Production>option.HardwareDivisionRounding.Undefined</param.HardwareDivisionRounding.Production>
+      <param.HardwareDivisionRounding.Production>option.HardwareDivisionRounding.Zero</param.HardwareDivisionRounding.Production>
       <param.HardwareVendor.Target>Generic</param.HardwareVendor.Target>
       <param.HardwareType.Target>MATLAB Host Computer</param.HardwareType.Target>
       <param.HWDeviceType.Target>Generic-&gt;MATLAB Host Computer</param.HWDeviceType.Target>
@@ -187,11 +187,11 @@
       <param.HardwareSizeWord.Target>32</param.HardwareSizeWord.Target>
       <param.HardwareSizePointer.Target>32</param.HardwareSizePointer.Target>
       <param.HardwareEndianness.Target>option.HardwareEndianness.Little</param.HardwareEndianness.Target>
-      <param.HardwareArithmeticRightShift.Target>false</param.HardwareArithmeticRightShift.Target>
-      <param.HardwareLongLongMode.Target>false</param.HardwareLongLongMode.Target>
+      <param.HardwareArithmeticRightShift.Target>true</param.HardwareArithmeticRightShift.Target>
+      <param.HardwareLongLongMode.Target>true</param.HardwareLongLongMode.Target>
       <param.HardwareAtomicIntegerSize.Target>option.HardwareAtomicIntegerSize.Char</param.HardwareAtomicIntegerSize.Target>
       <param.HardwareAtomicFloatSize.Target>option.HardwareAtomicFloatSize.None</param.HardwareAtomicFloatSize.Target>
-      <param.HardwareDivisionRounding.Target>option.HardwareDivisionRounding.Undefined</param.HardwareDivisionRounding.Target>
+      <param.HardwareDivisionRounding.Target>option.HardwareDivisionRounding.Zero</param.HardwareDivisionRounding.Target>
       <param.Toolchain>Automatically locate an installed toolchain</param.Toolchain>
       <param.BuildConfiguration>Faster Builds</param.BuildConfiguration>
       <param.CustomToolchainOptions />
@@ -289,11 +289,8 @@
         <param.HardwareSizeWord.Production />
         <param.HardwareSizePointer.Production />
         <param.HardwareEndianness.Production />
-        <param.HardwareArithmeticRightShift.Production />
-        <param.HardwareLongLongMode.Production />
         <param.HardwareAtomicIntegerSize.Production />
         <param.HardwareAtomicFloatSize.Production />
-        <param.HardwareDivisionRounding.Production />
         <param.HardwareVendor.Target />
         <param.HardwareType.Target />
         <param.HWDeviceType.Target />
@@ -308,11 +305,8 @@
         <param.HardwareSizeWord.Target />
         <param.HardwareSizePointer.Target />
         <param.HardwareEndianness.Target />
-        <param.HardwareArithmeticRightShift.Target />
-        <param.HardwareLongLongMode.Target />
         <param.HardwareAtomicIntegerSize.Target />
         <param.HardwareAtomicFloatSize.Target />
-        <param.HardwareDivisionRounding.Target />
         <param.Toolchain />
         <param.BuildConfiguration />
         <param.CustomToolchainOptions />
@@ -357,7 +351,7 @@
     <param.AutoInferUseUnboundedSize>false</param.AutoInferUseUnboundedSize>
     <param.AutoInferVariableSizeThreshold>1024</param.AutoInferVariableSizeThreshold>
     <param.AutoInferUnboundedSizeThreshold>2048</param.AutoInferUnboundedSizeThreshold>
-    <param.AnnotationChecksum>3832059965</param.AnnotationChecksum>
+    <param.AnnotationChecksum>3448844569</param.AnnotationChecksum>
     <param.mex.outputfile>KLTTrackerParallel_mex</param.mex.outputfile>
     <param.grt.outputfile>KLTTrackerParallel</param.grt.outputfile>
     <param.artifact>option.target.artifact.mex</param.artifact>
@@ -405,7 +399,6 @@
       <param.outputfile />
       <param.version />
       <param.HasECoderFeatures />
-      <param.grt.mainhtml />
       <param.CallGeneratedCodeFromTest />
       <param.VerificationMode />
       <param.DefaultTestFile />
@@ -478,7 +471,7 @@
           </Input>
           <Input Name="firstFrame">
             <Class>single</Class>
-            <Size>478 x 852 x 3</Size>
+            <Size>720 x 1280 x 3</Size>
             <Value />
             <InitialValue />
             <UserDefined>true</UserDefined>
@@ -487,7 +480,7 @@
           <Input Name="NFrame">
             <Class>double</Class>
             <Size>1 x 1</Size>
-            <Value>800</Value>
+            <Value>810</Value>
             <InitialValue />
             <UserDefined>true</UserDefined>
             <Complex>false</Complex>
@@ -503,12 +496,18 @@
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>B:\14\gsalhotr.Btm2.j136393.sb\matlab</root>
+      <root>C:\Program Files\MATLAB\R2014b</root>
       <toolboxes>
+        <toolbox name="matlabhdlcoder" />
         <toolbox name="fixedpoint" />
         <toolbox name="embeddedcoder" />
         <toolbox name="matlabcoder" />
       </toolboxes>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
       <toolbox>
         <fixedpoint>
           <enabled>true</enabled>
