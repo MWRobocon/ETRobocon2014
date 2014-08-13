@@ -1,7 +1,7 @@
 % function [botMean, botMean2] = KLTTrackerParallel(pointsLocation, points2Location, firstFrame, NFrame)
 function [TimeReader, TimeTracker, botMean, botMean2] = KLTTrackerParallel(pointsLocation, points2Location, firstFrame, NFrame)
 %#codegen
-coder.extrinsic('tic', 'toc'); %Another possible option
+% coder.extrinsic('tic', 'toc'); %Another possible option
 coder.cinclude('time.h');
 botMean = zeros(NFrame,2);
 botMean2 = zeros(NFrame,2);
