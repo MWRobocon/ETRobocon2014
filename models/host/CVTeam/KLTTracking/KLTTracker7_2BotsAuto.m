@@ -1,7 +1,6 @@
-function [botData] = KLTBotTrackerFunctionWrapper()
+function [Timing, botData] = KLTBotTrackerFunctionWrapper()
 %% Tracking an interesting part of the BOT using the Kanade-Lucas-Tomasi algorithm
 % NEED TO UPDATE
-%  V6 update: updated detectMinEigenFeatures with detectMinEigenFeatures
 %  
 % 1. Select initial area of interest in figure for now, automatically from
 % calibrated setup in the competition
@@ -28,9 +27,11 @@ function [botData] = KLTBotTrackerFunctionWrapper()
 persistent firstTime
 persistent tracker r c oldPoints visiblePoints
 
-videoFileReader = vision.VideoFileReader('media/BookAndPouch360p.mp4');
+videoFileReader = vision.VideoFileReader('media/BookAndPouch1080p.mp4');
 videoPlayer = vision.VideoPlayer();
-videoWriter = vision.VideoFileWriter('media/BookAndPouch360p_Tracked.mp4', 'FileFormat', 'MPEG4');
+videoWriter = vision.VideoFileWriter('media/BookAndPouch1080p_Tracked.mp4', 'FileFormat', 'MPEG4');
+
+NFeaturesToTrack = 50;
 
 % Skip first few frames
 numFramesToSkip = 0;
@@ -121,9 +122,11 @@ objectImage2 = insertShape(videoFrame,'Rectangle',objectRegion2);
 %% Get features within newly obtained objectRegion. Initialize tracker
 
 points = detectMinEigenFeatures(sceneImage, 'ROI', objectRegion);
+points = points.selectStrongest(NFeaturesToTrack);
 pointImage = insertMarker(videoFrame, points.Location, '+', 'Color', 'yellow');
 
 points2 = detectMinEigenFeatures(sceneImage, 'ROI', objectRegion2);
+points2 = points2.selectStrongest(NFeaturesToTrack);
 pointImage2 = insertMarker(videoFrame, points2.Location, '+', 'Color', 'blue');
 
 % Make a copy of the points to be used for computing the geometric
@@ -142,12 +145,26 @@ mode = 20; % mode = initializing
 %% Track (and re-detect if necessary) for the whole video
 disp('Press any key to start tic-toc');
 pause;
-tic
-while ~isDone(videoFileReader)
+% tic
+% while ~isDone(videoFileReader)
+NFrame = 810;
+TimeStepReader = zeros(NFrame,1);
+TimeStepTracker = zeros(NFrame,1);
+TimeStepPlayer = zeros(NFrame,1);
+
+tstart = clock;
+for ii = 1:NFrame
+    
+    tic
     videoFrame = step(videoFileReader);
-%     videoFrame = step(videoFileReader); % Step twice! Check at half the frame rate
+    TimeStepReader(ii) = toc;
+    
+    
+    %     videoFrame = step(videoFileReader); % Step twice! Check at half the frame rate
     [points, isFound] = step(tracker,videoFrame);
     [points2, isFound2] = step(tracker2,videoFrame);
+    TimeStepTracker(ii) = toc;
+    
     
     visiblePoints = points(isFound, :);
     visiblePoints2 = points2(isFound2, :);
@@ -157,53 +174,53 @@ while ~isDone(videoFileReader)
     scaleFactor = 1.36;
     captureFrame = round([xmin ymin scaleFactor*(xmax-xmin) scaleFactor*(ymax-ymin)]);
     
-    if isempty(visiblePoints)
-        isBotInFrame = [0 0 0 0];
-    else
-        isBotInFrame = [(xmin>10 && xmax>10) (ymin>10 && ymax>10) (xmin<c-10 && xmax<c-10) (ymin<r-10 && ymax<r-10)];
-    end
+%     if isempty(visiblePoints)
+%         isBotInFrame = [0 0 0 0];
+%     else
+%         isBotInFrame = [(xmin>10 && xmax>10) (ymin>10 && ymax>10) (xmin<c-10 && xmax<c-10) (ymin<r-10 && ymax<r-10)];
+%     end
     
-    if size(visiblePoints, 1) >= 25 % need at least 25 points consistently
-        
-        % Reset the points, not necessary in this code
-        % GS: Why reset points if you have 25+ visible points?
-        %         oldPoints = visiblePoints;
-        %         setPoints(tracker, oldPoints);
-        mode = 21; %mode = tracking safely
-    elseif size(visiblePoints, 1) >= 8 % atleast 8 points
-        
-        if xmin>0 && ymin>0 && scaleFactor*(xmax-xmin)+ xmin<c && scaleFactor*(ymax-ymin)+ ymin<r % if within image dimensions
-            release(tracker);
-            points = detectMinEigenFeatures(rgb2gray(videoFrame), 'ROI', captureFrame);
-            points = points.Location;
-            visiblePoints = points;
-            oldPoints = points;
-            initialize(tracker, points, videoFrame);
-            mode = 22; %mode = tracking with difficulty
-        end
-        
-    else
-        
-        points = detectMinEigenFeatures(rgb2gray(videoFrame));
-        points = points.Location;
-        [classifiedPoints,C] = kmeans(points,2,'distance','sqEuclidean','emptyaction','drop');
-        points = points(logical(classifiedPoints-1),:);
-        visiblePoints = points;
-        oldPoints = points;
-        
-        xmin = round(min( visiblePoints(:,1))-5); ymax = round(max( visiblePoints(:,2)));
-        xmax = round(max(visiblePoints(:,1))); ymin = round(min( visiblePoints(:,2))-5);
-        
-        if (xmax-xmin)*(ymax-ymin)<3600 %max threshold for num pixels in bot
-            release(tracker);
-            initialize(tracker, points, videoFrame);
-            
-        else
-            visiblePoints = [];
-            oldPoints = [];
-        end
-        mode = 23; %mode = unable to track, do setPoints() again
-    end
+%     if size(visiblePoints, 1) >= 25 % need at least 25 points consistently
+%         
+%         % Reset the points, not necessary in this code
+%         % GS: Why reset points if you have 25+ visible points?
+%         %         oldPoints = visiblePoints;
+%         %         setPoints(tracker, oldPoints);
+%         mode = 21; %mode = tracking safely
+%     elseif size(visiblePoints, 1) >= 8 % atleast 8 points
+%         
+%         if xmin>0 && ymin>0 && scaleFactor*(xmax-xmin)+ xmin<c && scaleFactor*(ymax-ymin)+ ymin<r % if within image dimensions
+%             release(tracker);
+%             points = detectMinEigenFeatures(rgb2gray(videoFrame), 'ROI', captureFrame);
+%             points = points.Location;
+%             visiblePoints = points;
+%             oldPoints = points;
+%             initialize(tracker, points, videoFrame);
+%             mode = 22; %mode = tracking with difficulty
+%         end
+%         
+%     else
+%         
+%         points = detectMinEigenFeatures(rgb2gray(videoFrame));
+%         points = points.Location;
+%         [classifiedPoints,C] = kmeans(points,2,'distance','sqEuclidean','emptyaction','drop');
+%         points = points(logical(classifiedPoints-1),:);
+%         visiblePoints = points;
+%         oldPoints = points;
+%         
+%         xmin = round(min( visiblePoints(:,1))-5); ymax = round(max( visiblePoints(:,2)));
+%         xmax = round(max(visiblePoints(:,1))); ymin = round(min( visiblePoints(:,2))-5);
+%         
+%         if (xmax-xmin)*(ymax-ymin)<3600 %max threshold for num pixels in bot
+%             release(tracker);
+%             initialize(tracker, points, videoFrame);
+%             
+%         else
+%             visiblePoints = [];
+%             oldPoints = [];
+%         end
+%         mode = 23; %mode = unable to track, do setPoints() again
+%     end
     
     % Display tracked points
     if ~isempty(visiblePoints)
@@ -228,10 +245,12 @@ while ~isDone(videoFileReader)
     
     % Display the annotated video frame using the video player object
     step(videoPlayer, videoFrame);
-    step(videoWriter, videoFrame);
-    botData = [sum(isFound) botMean  isBotInFrame]; % Display num features and output for debugging
+    TimeStepPlayer(ii) = toc;
+%     step(videoWriter, videoFrame);
+%     botData = [sum(isFound) botMean  isBotInFrame]; % Display num features and output for debugging
 end
-toc
+% tend = tic;
+tLoop = etime(clock, tstart)
 
 %% Release system objects
 release(videoPlayer);
@@ -239,5 +258,21 @@ release(videoFileReader);
 release(videoWriter);
 
 mode = 30;
+botData = [0 0 0 0];
+Timing = struct('TimeStepReader', TimeStepReader, 'TimeStepTracker', (TimeStepTracker - TimeStepReader), 'TimeStepPlayer', (TimeStepPlayer - TimeStepTracker));
+% Temp = struct2cell(Timing);
+% Temp = [Temp{:}];
+figure
+plot(1:NFrame, Timing.TimeStepReader, 1:NFrame,Timing.TimeStepTracker,1:NFrame, Timing.TimeStepPlayer);
+title('Timing for Reader, Tracker, Player');
+legend('TimeStepReader', 'TimeStepTracker', 'TimeStepPlayer');
+
+figure
+plot(1:NFrame, Timing.TimeStepReader, 1:NFrame, (Timing.TimeStepReader + Timing.TimeStepTracker));
+legend('Reader', 'Reader + Tracker');
+title('Timing for Reader, Reader+Tracker');
+
+AvgComputationPerFrame = sum(Timing.TimeStepReader + Timing.TimeStepTracker)/NFrame
+ComputationFrameRate = 1/AvgComputationPerFrame
 
 end
