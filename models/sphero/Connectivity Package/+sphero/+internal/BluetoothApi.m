@@ -37,6 +37,7 @@ classdef BluetoothApi<sphero.internal.Communication
         Rev = '1_50'; %temporarily hard coded. 
         %Should be based on revision of API, as returned by Sphero
         
+        DeviceName
         Sequence = uint8(1);
         Handshake = 0;
         ApiInfo;
@@ -163,7 +164,13 @@ classdef BluetoothApi<sphero.internal.Communication
                     did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdBoost; dlen = '02';
                 case 'setrawmotors'
                     did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRawMotors; dlen = '05';
-                    
+                case 'setmotionto'
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetMotionTo; dlen = '03';
+                case 'setdevicemode'
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetDeviceMode; dlen = '02';
+                case 'getdevicemode'
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetDeviceMode; dlen = '01';
+                
                 otherwise
                     throw(err)
             end
@@ -191,7 +198,7 @@ classdef BluetoothApi<sphero.internal.Communication
                 'setmotionto', 'setoptionsflag', 'getoptionsflag', ...
                 'settempoptionsflag', 'gettempoptionsflag', ...
                 'getconfigblk', 'setssbparams', 'setdevicemode', ...
-                'getssb', 'setssb', 'ssbrefill', 'ssbbuy', ...
+                'getssb', 'getdevicemode', 'setssb', 'ssbrefill', 'ssbbuy', ...
                 'ssbuseconsumeable', 'ssbgrantcores', 'ssbaddxp', ...
                 'ssblevelupattr', 'getpwseed', 'ssbenableasync', ...
                 'runmacro', 'savetempmacro', 'savemacro', ...
@@ -218,6 +225,10 @@ classdef BluetoothApi<sphero.internal.Communication
                     data(1:2) = cmdToByte(obj, uint16(origdata(1)));
                     data(3) = uint8(origdata(2));
                      data(4:5) = cmdToByte(obj, uint16(origdata(3)));
+                case 'setpowertrips'
+                    origdata = cell2mat(varargin);
+                    data(1:2) = cmdToByte(obj, uint16(origdata(1)));
+                    data(3:4) = cmdToByte(obj, uint16(origdata(2)));
                 case 'setrgbled'
                     origdata = cell2mat(varargin);
                     data = uint8(origdata);
@@ -358,12 +369,15 @@ classdef BluetoothApi<sphero.internal.Communication
              end
         end
         
-        function cmd = cmdFromByte(obj, msb, lsb, varargin)
+        function cmd = cmdFromByte(obj, bytedata, varargin)
          %CMDFROMBYTE    Convert 2 byte data to uint16 data 
-            % CMDTOBYTE(H, MSB, LSB) converts the data represented by the 
-            %Most Significant Bit and Least Significant Bit to an uint16 variable. 
+            % CMDTOBYTE(H, BYTEDATA) converts the data represented by the 
+            % BYTEDATA vector (containing Most Significant Bit and Least 
+            % Significant Bit) to an uint16 variable. 
             % It checks whether the machine is big endian or little
             % endian, and arranges the data based on that
+            % CMDTOBYTE(H, BYTEDATA, DATATYPE) converts the BYTEDATA to 
+            % the desired DATATYPE
             if nargin>3
                 type = varargin{1};
             else
@@ -373,9 +387,9 @@ classdef BluetoothApi<sphero.internal.Communication
             [~,~,endian] = computer;
             
             if strcmp(endian, 'L')
-                   cmd = swapbytes(typecast([msb lsb], type));
+                   cmd = swapbytes(typecast(bytedata, type));
             else
-                   cmd = typecast([msb lsb], type);
+                   cmd = typecast(bytedata, type);
             end
         end
         
@@ -452,11 +466,46 @@ classdef BluetoothApi<sphero.internal.Communication
                        
                        recver       = data(1);
                        powerstate   = data(2);
-                       voltage      = cmdFromByte(obj, data(3), data(4), 'uint16');
-                       charges      = cmdFromByte(obj, data(5), data(6), 'uint16');
-                       timeawake    =  cmdFromByte(obj, data(7), data(8), 'uint16');
+                       voltage      = cmdFromByte(obj, data(3:4), 'uint16');
+                       charges      = cmdFromByte(obj, data(5:6), 'uint16');
+                       timeawake    =  cmdFromByte(obj, data(7:8), 'uint16');
                        
                        out = {recver powerstate voltage charges timeawake};
+                       
+                   end
+               case 'getpowertrips'
+                   if length(data)~=obj.ApiInfo.RspGetPowerTripsDlen-1
+                       result = 0;
+                       out = [];
+                   else
+                       result = 1;
+                       out(1) = cmdFromByte(obj, data(1:2), 'uint16');
+                       out(2) = cmdFromByte(obj, data(3:4), 'uint16');
+                   end
+               case 'runl2diags'
+                   if length(data)~=obj.ApiInfo.RspRunL2DiagsDlen-1
+                       result = 0;
+                       out = [];
+                   else
+                       result = 1;
+                       
+                       out{1} = cmdFromByte(obj, data(1:2), 'uint16');
+                       out{2} = cmdFromByte(obj, data(4:7), 'uint32');
+                       out{3} = cmdFromByte(obj, data(8:11), 'uint32');
+                       out{4} = cmdFromByte(obj, data(12:15), 'uint32');
+                       out{5} = cmdFromByte(obj, data(16:19), 'uint32');
+                       out{6} = cmdFromByte(obj, data(20:23), 'uint32');
+                       out{7} = cmdFromByte(obj, data(24:27), 'uint32');
+                       out{8} = cmdFromByte(obj, data(28:31), 'uint32');
+                       out{9} = cmdFromByte(obj, data(32:35), 'uint32');
+                       out{10} = data(36);
+%                        out{11} = cmdFromByte(obj, data(37:68), 'uint32');
+                       out{12} = cmdFromByte(obj, data(71:72), 'uint16');
+                       out{13} = cmdFromByte(obj, data(73:74), 'uint16');
+                       out{14} = cmdFromByte(obj, data(75:78), 'uint32');
+                       out{15} = cmdFromByte(obj, data(79:82), 'uint32');
+                       out{16} = cmdFromByte(obj, data(83:84), 'uint16');
+                       out{17} = cmdFromByte(obj, data(85:88), 'uint32');
                        
                    end
                case 'getrgbled'
@@ -495,7 +544,7 @@ classdef BluetoothApi<sphero.internal.Communication
                   
                   for i=1:size(data,1)
                       for j=1:size(data,2)/2
-                            sensordata.(obj.Sensors{j})(end+1) =  cmdFromByte(obj, data(i,2*j-1), data(i,2*j), 'int16');
+                            sensordata.(obj.Sensors{j})(end+1) =  cmdFromByte(obj, data(i,2*j-1:2*j), 'int16');
                       end
                   end
                   
@@ -513,17 +562,25 @@ classdef BluetoothApi<sphero.internal.Communication
                        out = [];
                    else
                        result = 1;
-                       xpos = cmdFromByte(obj, data(1), data(2), 'int16');
-                       ypos = cmdFromByte(obj, data(3), data(4), 'int16');
-                       xvel = cmdFromByte(obj, data(5), data(6), 'int16');
-                       yvel = cmdFromByte(obj, data(7), data(8), 'int16');
-                       sog = cmdFromByte(obj, data(9), data(10), 'uint16');
+                       xpos = cmdFromByte(obj, data(1:2), 'int16');
+                       ypos = cmdFromByte(obj, data(3:4), 'int16');
+                       xvel = cmdFromByte(obj, data(5:6), 'int16');
+                       yvel = cmdFromByte(obj, data(7:8), 'int16');
+                       sog = cmdFromByte(obj, data(9:10), 'uint16');
                        
                        out = {xpos ypos xvel yvel sog};
                        
-                    end
+                   end
                    
                    
+               case 'getdevicemode'
+                  if length(data)~= obj.ApiInfo.RspGetDeviceModeDlen-1
+                       result = 0;
+                       out = [];
+                   else
+                       result = 1;
+                       out = data;
+                  end
                    % Other cases for response
                 otherwise
                      if length(data)~= obj.ApiInfo.RspSimpleDlen-1
@@ -599,8 +656,13 @@ classdef BluetoothApi<sphero.internal.Communication
         
             
         function assembleResponse(obj)
+            %If error occurs on assembling asynchronous response, then 
+            % throw the error. If error occurs during synchronous response,
+            % set the response to NaN (ResponseError)
+            
            processing = 1;
                 
+           try
                 while processing
                     dlen = obj.Response(obj.ApiInfo.SpheroResponse.dlen);
                     responseEnd = obj.ApiInfo.SpheroResponse.dlen+dlen;
@@ -613,6 +675,7 @@ classdef BluetoothApi<sphero.internal.Communication
                         response = obj.Response(1:responseEnd);
                         processResponse(obj, response);
                         obj.Response(1:responseEnd) = [];
+                        
 %                         obj.BytesToRead
                         if length(obj.Response)<obj.ApiInfo.SpheroResponse.dlen
                             processing = 0;
@@ -622,6 +685,21 @@ classdef BluetoothApi<sphero.internal.Communication
                         processing = 0;
                     end
                 end
+          catch exception
+              flushinput(obj.Bt); 
+              obj.Response(1:responseEnd) = [];
+              
+              %%%%%%%%% Test if this works in reestablishing the
+              %%%%%%%%% BytesAvailbale function
+              obj.Bt.BytesAvailableFcnCount = 1;
+              obj.Bt.BytesAvailableFcnMode = 'byte';
+              obj.Bt.BytesAvailableFcn = @obj.readBytes;
+              %%%%%%%%%%%%  
+                
+%               throwAsCaller(exception)
+                rethrow(exception)
+            
+          end
                 
         end
         function readBytes(obj, eventSrc, eventData)
@@ -637,12 +715,16 @@ classdef BluetoothApi<sphero.internal.Communication
             lenRsp = length(obj.Response);
             numDlen = obj.ApiInfo.SpheroResponse.dlen;
             
+            avail = eventSrc.BytesAvailable %%% Remove after debugging
+            
             if (lenRsp<numDlen && lenRsp+eventSrc.BytesAvailable>=numDlen) || ...
                 (lenRsp>=numDlen && eventSrc.BytesAvailable>=obj.BytesToRead)
                 
                 bytesRead = eventSrc.BytesAvailable;
                 
                 obj.Response(end+1:end+bytesRead) = fread(eventSrc, bytesRead);
+                
+                obj.Response%%% Remove after debugging
                 
                 assembleResponse(obj);
             end
@@ -652,45 +734,53 @@ classdef BluetoothApi<sphero.internal.Communication
         
         function processResponse(obj, response)
             err = MException('checkValidityResponse:InvalidResponse',...
-               'Valid response not received');
+               'Received response is not valid');
            
            response
            
-            [valid, ack, data, code] = decodeResponse(obj, response);
-            
-            if ack==1
-                idx = indexOfResponseSequence(obj, code);
-            else
-                idx = code;
-            end
-            
-            
-            action = decodeAction(obj, ack, idx);
+%            try 
+                [valid, ack, data, code] = decodeResponse(obj, response);
 
-            if (~valid || strcmp(action , 'notfound'))
-                if ~isempty(idx)
-                    obj.SequenceList.response{idx(1)} = obj.ResponseError;
-                    return
+                if ack==1
+                    idx = indexOfResponseSequence(obj, code);
                 else
-                    error('Received response is not valid')
-                    
-                
+                    idx = code;
                 end
-            end
 
-            [result2, out] = decodeResponseData(obj, data, action);
-            
-            if result2 && ack
-                obj.SequenceList.response{idx(1)} = out;
-            elseif ack
-                obj.SequenceList.response{idx(1)} = obj.ResponseError;
-            elseif ~result2 %When response is asynchronous & result is 0
-                error('Received asynchronous response is invalid');
-            end
-            
-            
 
-        
+                action = decodeAction(obj, ack, idx);
+
+                if (~valid || strcmp(action , 'notfound'))
+                    if ack && ~isempty(idx)
+                        obj.SequenceList.response{idx(1)} = obj.ResponseError;
+                        return
+                    else
+                        throw(err);
+    %                     obj.Response(1:responseEnd) = [];
+    %                     error('Received response is not valid')
+
+
+                    end
+                end
+
+                [result2, out] = decodeResponseData(obj, data, action);
+
+                if result2 && ack
+                    obj.SequenceList.response{idx(1)} = out;
+                elseif ack
+                    obj.SequenceList.response{idx(1)} = obj.ResponseError;
+                elseif ~result2 %When response is asynchronous & result is 0
+                    throw(err)
+    %                 obj.Response(1:responseEnd) = [];
+    %                 error('Received asynchronous response is invalid');
+                end
+                
+%            catch exception
+%                obj.Response(1:responseEnd) = [];
+%                rethrow(exception)
+%             
+%            end
+%         
         end
         
         
@@ -801,6 +891,9 @@ classdef BluetoothApi<sphero.internal.Communication
         
         function response = readResponse(obj, responseexpected, seq, responseTimeout)
             % Read the response from the SequenceList structure
+            % If timeout occurs, then give error
+            % If timeout doesnt occur, but the received response is
+            % invalid, then return NaN(ResponseError)
             err = MException('readResponse:timeout', 'Response Timeout');
             
             if responseexpected
@@ -808,28 +901,47 @@ classdef BluetoothApi<sphero.internal.Communication
                 
                  t = cputime;
                  
-                while (isinf(obj.SequenceList.response{idx}))%&&~iscell(obj.SequenceList.response{idx})
-                    if cputime-t>responseTimeout
-                        throwAsCaller(err);
+                try  
+                    while ~iscell(obj.SequenceList.response{idx}) && any(isinf(obj.SequenceList.response{idx}(:)))
+                        if cputime-t>responseTimeout
+                            if ~isempty(idx)
+                                %Remove the action from the SequenceList
+                                obj.SequenceList.response{idx(1)} = [];
+                                obj.SequenceList.action{idx(1)} = [];
+                                obj.SequenceList.seq(idx(1)) = [];
+
+                                % remove empty arrays in cell arrays
+                                obj.SequenceList.action = obj.SequenceList.action(~cellfun(@isempty, obj.SequenceList.action));
+                                obj.SequenceList.response = obj.SequenceList.response(~cellfun(@isempty, obj.SequenceList.response));
+                            end
+
+                            throw(err);
+                        end
+
+                        idx = indexOfResponseSequence(obj, seq);
+                    end
+                
+                    if idx(1)<=length(obj.SequenceList.seq)
+                        response = obj.SequenceList.response{idx(1)};
+                        %Remove the action from the SequenceList
+
+                        obj.SequenceList.response{idx(1)} = [];
+                        obj.SequenceList.action{idx(1)} = [];
+                        obj.SequenceList.seq(idx(1)) = [];
+
+                        % remove empty arrays in cell arrays
+                        obj.SequenceList.action = obj.SequenceList.action(~cellfun(@isempty, obj.SequenceList.action));
+                        obj.SequenceList.response = obj.SequenceList.response(~cellfun(@isempty, obj.SequenceList.response));
+
+                    else
+                        response = obj.ResponseError;
                     end
                     
-                    idx = indexOfResponseSequence(obj, seq);
+                catch exception
+%                     throwAsCaller(exception);
+                     rethrow(exception);
                 end
-                
-                if idx(1)<=length(obj.SequenceList.seq)
-                    response = obj.SequenceList.response{idx(1)};
-
-                    obj.SequenceList.response{idx(1)} = [];
-                    obj.SequenceList.action{idx(1)} = [];
-                    obj.SequenceList.seq(idx(1)) = [];
                     
-                    % remove empty arrays in cell arrays
-                    obj.SequenceList.action = obj.SequenceList.action(~cellfun(@isempty, obj.SequenceList.action));
-                    obj.SequenceList.response = obj.SequenceList.response(~cellfun(@isempty, obj.SequenceList.response));
-                    
-                else
-                    response = obj.ResponseError;
-                end
             else
                 response = obj.ResponseEmpty;
             end
@@ -857,7 +969,7 @@ classdef BluetoothApi<sphero.internal.Communication
                     code  = response(obj.ApiInfo.SpheroResponse.idcode);
                     dlenmsb = response(obj.ApiInfo.SpheroResponse.dlenmsb);
                     dlenlsb = response(obj.ApiInfo.SpheroResponse.dlenlsb);
-                    dlen = cmdFromByte(obj, dlenmsb, dlenlsb);
+                    dlen = cmdFromByte(obj, [dlenmsb, dlenlsb]);
                     
                     mrsp = 0;
 %                     seq = 0;
@@ -913,7 +1025,7 @@ classdef BluetoothApi<sphero.internal.Communication
             
             [cmd, responseexpected, seq] = createCommand(obj, action, varargin{:});
             fwrite(obj.Bt, cmd);
-            cmd
+            cmd %%%Remove after debugging
             
         end
         
@@ -938,6 +1050,8 @@ classdef BluetoothApi<sphero.internal.Communication
                 end
 
                           
+            elseif ~isempty(obj.DeviceName)
+                devicename = obj.DeviceName;
             else
                devicename = obj.findDevices;
                 
@@ -958,6 +1072,7 @@ classdef BluetoothApi<sphero.internal.Communication
                 flushinput(obj.Bt);
                 flushoutput(obj.Bt); 
                 
+                obj.DeviceName = devicename;
 %                 result = ping(obj);
 %                 if ~result
 %                     error('Device:Invalild', ...
