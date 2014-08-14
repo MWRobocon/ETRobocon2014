@@ -35,7 +35,7 @@ points2 = points2.selectStrongest(NFeaturesToTrack);
 % tic
 [TimeReader, TimeTracker, MexMean1, MexMean2] = KLTTrackerParallel_mex(points.Location, points2.Location, videoFrame, NFrame);
 % toc
-
+TimeTracker = TimeTracker - TimeReader;
 % tic
 % [MLMean1, MLMean2] = KLTTrackerParallel(points.Location, points2.Location, videoFrame, NFrame);
 % toc
