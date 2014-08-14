@@ -20,8 +20,8 @@ switch command
         data = uint8(0);
         if length > 0
             fprintf('Reading Data\n');
+            length = 1; % Costrain length to 1 to prevent MLFcnBlk errors
             data = uint8(fread(b, length));
-            length = 1;
             fprintf('Done Reading Data\n');
         end
         varargout{1} = length;
