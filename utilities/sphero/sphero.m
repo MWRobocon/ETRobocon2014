@@ -32,6 +32,11 @@ classdef sphero<handle
 
     end
     
+     properties (Dependent=true, SetAccess = private)
+       Status
+
+    end
+    
     properties(Access = private, Constant)
         RateUnit = 0.784;
         RateMax = 400;
@@ -886,6 +891,10 @@ classdef sphero<handle
             handshaking = obj.Api.Handshake;
         end
           
+        function status = get.Status(obj)
+            status = obj.Api.Bt.status;
+        end
+        
         function set.BackLEDBrightness(obj, brightness)
             
             if brightness>0 && brightness<1
