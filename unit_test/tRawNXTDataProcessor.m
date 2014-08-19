@@ -28,7 +28,7 @@ classdef tRawNXTDataProcessor < matlab.unittest.TestCase
             p = comms.RawNXTDataProcessor(uint8(10));
             [~,dataLen] = p.process(uint8([1 0 6]),uint8(3));
             testCase.verifyEqual(dataLen,uint8(0),'Unexpected returned dataLen when processing mailbox only packet [1 0 6] in one-shot');
-            testCase.verifyEqual(p.state,comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE,...
+            testCase.verifyEqual(p.state,RawNXTDataProcessorState.PACKET_SIZE_BYTE,...
                                  'Data processor is in unexpected state after processing mailbox only packet [1 0 6] in one-shot');
         end
         

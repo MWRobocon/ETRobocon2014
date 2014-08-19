@@ -3,7 +3,7 @@
 
 classdef RawNXTDataProcessor < handle
     properties(SetAccess = private, GetAccess = public)
-        state = comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE;
+        state = RawNXTDataProcessorState.PACKET_SIZE_BYTE;
         dataBuffer;
         currentDataSize = uint8(0);
         currentDataBytesReceived = uint8(0);
@@ -22,13 +22,13 @@ classdef RawNXTDataProcessor < handle
             assert(actualLength <= uint8(numel(byteArray)));
             for k = 1:actualLength
                 switch(this.state)
-                    case comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE
+                    case RawNXTDataProcessorState.PACKET_SIZE_BYTE
                         this.processPacketSizeByte(byteArray(k));
-                    case comms.RawNXTDataProcessorState.SYNCHRO_BYTE
+                    case RawNXTDataProcessorState.SYNCHRO_BYTE
                         this.processSynchroByte(byteArray(k));
-                    case comms.RawNXTDataProcessorState.MAILBOX_BYTE
+                    case RawNXTDataProcessorState.MAILBOX_BYTE
                         this.processMailboxByte(byteArray(k));
-                    case comms.RawNXTDataProcessorState.PACKET_BYTES
+                    case RawNXTDataProcessorState.PACKET_BYTES
                         this.currentDataBytesReceived = this.currentDataBytesReceived + 1;
                         
                         if(this.currentDataBytesReceived <= uint8(numel(this.dataBuffer)))
@@ -53,14 +53,14 @@ classdef RawNXTDataProcessor < handle
                             else
                                 this.numOverruns = this.numOverruns + 1;
                             end
-                            this.state = comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE;
+                            this.state = RawNXTDataProcessorState.PACKET_SIZE_BYTE;
                         end
                 end
             end
         end
         
         function reset(this)
-            this.state = comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE;
+            this.state = RawNXTDataProcessorState.PACKET_SIZE_BYTE;
         end
     end
     
@@ -68,24 +68,24 @@ classdef RawNXTDataProcessor < handle
         function processPacketSizeByte(this,aByte)
             this.currentDataBytesReceived = uint8(0);
             this.currentDataSize = aByte - 1; % We will strip off the mailbox
-            this.state = comms.RawNXTDataProcessorState.SYNCHRO_BYTE;
+            this.state = RawNXTDataProcessorState.SYNCHRO_BYTE;
         end
         
         function processSynchroByte(this,aByte)
             if(aByte ~= uint8(0))
                 % If we didn't get the synchroByte assume we got the packetSizeByte
-                this.state = comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE;
+                this.state = RawNXTDataProcessorState.PACKET_SIZE_BYTE;
                 this.processPacketSizeByte(aByte);
             else
-                this.state = comms.RawNXTDataProcessorState.MAILBOX_BYTE;
+                this.state = RawNXTDataProcessorState.MAILBOX_BYTE;
             end
         end
         
         function processMailboxByte(this,~)
             if(this.currentDataSize == 0)
-                this.state = comms.RawNXTDataProcessorState.PACKET_SIZE_BYTE;
+                this.state = RawNXTDataProcessorState.PACKET_SIZE_BYTE;
             else
-                this.state = comms.RawNXTDataProcessorState.PACKET_BYTES;
+                this.state = RawNXTDataProcessorState.PACKET_BYTES;
             end
         end
     end
