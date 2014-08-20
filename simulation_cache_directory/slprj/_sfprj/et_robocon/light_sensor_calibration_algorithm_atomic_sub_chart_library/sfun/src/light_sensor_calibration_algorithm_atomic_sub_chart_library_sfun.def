@@ -1,0 +1,3 @@
+LIBRARY light_sensor_calibration_algorithm_atomic_sub_chart_library_sfun.lib
+EXPORTS
+mexFunction

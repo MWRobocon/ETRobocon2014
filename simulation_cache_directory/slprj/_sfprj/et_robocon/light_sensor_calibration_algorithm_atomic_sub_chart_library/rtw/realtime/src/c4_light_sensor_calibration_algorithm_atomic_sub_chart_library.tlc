@@ -1,0 +1,42 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   4 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "isStable"\
+      Description  "IsstableBool"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c4_light_sensor_calibration_algorithm_atomic_sub_chart_library"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_light_sensor_calibration_up"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "light_sensor_calibration_up"\
+    }\
+    ChartData {\
+      Name         "temporalCounter_i1"\
+      Description  "TemporalCounter"\
+      SFName       ""\
+      Path         ""\
+    }\
+  }
+  %return ChartDataElements
+%endfunction
