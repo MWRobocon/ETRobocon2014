@@ -201,7 +201,11 @@ typedef struct {
   uint8_T c6_tp_Balancing;
   uint8_T c6_tp_SeesawLogic;
   uint8_T c6_tp_MoveForwardSlowly;
+  uint8_T c6_tp_BridgeTest;
   uint8_T c6_tp_StationnaryBalance;
+  uint8_T c6_tp_Curvature;
+  uint8_T c6_tp_Slowdown;
+  uint8_T c6_tp_Const;
   uint8_T c6_tp_SpeedUp;
   uint8_T c6_tp_ConstantSpeed;
   uint8_T c6_tp_ApproachtoRamp_1;
@@ -212,6 +216,7 @@ typedef struct {
   uint8_T c6_is_see_saw_mode;
   uint8_T c6_is_SeesawLogic;
   uint8_T c6_is_active_SeesawLogic;
+  uint8_T c6_is_Curvature;
   uint8_T c6_is_active_After;
   real32_T c6_desired_tail;
   c6_struct_FjjrIT366yeIj3aqvn0HfE c6_balancerStates_Bus0;
@@ -220,7 +225,7 @@ typedef struct {
   real32_T c6_forwardPWM;
   real32_T c6_des_vel;
   real32_T c6_desired_phi;
-  uint16_T c6_temporalCounter_i1;
+  uint8_T c6_temporalCounter_i1;
   boolean_T c6_dataWrittenToVector[12];
   uint8_T c6_doSetSimStateSideEffects;
   const mxArray *c6_setSimStateSideEffectsInfo;
@@ -236,15 +241,15 @@ typedef struct {
   real32_T *c6_rawLight;
   c6_Light_Bus *c6_lightCalib;
   real32_T *c6_light;
+  c6_Balancer_States_Bus *c6_balancerStates;
+  real32_T *c6_desired_velocity;
+  real_T *c6_battery;
   real32_T *c6_cmd;
+  real32_T *c6_b_cmd;
   real32_T *c6_desiredLight;
   real32_T *c6_b_light;
   real32_T *c6_trackingPower;
-  real_T *c6_battery;
-  c6_Balancer_States_Bus *c6_balancerStates;
-  real32_T *c6_desired_velocity;
   real_T *c6_b_battery;
-  real32_T *c6_b_cmd;
 } SFc6_et_roboconInstanceStruct;
 
 #endif                                 /*typedef_SFc6_et_roboconInstanceStruct*/

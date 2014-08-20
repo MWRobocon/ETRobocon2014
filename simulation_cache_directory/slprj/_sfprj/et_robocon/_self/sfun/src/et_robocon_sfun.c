@@ -84,10 +84,10 @@ unsigned int sf_et_robocon_process_check_sum_call( int nlhs, mxArray * plhs[],
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(976161991U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1686708575U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(415628U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(978095519U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2060979339U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1636334390U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1606571439U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2217122078U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -135,10 +135,10 @@ unsigned int sf_et_robocon_process_check_sum_call( int nlhs, mxArray * plhs[],
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1647386483U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4139521397U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3356048331U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4001779880U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1162469625U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4292189939U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2819409408U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1051852617U);
   }
 
   return 1;
@@ -212,7 +212,7 @@ unsigned int sf_et_robocon_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 6:
       {
-        if (strcmp(aiChksum, "SaQnXqvDObwYY4bnXbwCuD") == 0) {
+        if (strcmp(aiChksum, "Vz0VZQKpDZe4btMgiOXEfB") == 0) {
           extern mxArray *sf_c6_et_robocon_get_autoinheritance_info(void);
           plhs[0] = sf_c6_et_robocon_get_autoinheritance_info();
           break;
@@ -365,7 +365,7 @@ unsigned int sf_et_robocon_third_party_uses_info( int nlhs, mxArray * plhs[],
 
      case 6:
       {
-        if (strcmp(tpChksum, "Mmef3oRwStMNcIyK81K6h") == 0) {
+        if (strcmp(tpChksum, "ElHEwzzKAkQAxqrzMzd4iB") == 0) {
           extern mxArray *sf_c6_et_robocon_third_party_uses_info(void);
           plhs[0] = sf_c6_et_robocon_third_party_uses_info();
           break;
@@ -429,7 +429,7 @@ unsigned int sf_et_robocon_jit_fallback_info( int nlhs, mxArray * plhs[], int
 
      case 6:
       {
-        if (strcmp(tpChksum, "Mmef3oRwStMNcIyK81K6h") == 0) {
+        if (strcmp(tpChksum, "ElHEwzzKAkQAxqrzMzd4iB") == 0) {
           extern mxArray *sf_c6_et_robocon_jit_fallback_info(void);
           plhs[0] = sf_c6_et_robocon_jit_fallback_info();
           break;
@@ -493,7 +493,7 @@ unsigned int sf_et_robocon_updateBuildInfo_args_info( int nlhs, mxArray * plhs[]
 
      case 6:
       {
-        if (strcmp(tpChksum, "Mmef3oRwStMNcIyK81K6h") == 0) {
+        if (strcmp(tpChksum, "ElHEwzzKAkQAxqrzMzd4iB") == 0) {
           extern mxArray *sf_c6_et_robocon_updateBuildInfo_args_info(void);
           plhs[0] = sf_c6_et_robocon_updateBuildInfo_args_info();
           break;
@@ -548,7 +548,7 @@ void sf_et_robocon_get_post_codegen_info( int nlhs, mxArray * plhs[], int nrhs,
 
    case 6:
     {
-      if (strcmp(tpChksum, "Mmef3oRwStMNcIyK81K6h") == 0) {
+      if (strcmp(tpChksum, "ElHEwzzKAkQAxqrzMzd4iB") == 0) {
         extern mxArray *sf_c6_et_robocon_get_post_codegen_info(void);
         plhs[0] = sf_c6_et_robocon_get_post_codegen_info();
         return;
