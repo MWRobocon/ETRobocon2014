@@ -8,12 +8,15 @@
 % vid.Resolution = '960x720';
 % vid = videoinput('winvideo', 1, 'RGB24_176x144');
 vid = imaq.VideoDevice('winvideo', 1);
-vid.VideoFormat = 'MJPG_1280x720';
+% vid.VideoFormat = 'MJPG_1280x720';
+vid.VideoFormat = 'MJPG_640x480';
 % vid = getselectedsource(vid);
 % vid.FramesPerTrigger = 1;
 videoPlayer = vision.VideoPlayer();
 videoWriter = vision.VideoFileWriter('media/MarioLiveFeedT.mp4', 'FileFormat', 'MPEG4');
-
+% load('MSLifeCamParams.mat');
+load('logitechCameraParams.mat');
+magnification = 25;
 NFeaturesToTrack = 50; % Track strongest N features
 NFrame = 800; % Number of frames
 % numFramesToSkip = 0; % Skip first few frames
@@ -32,9 +35,9 @@ pause;
 videoFrame = step(vid);
 r = size(videoFrame,1);
 c = size(videoFrame,2);
-[CalibratedImage, MingTForm] = imageCalibration(videoFrame);
-warpedImage = imwarp(videoFrame, MingTForm);
-figure; imshow(warpedImage);
+% [CalibratedImage, MingTForm] = imageCalibration(videoFrame);
+% warpedImage = imwarp(videoFrame, MingTForm);
+% figure; imshow(warpedImage);
 % Get objectRegion from features and ROI of template (for Option 2)
 sceneImage = rgb2gray(videoFrame);
 % boxImage = rgb2gray(template);
@@ -76,6 +79,19 @@ initialize(tracker, points.Location, videoFrame);
 
 mode = 20; % mode = initializing
 
+%% Get undistorted image
+[im, newOrigin] = undistortImage(videoFrame, cameraParams, 'OutputView', 'full');
+figure; imshow(im, 'InitialMagnification', magnification);
+title('Undistorted Image');
+
+% Compute extrinsics
+% Both imagePoints and boardSize don't change if the checkerboard stays
+% where it is during the video
+[imagePoints, boardSize] = detectCheckerboardPoints(im);
+
+% Compute rotation and translation of the camera.
+[R, t] = extrinsics(imagePoints, cameraParams.WorldPoints, cameraParams);
+
 %% Track (and re-detect if necessary) for the whole video
 disp('Press any key to start tic-toc');
 pause;
@@ -111,13 +127,18 @@ videoFrame = step(vid);
             'Color', 'green', 'Size', 5);
     end
 %     
+
     botMean = mean(visiblePoints); % Mean of all visible features
-    TBotMean = transformPointsForward(MingTForm, botMean);
+%     TBotMean = transformPointsForward(MingTForm, botMean);
+
+    % Get the world coordinates of the centroid
+    worldCentroid = pointsToWorld(cameraParams, R, t, botMean);
+    
     position =  [50 50]; % [x y]
-    videoFrame = insertText(videoFrame, position, int2str(TBotMean)); 
-% 
+    videoFrame = insertText(videoFrame, position, int2str(worldCentroid));
+ 
     % Show the points on the output video
-    videoFrame = insertMarker(videoFrame, TBotMean , 'x', 'Color', 'red', 'Size', 5);
+    videoFrame = insertMarker(videoFrame, botMean , 'x', 'Color', 'red', 'Size', 5);
 %     videoFrame = insertMarker(videoFrame, botMean2 , 'x', 'Color', 'red', 'Size', 5);
 %     
 %     % Display the annotated video frame using the video player object
@@ -125,6 +146,19 @@ videoFrame = step(vid);
 % step(videoWriter, videoFrame);
     TimePlayer(ii) = toc;
 %     step(videoWriter, videoFrame);
+
+% img = step(vid);
+% imshow(img)
+temp = rgb2hsv(videoFrame);
+saturation = temp(:,:,2);
+thresh = graythresh(saturation);
+filtered = (saturation > thresh);
+% imshow(filtered);
+blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
+'CentroidOutputPort', true,...
+'BoundingBoxOutputPort', true,...
+'MinimumBlobArea', 200);
+[areas, boxes] = step(blobAnalysis, filtered);
 
 end
 % tend = toc;
