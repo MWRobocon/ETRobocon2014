@@ -50,16 +50,16 @@
       Path         "see_saw_mode.Balancing.SeesawLogic.Curvature"\
     }\
     ChartData {\
-      Name         "is_active_After"\
-      Description  "StateIsActive"\
-      SFName       ""\
-      Path         "see_saw_mode.Balancing.After"\
-    }\
-    ChartData {\
       Name         "is_Ramp"\
       Description  "StateActiveChild"\
       SFName       ""\
       Path         "see_saw_mode.Balancing.SeesawLogic.Ramp"\
+    }\
+    ChartData {\
+      Name         "is_active_After"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.After"\
     }\
     ChartData {\
       Name         "desired_tail"\
@@ -92,10 +92,10 @@
       Path         "desired_phi"\
     }\
     ChartData {\
-      Name         "desiredangle"\
+      Name         "storedphi"\
       Description  "ChartLocal"\
       SFName       ""\
-      Path         "desiredangle"\
+      Path         "storedphi"\
     }\
     ChartData {\
       Name         "temporalCounter_i1"\

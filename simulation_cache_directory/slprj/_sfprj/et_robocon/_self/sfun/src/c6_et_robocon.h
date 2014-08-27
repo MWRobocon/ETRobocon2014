@@ -207,14 +207,13 @@ typedef struct {
   uint8_T c6_tp_Const;
   uint8_T c6_tp_SpeedUp;
   uint8_T c6_tp_ConstantSpeed;
-  uint8_T c6_tp_After;
   uint8_T c6_tp_Ramp;
   uint8_T c6_tp_RampUpOne;
   uint8_T c6_tp_BridgeTest;
   uint8_T c6_tp_RampUpTwo;
-  uint8_T c6_tp_RotateInPlace;
   uint8_T c6_tp_SlowtoRotate;
   uint8_T c6_tp_Stop;
+  uint8_T c6_tp_After;
   boolean_T c6_isStable;
   uint8_T c6_is_active_c6_et_robocon;
   uint8_T c6_is_c6_et_robocon;
@@ -222,8 +221,8 @@ typedef struct {
   uint8_T c6_is_SeesawLogic;
   uint8_T c6_is_active_SeesawLogic;
   uint8_T c6_is_Curvature;
-  uint8_T c6_is_active_After;
   uint8_T c6_is_Ramp;
+  uint8_T c6_is_active_After;
   real32_T c6_desired_tail;
   c6_struct_FjjrIT366yeIj3aqvn0HfE c6_balancerStates_Bus0;
   real32_T c6_turningPWM;
@@ -231,9 +230,10 @@ typedef struct {
   real32_T c6_forwardPWM;
   real32_T c6_des_vel;
   real32_T c6_desired_phi;
-  real32_T c6_desiredangle;
+  real_T c6_desiredangle;
+  real32_T c6_storedphi;
   uint16_T c6_temporalCounter_i1;
-  boolean_T c6_dataWrittenToVector[13];
+  boolean_T c6_dataWrittenToVector[14];
   uint8_T c6_doSetSimStateSideEffects;
   const mxArray *c6_setSimStateSideEffectsInfo;
   c6_OperationModeStatusEnum *c6_current_task_operation_status_address;

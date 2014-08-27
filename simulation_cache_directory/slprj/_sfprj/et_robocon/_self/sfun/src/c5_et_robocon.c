@@ -933,11 +933,11 @@ static void c5_c5_et_robocon(SFc5_et_roboconInstanceStruct *chartInstance)
                               chartInstance->
                               c5_TRACK_MODE_LIST[_SFD_ARRAY_BOUNDS_CHECK(1U,
             (uint8_T)_SFD_EML_ARRAY_BOUNDS_CHECK(
-            "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-            "                                               ^^^^^^^^^^^^^^^",
-            (int32_T)(uint8_T)_SFD_INTEGER_CHECK(
-            "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-            "                                                                ^^^^^^^^^^^^^^^^^^",
+            "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+            "                                       ^^^^^^^^^^^^^^^", (int32_T)
+            (uint8_T)_SFD_INTEGER_CHECK(
+            "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+            "                                                        ^^^^^^^^^^^^^^^^^^",
                                  (real_T)chartInstance->c5_current_mode_index),
             1, 3, 1, 0) - 1, 0, 2, 1, 0)]);
           ssUpdateDataStoreLog(chartInstance->S, 0);
@@ -1055,11 +1055,11 @@ static void c5_c5_et_robocon(SFc5_et_roboconInstanceStruct *chartInstance)
                                 chartInstance->
                                 c5_TRACK_MODE_LIST[_SFD_ARRAY_BOUNDS_CHECK(1U,
               (uint8_T)_SFD_EML_ARRAY_BOUNDS_CHECK(
-              "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-              "                                               ^^^^^^^^^^^^^^^",
-                                  (int32_T)(uint8_T)_SFD_INTEGER_CHECK(
-              "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-              "                                                                ^^^^^^^^^^^^^^^^^^",
+              "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+              "                                       ^^^^^^^^^^^^^^^", (int32_T)
+                                  (uint8_T)_SFD_INTEGER_CHECK(
+              "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+              "                                                        ^^^^^^^^^^^^^^^^^^",
                                    (real_T)chartInstance->c5_current_mode_index),
               1, 3, 1, 0) - 1, 0, 2, 1, 0)]);
             ssUpdateDataStoreLog(chartInstance->S, 0);
@@ -1405,11 +1405,11 @@ static void c5_normal_operation_modes(SFc5_et_roboconInstanceStruct
                                 chartInstance->
                                 c5_TRACK_MODE_LIST[_SFD_ARRAY_BOUNDS_CHECK(1U,
               (uint8_T)_SFD_EML_ARRAY_BOUNDS_CHECK(
-              "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-              "                                               ^^^^^^^^^^^^^^^",
-                                  (int32_T)(uint8_T)_SFD_INTEGER_CHECK(
-              "Transition #1062 in Chart \'Main Controller\' (#1012): current_mode = TRACK_MODE_LIST( current_mode_index );\n                     "
-              "                                                                ^^^^^^^^^^^^^^^^^^",
+              "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+              "                                       ^^^^^^^^^^^^^^^", (int32_T)
+                                  (uint8_T)_SFD_INTEGER_CHECK(
+              "Transition #97 in Chart \'Main Controller\' (#47): current_mode = TRACK_MODE_LIST( current_mode_index );\n                         "
+              "                                                        ^^^^^^^^^^^^^^^^^^",
                                    (real_T)chartInstance->c5_current_mode_index),
               1, 3, 1, 0) - 1, 0, 2, 1, 0)]);
             ssUpdateDataStoreLog(chartInstance->S, 0);
@@ -1735,7 +1735,7 @@ static void c5_info_helper(const mxArray **c5_info)
   sf_mex_addfield(*c5_info, c5_emlrt_marshallOut(
     "[N]C:/ETRobocon2014/Repository/data_types/enumerations/OperationModeStatusEnum.m"),
                   "resolved", "resolved", 0);
-  sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(1408487734U), "fileTimeLo",
+  sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(1409161942U), "fileTimeLo",
                   "fileTimeLo", 0);
   sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(0U), "fileTimeHi",
                   "fileTimeHi", 0);
@@ -1755,7 +1755,7 @@ static void c5_info_helper(const mxArray **c5_info)
   sf_mex_addfield(*c5_info, c5_emlrt_marshallOut(
     "[N]C:/ETRobocon2014/Repository/data_types/enumerations/OperationModeEnum.m"),
                   "resolved", "resolved", 1);
-  sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(1408487734U), "fileTimeLo",
+  sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(1409161942U), "fileTimeLo",
                   "fileTimeLo", 1);
   sf_mex_addfield(*c5_info, c5_b_emlrt_marshallOut(0U), "fileTimeHi",
                   "fileTimeHi", 1);
@@ -3493,30 +3493,24 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_CV_INIT_EML(0,0,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(1,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(1,0,0,1,53,1,48);
-        _SFD_CV_INIT_EML_RELATIONAL(1,0,0,3,53,-4,0);
         _SFD_CV_INIT_EML(24,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(24,0,0,1,56,1,48);
-        _SFD_CV_INIT_EML_RELATIONAL(24,0,0,2,56,-4,0);
         _SFD_CV_INIT_EML(26,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(26,0,0,1,49,1,48);
-        _SFD_CV_INIT_EML_RELATIONAL(26,0,0,2,49,-4,0);
         _SFD_CV_INIT_EML(5,0,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(8,0,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(10,0,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(11,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(11,0,0,1,71,1,48);
-        _SFD_CV_INIT_EML_RELATIONAL(11,0,0,2,71,-4,0);
         _SFD_CV_INIT_EML(21,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(21,0,0,1,19,1,19);
         _SFD_CV_INIT_EML(13,0,0,0,0,1,0,0,0,0,0);
         _SFD_CV_INIT_EML_SATURATION(13,0,0,23,-1,54);
         _SFD_CV_INIT_EML(15,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(15,0,0,1,47,1,47);
-        _SFD_CV_INIT_EML_RELATIONAL(15,0,0,2,47,-4,2);
         _SFD_CV_INIT_EML(17,0,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(19,0,0,1,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML_IF(19,0,0,1,41,1,41);
-        _SFD_CV_INIT_EML_RELATIONAL(19,0,0,3,41,-4,0);
         _SFD_SET_DATA_COMPILED_PROPS(0,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c5_PWM_bus_io,(MexInFcnForType)NULL);
 
@@ -3717,10 +3711,10 @@ static void mdlSetWorkWidths_c5_et_robocon(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2825619504U));
-  ssSetChecksum1(S,(3745687586U));
-  ssSetChecksum2(S,(176530941U));
-  ssSetChecksum3(S,(3550045060U));
+  ssSetChecksum0(S,(2542479347U));
+  ssSetChecksum1(S,(2115419639U));
+  ssSetChecksum2(S,(2943782012U));
+  ssSetChecksum3(S,(1333649323U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,0);

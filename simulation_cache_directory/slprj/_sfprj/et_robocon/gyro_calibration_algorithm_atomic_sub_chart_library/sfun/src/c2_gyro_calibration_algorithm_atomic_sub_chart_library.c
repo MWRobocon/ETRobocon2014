@@ -1631,7 +1631,7 @@ static void c2_info_helper(const mxArray **c2_info)
   sf_mex_addfield(*c2_info, c2_emlrt_marshallOut(
     "[N]C:/ETRobocon2014/Repository/data_types/enumerations/OperationModeStatusEnum.m"),
                   "resolved", "resolved", 0);
-  sf_mex_addfield(*c2_info, c2_b_emlrt_marshallOut(1408487734U), "fileTimeLo",
+  sf_mex_addfield(*c2_info, c2_b_emlrt_marshallOut(1409161942U), "fileTimeLo",
                   "fileTimeLo", 0);
   sf_mex_addfield(*c2_info, c2_b_emlrt_marshallOut(0U), "fileTimeHi",
                   "fileTimeHi", 0);
@@ -2671,13 +2671,13 @@ mxArray*
 
   {
     mxArray* mxExportedFunctionsChecksum = mxCreateString(
-      "7R35hr5DxLdBbGMc7cfAiC");
+      "lSGNVT3cA4W1threRTXalC");
     mwSize exp_dims[2] = { 3, 1 };
 
     mxArray* mxExportedFunctionsUsedByThisChart = mxCreateCellArray(2, exp_dims);
 
     {
-      mxArray* mxFcnName = mxCreateString("tail_controller");
+      mxArray* mxFcnName = mxCreateString("Speak");
       mxSetCell(mxExportedFunctionsUsedByThisChart, 0, mxFcnName);
     }
 
@@ -2687,7 +2687,7 @@ mxArray*
     }
 
     {
-      mxArray* mxFcnName = mxCreateString("Speak");
+      mxArray* mxFcnName = mxCreateString("tail_controller");
       mxSetCell(mxExportedFunctionsUsedByThisChart, 2, mxFcnName);
     }
 
@@ -3075,10 +3075,10 @@ static void
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(938333328U));
-  ssSetChecksum1(S,(1255664962U));
-  ssSetChecksum2(S,(1491479684U));
-  ssSetChecksum3(S,(3294472213U));
+  ssSetChecksum0(S,(4234616315U));
+  ssSetChecksum1(S,(4036705158U));
+  ssSetChecksum2(S,(820742801U));
+  ssSetChecksum3(S,(3009862445U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,0);
