@@ -1,6 +1,6 @@
 function [calibratedImg, tform] = imageCalibration (distorted,original)
 load captured_signs_more1.mat;
-original  = rgb2gray(imread('roadsigns50pc.png'));
+original  = rgb2gray(imread('media/roadsigns50pc.png'));
 
 imshow(original); 
 title('Base image');
