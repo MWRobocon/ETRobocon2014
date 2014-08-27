@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   12 \
+    NumChartData   15 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -56,6 +56,12 @@
       Path         "see_saw_mode.Balancing.After"\
     }\
     ChartData {\
+      Name         "is_Ramp"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.SeesawLogic.Ramp"\
+    }\
+    ChartData {\
       Name         "desired_tail"\
       Description  "ChartLocal"\
       SFName       ""\
@@ -68,6 +74,12 @@
       Path         "turningPWM"\
     }\
     ChartData {\
+      Name         "normalizedLight"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "normalizedLight"\
+    }\
+    ChartData {\
       Name         "des_vel"\
       Description  "ChartLocal"\
       SFName       ""\
@@ -78,6 +90,12 @@
       Description  "ChartLocal"\
       SFName       ""\
       Path         "desired_phi"\
+    }\
+    ChartData {\
+      Name         "desiredangle"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "desiredangle"\
     }\
     ChartData {\
       Name         "temporalCounter_i1"\

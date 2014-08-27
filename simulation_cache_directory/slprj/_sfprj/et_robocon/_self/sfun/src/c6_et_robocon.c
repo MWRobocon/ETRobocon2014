@@ -18,15 +18,20 @@
 #define c6_IN_Balancing                ((uint8_T)1U)
 #define c6_IN_StandUp                  ((uint8_T)2U)
 #define c6_IN_Waiting                  ((uint8_T)3U)
-#define c6_IN_ApproachtoRamp_1         ((uint8_T)1U)
-#define c6_IN_BridgeTest               ((uint8_T)2U)
-#define c6_IN_ConstantSpeed            ((uint8_T)3U)
-#define c6_IN_Curvature                ((uint8_T)4U)
-#define c6_IN_MoveForwardSlowly        ((uint8_T)5U)
-#define c6_IN_SpeedUp                  ((uint8_T)6U)
-#define c6_IN_StationnaryBalance       ((uint8_T)7U)
+#define c6_IN_ConstantSpeed            ((uint8_T)1U)
+#define c6_IN_Curvature                ((uint8_T)2U)
+#define c6_IN_MoveForwardSlowly        ((uint8_T)3U)
+#define c6_IN_Ramp                     ((uint8_T)4U)
+#define c6_IN_SpeedUp                  ((uint8_T)5U)
+#define c6_IN_StationnaryBalance       ((uint8_T)6U)
 #define c6_IN_Const                    ((uint8_T)1U)
 #define c6_IN_Slowdown                 ((uint8_T)2U)
+#define c6_IN_BridgeTest               ((uint8_T)1U)
+#define c6_IN_RampUpOne                ((uint8_T)2U)
+#define c6_IN_RampUpTwo                ((uint8_T)3U)
+#define c6_IN_RotateInPlace            ((uint8_T)4U)
+#define c6_IN_SlowtoRotate             ((uint8_T)5U)
+#define c6_IN_Stop                     ((uint8_T)6U)
 
 /* Variable Declarations */
 
@@ -72,29 +77,21 @@ static const char * c6_s_debug_family_names[2] = { "nargin", "nargout" };
 
 static const char * c6_t_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_u_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_u_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_v_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_v_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_w_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_w_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_x_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_x_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_y_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_y_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_ab_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_ab_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_bb_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_bb_debug_family_names[2] = { "nargin", "nargout" };
 
-static const char * c6_cb_debug_family_names[3] = { "nargin", "nargout",
-  "sf_internal_predicateOutput" };
+static const char * c6_cb_debug_family_names[2] = { "nargin", "nargout" };
 
 static const char * c6_db_debug_family_names[3] = { "nargin", "nargout",
   "sf_internal_predicateOutput" };
@@ -124,6 +121,54 @@ static const char * c6_lb_debug_family_names[3] = { "nargin", "nargout",
   "sf_internal_predicateOutput" };
 
 static const char * c6_mb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_nb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_ob_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_pb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_qb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_rb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_sb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_tb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_ub_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_vb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_wb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_xb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_yb_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_ac_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_bc_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_cc_debug_family_names[3] = { "nargin", "nargout",
+  "sf_internal_predicateOutput" };
+
+static const char * c6_dc_debug_family_names[3] = { "nargin", "nargout",
   "sf_internal_predicateOutput" };
 
 /* Function Declarations */
@@ -172,13 +217,13 @@ static void initSimStructsc6_et_robocon(SFc6_et_roboconInstanceStruct
   *chartInstance);
 static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance);
 static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance);
-static void c6_MoveForwardSlowly(SFc6_et_roboconInstanceStruct *chartInstance);
-static void c6_StationnaryBalance(SFc6_et_roboconInstanceStruct *chartInstance);
 static void c6_exit_atomic_StationnaryBalance(SFc6_et_roboconInstanceStruct
   *chartInstance);
 static void c6_exit_internal_Curvature(SFc6_et_roboconInstanceStruct
   *chartInstance);
 static void c6_SpeedUp(SFc6_et_roboconInstanceStruct *chartInstance);
+static void c6_Ramp(SFc6_et_roboconInstanceStruct *chartInstance);
+static void c6_SlowtoRotate(SFc6_et_roboconInstanceStruct *chartInstance);
 static void init_script_number_translation(uint32_T c6_machineNumber, uint32_T
   c6_chartNumber, uint32_T c6_instanceNumber);
 static const mxArray *c6_sf_marshallOut(void *chartInstanceVoid, void *c6_inData);
@@ -275,15 +320,20 @@ static c6_Balancer_States_Bus c6_o_emlrt_marshallIn
    emlrtMsgIdentifier *c6_parentId);
 static void c6_k_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c6_mxArrayInData, const char_T *c6_varName, void *c6_outData);
-static void c6_p_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
+static uint16_T c6_p_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+  *chartInstance, const mxArray *c6_b_temporalCounter_i1, const char_T
+  *c6_identifier);
+static uint16_T c6_q_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+  *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId);
+static void c6_r_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
   const mxArray *c6_b_dataWrittenToVector, const char_T *c6_identifier,
-  boolean_T c6_y[12]);
-static void c6_q_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
-  const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId, boolean_T c6_y[12]);
-static const mxArray *c6_r_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+  boolean_T c6_y[13]);
+static void c6_s_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
+  const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId, boolean_T c6_y[13]);
+static const mxArray *c6_t_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_b_setSimStateSideEffectsInfo, const char_T
   *c6_identifier);
-static const mxArray *c6_s_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+static const mxArray *c6_u_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId);
 static void c6_updateDataWrittenToVector(SFc6_et_roboconInstanceStruct
   *chartInstance, uint32_T c6_vectorIndex);
@@ -371,15 +421,15 @@ static void c6_update_debugger_state_c6_et_robocon(SFc6_et_roboconInstanceStruct
   }
 
   if (chartInstance->c6_is_see_saw_mode == c6_IN_Waiting) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 19U, chartInstance->c6_sfEvent);
   } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 19U, chartInstance->c6_sfEvent);
   }
 
   if (chartInstance->c6_is_see_saw_mode == c6_IN_StandUp) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 18U, chartInstance->c6_sfEvent);
   } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 18U, chartInstance->c6_sfEvent);
   }
 
   if (chartInstance->c6_is_see_saw_mode == c6_IN_Balancing) {
@@ -395,54 +445,42 @@ static void c6_update_debugger_state_c6_et_robocon(SFc6_et_roboconInstanceStruct
   }
 
   if (chartInstance->c6_is_SeesawLogic == c6_IN_MoveForwardSlowly) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
-  }
-
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_BridgeTest) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
-  }
-
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_StationnaryBalance) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
-  }
-
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_Curvature) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
-  }
-
-  if (chartInstance->c6_is_Curvature == c6_IN_Slowdown) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
-  }
-
-  if (chartInstance->c6_is_Curvature == c6_IN_Const) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
   }
 
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_SpeedUp) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+  if (chartInstance->c6_is_SeesawLogic == c6_IN_StationnaryBalance) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
   } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
   }
 
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_ConstantSpeed) {
+  if (chartInstance->c6_is_SeesawLogic == c6_IN_Curvature) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Curvature == c6_IN_Slowdown) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Curvature == c6_IN_Const) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
   }
 
-  if (chartInstance->c6_is_SeesawLogic == c6_IN_ApproachtoRamp_1) {
+  if (chartInstance->c6_is_SeesawLogic == c6_IN_SpeedUp) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_SeesawLogic == c6_IN_ConstantSpeed) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
@@ -452,6 +490,48 @@ static void c6_update_debugger_state_c6_et_robocon(SFc6_et_roboconInstanceStruct
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_SeesawLogic == c6_IN_Ramp) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_RampUpOne) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_BridgeTest) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_RampUpTwo) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_RotateInPlace) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_SlowtoRotate) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+  }
+
+  if (chartInstance->c6_is_Ramp == c6_IN_Stop) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
   }
 
   _SFD_SET_ANIMATION(c6_prevAniVal);
@@ -503,8 +583,8 @@ static const mxArray *get_sim_state_c6_et_robocon(SFc6_et_roboconInstanceStruct 
   real32_T c6_g_hoistedGlobal;
   real32_T c6_o_u;
   const mxArray *c6_r_y = NULL;
-  uint8_T c6_h_hoistedGlobal;
-  uint8_T c6_p_u;
+  real32_T c6_h_hoistedGlobal;
+  real32_T c6_p_u;
   const mxArray *c6_s_y = NULL;
   uint8_T c6_i_hoistedGlobal;
   uint8_T c6_q_u;
@@ -527,13 +607,19 @@ static const mxArray *get_sim_state_c6_et_robocon(SFc6_et_roboconInstanceStruct 
   uint8_T c6_o_hoistedGlobal;
   uint8_T c6_w_u;
   const mxArray *c6_ab_y = NULL;
-  int32_T c6_i0;
-  boolean_T c6_x_u[12];
+  uint8_T c6_p_hoistedGlobal;
+  uint8_T c6_x_u;
   const mxArray *c6_bb_y = NULL;
+  uint16_T c6_q_hoistedGlobal;
+  uint16_T c6_y_u;
+  const mxArray *c6_cb_y = NULL;
+  int32_T c6_i0;
+  boolean_T c6_ab_u[13];
+  const mxArray *c6_db_y = NULL;
   c6_st = NULL;
   c6_st = NULL;
   c6_y = NULL;
-  sf_mex_assign(&c6_y, sf_mex_createcellmatrix(18, 1), false);
+  sf_mex_assign(&c6_y, sf_mex_createcellmatrix(20, 1), false);
   c6_hoistedGlobal = *chartInstance->c6_BT_status_out;
   c6_u = c6_hoistedGlobal;
   c6_b_y = NULL;
@@ -592,69 +678,79 @@ static const mxArray *get_sim_state_c6_et_robocon(SFc6_et_roboconInstanceStruct 
   c6_o_y = NULL;
   sf_mex_assign(&c6_o_y, sf_mex_create("y", &c6_l_u, 1, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 5, c6_o_y);
-  c6_e_hoistedGlobal = chartInstance->c6_forwardPWM;
+  c6_e_hoistedGlobal = chartInstance->c6_desiredangle;
   c6_m_u = c6_e_hoistedGlobal;
   c6_p_y = NULL;
   sf_mex_assign(&c6_p_y, sf_mex_create("y", &c6_m_u, 1, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 6, c6_p_y);
-  c6_f_hoistedGlobal = chartInstance->c6_normalizedLight;
+  c6_f_hoistedGlobal = chartInstance->c6_forwardPWM;
   c6_n_u = c6_f_hoistedGlobal;
   c6_q_y = NULL;
   sf_mex_assign(&c6_q_y, sf_mex_create("y", &c6_n_u, 1, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 7, c6_q_y);
-  c6_g_hoistedGlobal = chartInstance->c6_turningPWM;
+  c6_g_hoistedGlobal = chartInstance->c6_normalizedLight;
   c6_o_u = c6_g_hoistedGlobal;
   c6_r_y = NULL;
   sf_mex_assign(&c6_r_y, sf_mex_create("y", &c6_o_u, 1, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 8, c6_r_y);
-  c6_h_hoistedGlobal = chartInstance->c6_is_active_c6_et_robocon;
+  c6_h_hoistedGlobal = chartInstance->c6_turningPWM;
   c6_p_u = c6_h_hoistedGlobal;
   c6_s_y = NULL;
-  sf_mex_assign(&c6_s_y, sf_mex_create("y", &c6_p_u, 3, 0U, 0U, 0U, 0), false);
+  sf_mex_assign(&c6_s_y, sf_mex_create("y", &c6_p_u, 1, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 9, c6_s_y);
-  c6_i_hoistedGlobal = chartInstance->c6_is_active_After;
+  c6_i_hoistedGlobal = chartInstance->c6_is_active_c6_et_robocon;
   c6_q_u = c6_i_hoistedGlobal;
   c6_t_y = NULL;
   sf_mex_assign(&c6_t_y, sf_mex_create("y", &c6_q_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 10, c6_t_y);
-  c6_j_hoistedGlobal = chartInstance->c6_is_active_SeesawLogic;
+  c6_j_hoistedGlobal = chartInstance->c6_is_active_After;
   c6_r_u = c6_j_hoistedGlobal;
   c6_u_y = NULL;
   sf_mex_assign(&c6_u_y, sf_mex_create("y", &c6_r_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 11, c6_u_y);
-  c6_k_hoistedGlobal = chartInstance->c6_is_c6_et_robocon;
+  c6_k_hoistedGlobal = chartInstance->c6_is_active_SeesawLogic;
   c6_s_u = c6_k_hoistedGlobal;
   c6_v_y = NULL;
   sf_mex_assign(&c6_v_y, sf_mex_create("y", &c6_s_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 12, c6_v_y);
-  c6_l_hoistedGlobal = chartInstance->c6_is_see_saw_mode;
+  c6_l_hoistedGlobal = chartInstance->c6_is_c6_et_robocon;
   c6_t_u = c6_l_hoistedGlobal;
   c6_w_y = NULL;
   sf_mex_assign(&c6_w_y, sf_mex_create("y", &c6_t_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 13, c6_w_y);
-  c6_m_hoistedGlobal = chartInstance->c6_is_SeesawLogic;
+  c6_m_hoistedGlobal = chartInstance->c6_is_see_saw_mode;
   c6_u_u = c6_m_hoistedGlobal;
   c6_x_y = NULL;
   sf_mex_assign(&c6_x_y, sf_mex_create("y", &c6_u_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 14, c6_x_y);
-  c6_n_hoistedGlobal = chartInstance->c6_is_Curvature;
+  c6_n_hoistedGlobal = chartInstance->c6_is_SeesawLogic;
   c6_v_u = c6_n_hoistedGlobal;
   c6_y_y = NULL;
   sf_mex_assign(&c6_y_y, sf_mex_create("y", &c6_v_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 15, c6_y_y);
-  c6_o_hoistedGlobal = chartInstance->c6_temporalCounter_i1;
+  c6_o_hoistedGlobal = chartInstance->c6_is_Curvature;
   c6_w_u = c6_o_hoistedGlobal;
   c6_ab_y = NULL;
   sf_mex_assign(&c6_ab_y, sf_mex_create("y", &c6_w_u, 3, 0U, 0U, 0U, 0), false);
   sf_mex_setcell(c6_y, 16, c6_ab_y);
-  for (c6_i0 = 0; c6_i0 < 12; c6_i0++) {
-    c6_x_u[c6_i0] = chartInstance->c6_dataWrittenToVector[c6_i0];
+  c6_p_hoistedGlobal = chartInstance->c6_is_Ramp;
+  c6_x_u = c6_p_hoistedGlobal;
+  c6_bb_y = NULL;
+  sf_mex_assign(&c6_bb_y, sf_mex_create("y", &c6_x_u, 3, 0U, 0U, 0U, 0), false);
+  sf_mex_setcell(c6_y, 17, c6_bb_y);
+  c6_q_hoistedGlobal = chartInstance->c6_temporalCounter_i1;
+  c6_y_u = c6_q_hoistedGlobal;
+  c6_cb_y = NULL;
+  sf_mex_assign(&c6_cb_y, sf_mex_create("y", &c6_y_u, 5, 0U, 0U, 0U, 0), false);
+  sf_mex_setcell(c6_y, 18, c6_cb_y);
+  for (c6_i0 = 0; c6_i0 < 13; c6_i0++) {
+    c6_ab_u[c6_i0] = chartInstance->c6_dataWrittenToVector[c6_i0];
   }
 
-  c6_bb_y = NULL;
-  sf_mex_assign(&c6_bb_y, sf_mex_create("y", c6_x_u, 11, 0U, 1U, 0U, 1, 12),
+  c6_db_y = NULL;
+  sf_mex_assign(&c6_db_y, sf_mex_create("y", c6_ab_u, 11, 0U, 1U, 0U, 1, 13),
                 false);
-  sf_mex_setcell(c6_y, 17, c6_bb_y);
+  sf_mex_setcell(c6_y, 19, c6_db_y);
   sf_mex_assign(&c6_st, c6_y, false);
   return c6_st;
 }
@@ -665,7 +761,7 @@ static void set_sim_state_c6_et_robocon(SFc6_et_roboconInstanceStruct
   const mxArray *c6_u;
   c6_PWM_bus c6_r1;
   c6_Init_Bus c6_r2;
-  boolean_T c6_bv0[12];
+  boolean_T c6_bv0[13];
   int32_T c6_i1;
   c6_u = sf_mex_dup(c6_st);
   *chartInstance->c6_BT_status_out = c6_c_emlrt_marshallIn(chartInstance,
@@ -688,38 +784,42 @@ static void set_sim_state_c6_et_robocon(SFc6_et_roboconInstanceStruct
     sf_mex_dup(sf_mex_getcell(c6_u, 4)), "desired_phi");
   chartInstance->c6_desired_tail = c6_c_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c6_u, 5)), "desired_tail");
+  chartInstance->c6_desiredangle = c6_c_emlrt_marshallIn(chartInstance,
+    sf_mex_dup(sf_mex_getcell(c6_u, 6)), "desiredangle");
   chartInstance->c6_forwardPWM = c6_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c6_u, 6)), "forwardPWM");
+    (sf_mex_getcell(c6_u, 7)), "forwardPWM");
   chartInstance->c6_normalizedLight = c6_c_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 7)), "normalizedLight");
+    sf_mex_dup(sf_mex_getcell(c6_u, 8)), "normalizedLight");
   chartInstance->c6_turningPWM = c6_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c6_u, 8)), "turningPWM");
+    (sf_mex_getcell(c6_u, 9)), "turningPWM");
   chartInstance->c6_is_active_c6_et_robocon = c6_f_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c6_u, 9)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c6_u, 10)),
      "is_active_c6_et_robocon");
   chartInstance->c6_is_active_After = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 10)), "is_active_After");
+    sf_mex_dup(sf_mex_getcell(c6_u, 11)), "is_active_After");
   chartInstance->c6_is_active_SeesawLogic = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 11)), "is_active_SeesawLogic");
+    sf_mex_dup(sf_mex_getcell(c6_u, 12)), "is_active_SeesawLogic");
   chartInstance->c6_is_c6_et_robocon = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 12)), "is_c6_et_robocon");
+    sf_mex_dup(sf_mex_getcell(c6_u, 13)), "is_c6_et_robocon");
   chartInstance->c6_is_see_saw_mode = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 13)), "is_see_saw_mode");
+    sf_mex_dup(sf_mex_getcell(c6_u, 14)), "is_see_saw_mode");
   chartInstance->c6_is_SeesawLogic = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 14)), "is_SeesawLogic");
+    sf_mex_dup(sf_mex_getcell(c6_u, 15)), "is_SeesawLogic");
   chartInstance->c6_is_Curvature = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 15)), "is_Curvature");
-  chartInstance->c6_temporalCounter_i1 = c6_f_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c6_u, 16)), "temporalCounter_i1");
-  c6_p_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c6_u, 17)),
+    sf_mex_dup(sf_mex_getcell(c6_u, 16)), "is_Curvature");
+  chartInstance->c6_is_Ramp = c6_f_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c6_u, 17)), "is_Ramp");
+  chartInstance->c6_temporalCounter_i1 = c6_p_emlrt_marshallIn(chartInstance,
+    sf_mex_dup(sf_mex_getcell(c6_u, 18)), "temporalCounter_i1");
+  c6_r_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c6_u, 19)),
                         "dataWrittenToVector", c6_bv0);
-  for (c6_i1 = 0; c6_i1 < 12; c6_i1++) {
+  for (c6_i1 = 0; c6_i1 < 13; c6_i1++) {
     chartInstance->c6_dataWrittenToVector[c6_i1] = c6_bv0[c6_i1];
   }
 
   sf_mex_assign(&chartInstance->c6_setSimStateSideEffectsInfo,
-                c6_r_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
-    (c6_u, 18)), "setSimStateSideEffectsInfo"), true);
+                c6_t_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+    (c6_u, 20)), "setSimStateSideEffectsInfo"), true);
   sf_mex_destroy(&c6_u);
   chartInstance->c6_doSetSimStateSideEffects = 1U;
   c6_update_debugger_state_c6_et_robocon(chartInstance);
@@ -754,22 +854,16 @@ static void c6_set_sim_state_side_effects_c6_et_robocon
       chartInstance->c6_tp_Balancing = 0U;
     }
 
+    if (chartInstance->c6_is_active_After == 1U) {
+      chartInstance->c6_tp_After = 1U;
+    } else {
+      chartInstance->c6_tp_After = 0U;
+    }
+
     if (chartInstance->c6_is_active_SeesawLogic == 1U) {
       chartInstance->c6_tp_SeesawLogic = 1U;
     } else {
       chartInstance->c6_tp_SeesawLogic = 0U;
-    }
-
-    if (chartInstance->c6_is_SeesawLogic == c6_IN_ApproachtoRamp_1) {
-      chartInstance->c6_tp_ApproachtoRamp_1 = 1U;
-    } else {
-      chartInstance->c6_tp_ApproachtoRamp_1 = 0U;
-    }
-
-    if (chartInstance->c6_is_SeesawLogic == c6_IN_BridgeTest) {
-      chartInstance->c6_tp_BridgeTest = 1U;
-    } else {
-      chartInstance->c6_tp_BridgeTest = 0U;
     }
 
     if (chartInstance->c6_is_SeesawLogic == c6_IN_ConstantSpeed) {
@@ -799,11 +893,61 @@ static void c6_set_sim_state_side_effects_c6_et_robocon
     if (chartInstance->c6_is_SeesawLogic == c6_IN_MoveForwardSlowly) {
       chartInstance->c6_tp_MoveForwardSlowly = 1U;
       if (sf_mex_sub(chartInstance->c6_setSimStateSideEffectsInfo,
-                     "setSimStateSideEffectsInfo", 1, 11) == 0.0) {
+                     "setSimStateSideEffectsInfo", 1, 10) == 0.0) {
         chartInstance->c6_temporalCounter_i1 = 0U;
       }
     } else {
       chartInstance->c6_tp_MoveForwardSlowly = 0U;
+    }
+
+    if (chartInstance->c6_is_SeesawLogic == c6_IN_Ramp) {
+      chartInstance->c6_tp_Ramp = 1U;
+    } else {
+      chartInstance->c6_tp_Ramp = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_BridgeTest) {
+      chartInstance->c6_tp_BridgeTest = 1U;
+      if (sf_mex_sub(chartInstance->c6_setSimStateSideEffectsInfo,
+                     "setSimStateSideEffectsInfo", 1, 12) == 0.0) {
+        chartInstance->c6_temporalCounter_i1 = 0U;
+      }
+    } else {
+      chartInstance->c6_tp_BridgeTest = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_RampUpOne) {
+      chartInstance->c6_tp_RampUpOne = 1U;
+    } else {
+      chartInstance->c6_tp_RampUpOne = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_RampUpTwo) {
+      chartInstance->c6_tp_RampUpTwo = 1U;
+      if (sf_mex_sub(chartInstance->c6_setSimStateSideEffectsInfo,
+                     "setSimStateSideEffectsInfo", 1, 14) == 0.0) {
+        chartInstance->c6_temporalCounter_i1 = 0U;
+      }
+    } else {
+      chartInstance->c6_tp_RampUpTwo = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_RotateInPlace) {
+      chartInstance->c6_tp_RotateInPlace = 1U;
+    } else {
+      chartInstance->c6_tp_RotateInPlace = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_SlowtoRotate) {
+      chartInstance->c6_tp_SlowtoRotate = 1U;
+    } else {
+      chartInstance->c6_tp_SlowtoRotate = 0U;
+    }
+
+    if (chartInstance->c6_is_Ramp == c6_IN_Stop) {
+      chartInstance->c6_tp_Stop = 1U;
+    } else {
+      chartInstance->c6_tp_Stop = 0U;
     }
 
     if (chartInstance->c6_is_SeesawLogic == c6_IN_SpeedUp) {
@@ -815,17 +959,11 @@ static void c6_set_sim_state_side_effects_c6_et_robocon
     if (chartInstance->c6_is_SeesawLogic == c6_IN_StationnaryBalance) {
       chartInstance->c6_tp_StationnaryBalance = 1U;
       if (sf_mex_sub(chartInstance->c6_setSimStateSideEffectsInfo,
-                     "setSimStateSideEffectsInfo", 1, 13) == 0.0) {
+                     "setSimStateSideEffectsInfo", 1, 19) == 0.0) {
         chartInstance->c6_temporalCounter_i1 = 0U;
       }
     } else {
       chartInstance->c6_tp_StationnaryBalance = 0U;
-    }
-
-    if (chartInstance->c6_is_active_After == 1U) {
-      chartInstance->c6_tp_After = 1U;
-    } else {
-      chartInstance->c6_tp_After = 0U;
     }
 
     if (chartInstance->c6_is_see_saw_mode == c6_IN_StandUp) {
@@ -898,6 +1036,9 @@ static void enterc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
     c6_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargout, 1U, c6_sf_marshallOut,
     c6_sf_marshallIn);
+  chartInstance->c6_des_vel = 0.0F;
+  c6_updateDataWrittenToVector(chartInstance, 7U);
+  _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
   chartInstance->c6_desired_tail = 0.0F;
   c6_updateDataWrittenToVector(chartInstance, 2U);
   _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_tail, 5U);
@@ -909,7 +1050,7 @@ static void enterc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
   _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 0U, chartInstance->c6_sfEvent);
   chartInstance->c6_isStable = false;
   chartInstance->c6_is_see_saw_mode = c6_IN_Waiting;
-  _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(STATE_ACTIVE_TAG, 19U, chartInstance->c6_sfEvent);
   chartInstance->c6_tp_Waiting = 1U;
 }
 
@@ -919,59 +1060,99 @@ static void exitc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
   switch (chartInstance->c6_is_see_saw_mode) {
    case c6_IN_Balancing:
     CV_STATE_EVAL(0, 1, 1);
-    chartInstance->c6_tp_After = 0U;
-    chartInstance->c6_is_active_After = 0U;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
     switch (chartInstance->c6_is_SeesawLogic) {
-     case c6_IN_ApproachtoRamp_1:
+     case c6_IN_ConstantSpeed:
       CV_STATE_EVAL(3, 1, 1);
-      chartInstance->c6_tp_ApproachtoRamp_1 = 0U;
+      chartInstance->c6_tp_ConstantSpeed = 0U;
       chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
       _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
       break;
 
-     case c6_IN_BridgeTest:
+     case c6_IN_Curvature:
       CV_STATE_EVAL(3, 1, 2);
-      chartInstance->c6_tp_BridgeTest = 0U;
+      c6_exit_internal_Curvature(chartInstance);
+      chartInstance->c6_tp_Curvature = 0U;
       chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
       _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
       break;
 
-     case c6_IN_ConstantSpeed:
-      CV_STATE_EVAL(3, 1, 3);
-      chartInstance->c6_tp_ConstantSpeed = 0U;
-      chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
-      break;
-
-     case c6_IN_Curvature:
-      CV_STATE_EVAL(3, 1, 4);
-      c6_exit_internal_Curvature(chartInstance);
-      chartInstance->c6_tp_Curvature = 0U;
-      chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
-      break;
-
      case c6_IN_MoveForwardSlowly:
-      CV_STATE_EVAL(3, 1, 5);
+      CV_STATE_EVAL(3, 1, 3);
       chartInstance->c6_tp_MoveForwardSlowly = 0U;
       chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+      break;
+
+     case c6_IN_Ramp:
+      CV_STATE_EVAL(3, 1, 4);
+      switch (chartInstance->c6_is_Ramp) {
+       case c6_IN_BridgeTest:
+        CV_STATE_EVAL(9, 1, 1);
+        chartInstance->c6_tp_BridgeTest = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+        break;
+
+       case c6_IN_RampUpOne:
+        CV_STATE_EVAL(9, 1, 2);
+        chartInstance->c6_tp_RampUpOne = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+        break;
+
+       case c6_IN_RampUpTwo:
+        CV_STATE_EVAL(9, 1, 3);
+        chartInstance->c6_tp_RampUpTwo = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+        break;
+
+       case c6_IN_RotateInPlace:
+        CV_STATE_EVAL(9, 1, 4);
+        chartInstance->c6_tp_RotateInPlace = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+        break;
+
+       case c6_IN_SlowtoRotate:
+        CV_STATE_EVAL(9, 1, 5);
+        chartInstance->c6_tp_SlowtoRotate = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+        break;
+
+       case c6_IN_Stop:
+        CV_STATE_EVAL(9, 1, 6);
+        chartInstance->c6_tp_Stop = 0U;
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+        break;
+
+       default:
+        CV_STATE_EVAL(9, 1, 0);
+        chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+        break;
+      }
+
+      chartInstance->c6_tp_Ramp = 0U;
+      chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
       break;
 
      case c6_IN_SpeedUp:
-      CV_STATE_EVAL(3, 1, 6);
+      CV_STATE_EVAL(3, 1, 5);
       chartInstance->c6_tp_SpeedUp = 0U;
       chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
       break;
 
      case c6_IN_StationnaryBalance:
-      CV_STATE_EVAL(3, 1, 7);
+      CV_STATE_EVAL(3, 1, 6);
       chartInstance->c6_tp_StationnaryBalance = 0U;
       c6_exit_atomic_StationnaryBalance(chartInstance);
       chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
       break;
 
      default:
@@ -984,6 +1165,9 @@ static void exitc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
     chartInstance->c6_tp_SeesawLogic = 0U;
     chartInstance->c6_is_active_SeesawLogic = 0U;
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 3U, chartInstance->c6_sfEvent);
+    chartInstance->c6_tp_After = 0U;
+    chartInstance->c6_is_active_After = 0U;
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
     chartInstance->c6_tp_Balancing = 0U;
     chartInstance->c6_is_see_saw_mode = c6_IN_NO_ACTIVE_CHILD;
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 1U, chartInstance->c6_sfEvent);
@@ -993,14 +1177,14 @@ static void exitc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
     CV_STATE_EVAL(0, 1, 2);
     chartInstance->c6_tp_StandUp = 0U;
     chartInstance->c6_is_see_saw_mode = c6_IN_NO_ACTIVE_CHILD;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 18U, chartInstance->c6_sfEvent);
     break;
 
    case c6_IN_Waiting:
     CV_STATE_EVAL(0, 1, 3);
     chartInstance->c6_tp_Waiting = 0U;
     chartInstance->c6_is_see_saw_mode = c6_IN_NO_ACTIVE_CHILD;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 19U, chartInstance->c6_sfEvent);
     break;
 
    default:
@@ -1023,7 +1207,7 @@ static void exitc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
 static void gatewayc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
 {
   _sfTime_ = sf_get_time(chartInstance->S);
-  if (chartInstance->c6_temporalCounter_i1 < 63U) {
+  if (chartInstance->c6_temporalCounter_i1 < 8191U) {
     chartInstance->c6_temporalCounter_i1++;
   }
 }
@@ -1041,7 +1225,7 @@ static void enablec6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
 static void disablec6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
 {
   _sfTime_ = sf_get_time(chartInstance->S);
-  if (chartInstance->c6_temporalCounter_i1 < 63U) {
+  if (chartInstance->c6_temporalCounter_i1 < 8191U) {
     chartInstance->c6_temporalCounter_i1++;
   }
 
@@ -1078,8 +1262,6 @@ static void initc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
   chartInstance->c6_is_active_SeesawLogic = 0U;
   chartInstance->c6_is_SeesawLogic = c6_IN_NO_ACTIVE_CHILD;
   chartInstance->c6_tp_SeesawLogic = 0U;
-  chartInstance->c6_tp_ApproachtoRamp_1 = 0U;
-  chartInstance->c6_tp_BridgeTest = 0U;
   chartInstance->c6_tp_ConstantSpeed = 0U;
   chartInstance->c6_is_Curvature = c6_IN_NO_ACTIVE_CHILD;
   chartInstance->c6_tp_Curvature = 0U;
@@ -1087,6 +1269,16 @@ static void initc6_et_robocon(SFc6_et_roboconInstanceStruct *chartInstance)
   chartInstance->c6_tp_Slowdown = 0U;
   chartInstance->c6_tp_MoveForwardSlowly = 0U;
   chartInstance->c6_temporalCounter_i1 = 0U;
+  chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+  chartInstance->c6_tp_Ramp = 0U;
+  chartInstance->c6_tp_BridgeTest = 0U;
+  chartInstance->c6_temporalCounter_i1 = 0U;
+  chartInstance->c6_tp_RampUpOne = 0U;
+  chartInstance->c6_tp_RampUpTwo = 0U;
+  chartInstance->c6_temporalCounter_i1 = 0U;
+  chartInstance->c6_tp_RotateInPlace = 0U;
+  chartInstance->c6_tp_SlowtoRotate = 0U;
+  chartInstance->c6_tp_Stop = 0U;
   chartInstance->c6_tp_SpeedUp = 0U;
   chartInstance->c6_tp_StationnaryBalance = 0U;
   chartInstance->c6_temporalCounter_i1 = 0U;
@@ -1218,20 +1410,20 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
   c6_bus_rd_access_lightCalib_2(chartInstance, -1, 0, 11, 0);
   c6_b_lightCalib.flashingMapWhite = *(real32_T *)&((char_T *)
     c6_access_lightCalib(chartInstance, true))[44];
-  _SFD_DATA_RANGE_CHECK((real_T)c6_b_rawLight, 14U);
-  _SFD_SET_DATA_VALUE_PTR(16U, &c6_c_light);
-  _SFD_SET_DATA_VALUE_PTR(15U, &c6_b_lightCalib);
-  _SFD_SET_DATA_VALUE_PTR(14U, &c6_b_rawLight);
-  _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_b_rawLight, 15U);
+  _SFD_SET_DATA_VALUE_PTR(17U, &c6_c_light);
+  _SFD_SET_DATA_VALUE_PTR(16U, &c6_b_lightCalib);
+  _SFD_SET_DATA_VALUE_PTR(15U, &c6_b_rawLight);
+  _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 22U, chartInstance->c6_sfEvent);
   _SFD_SYMBOL_SCOPE_PUSH(3U, 0U);
   _SFD_SYMBOL_SCOPE_ADD_IMPORTABLE("rawLight", &c6_b_rawLight,
     c6_c_sf_marshallOut, c6_c_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD("lightCalib", &c6_b_lightCalib, c6_lightCalib_bus_io);
   _SFD_SYMBOL_SCOPE_ADD_IMPORTABLE("light", &c6_c_light, c6_c_sf_marshallOut,
     c6_c_sf_marshallIn);
-  _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 17U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 22U, chartInstance->c6_sfEvent);
   *chartInstance->c6_rawLight = c6_b_rawLight;
-  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_rawLight, 14U);
+  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_rawLight, 15U);
   *(real32_T *)&((char_T *)chartInstance->c6_lightCalib)[0] =
     c6_b_lightCalib.whiteOnLimbo;
   *(real32_T *)&((char_T *)chartInstance->c6_lightCalib)[4] =
@@ -1258,18 +1450,18 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     c6_b_lightCalib.flashingMapWhite;
   sf_call_output_fcn_call(chartInstance->S, 0, "processLight", 0);
   c6_c_light = *chartInstance->c6_light;
-  c6_updateDataWrittenToVector(chartInstance, 9U);
-  _SFD_DATA_RANGE_CHECK((real_T)c6_c_light, 16U);
+  c6_updateDataWrittenToVector(chartInstance, 10U);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_c_light, 17U);
   _SFD_SYMBOL_SCOPE_POP();
-  _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 22U, chartInstance->c6_sfEvent);
+  _SFD_UNSET_DATA_VALUE_PTR(17U);
   _SFD_UNSET_DATA_VALUE_PTR(16U);
   _SFD_UNSET_DATA_VALUE_PTR(15U);
-  _SFD_UNSET_DATA_VALUE_PTR(14U);
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c6_sfEvent);
   chartInstance->c6_normalizedLight = c6_c_light;
   c6_updateDataWrittenToVector(chartInstance, 5U);
   _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_normalizedLight, 10U);
-  c6_errorIfDataNotWrittenToFcn(chartInstance, 2U, 5U, 96U, 217, 12);
+  c6_errorIfDataNotWrittenToFcn(chartInstance, 2U, 5U, 96U, 216, 12);
   c6_hoistedGlobal = chartInstance->c6_desired_tail;
   c6_b_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)[8];
   c6_c_hoistedGlobal = c6_hoistedGlobal;
@@ -1289,9 +1481,8 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
    case c6_IN_Balancing:
     CV_STATE_EVAL(0, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 1U, chartInstance->c6_sfEvent);
-    c6_SeesawLogic(chartInstance);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 2U, chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_t_debug_family_names,
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_p_debug_family_names,
       c6_debug_family_var_map);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
       c6_sf_marshallIn);
@@ -1311,13 +1502,13 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
       (c6_Balancer_States_Bus *)&((char_T *)chartInstance->c6_states)[0])[16];
     c6_b_desired_velocity = c6_d_hoistedGlobal;
     c6_c_battery = *(real32_T *)&((char_T *)chartInstance->c6_sensors)[24];
-    _SFD_DATA_RANGE_CHECK((real_T)c6_b_desired_velocity, 18U);
-    _SFD_DATA_RANGE_CHECK(c6_c_battery, 19U);
-    _SFD_SET_DATA_VALUE_PTR(20U, &c6_c_cmd);
-    _SFD_SET_DATA_VALUE_PTR(19U, &c6_c_battery);
-    _SFD_SET_DATA_VALUE_PTR(18U, &c6_b_desired_velocity);
-    _SFD_SET_DATA_VALUE_PTR(17U, &c6_b_balancerStates);
-    _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+    _SFD_DATA_RANGE_CHECK((real_T)c6_b_desired_velocity, 19U);
+    _SFD_DATA_RANGE_CHECK(c6_c_battery, 20U);
+    _SFD_SET_DATA_VALUE_PTR(21U, &c6_c_cmd);
+    _SFD_SET_DATA_VALUE_PTR(20U, &c6_c_battery);
+    _SFD_SET_DATA_VALUE_PTR(19U, &c6_b_desired_velocity);
+    _SFD_SET_DATA_VALUE_PTR(18U, &c6_b_balancerStates);
+    _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 20U, chartInstance->c6_sfEvent);
     _SFD_SYMBOL_SCOPE_PUSH(4U, 0U);
     _SFD_SYMBOL_SCOPE_ADD("balancerStates", &c6_b_balancerStates,
                           c6_balancerStates_bus_io);
@@ -1327,7 +1518,7 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
       c6_sf_marshallIn);
     _SFD_SYMBOL_SCOPE_ADD_IMPORTABLE("cmd", &c6_c_cmd, c6_c_sf_marshallOut,
       c6_c_sf_marshallIn);
-    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 15U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 20U, chartInstance->c6_sfEvent);
     *(real32_T *)&((char_T *)chartInstance->c6_balancerStates)[0] =
       c6_b_balancerStates.theta;
     *(real32_T *)&((char_T *)chartInstance->c6_balancerStates)[4] =
@@ -1339,20 +1530,20 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     *(real32_T *)&((char_T *)chartInstance->c6_balancerStates)[16] =
       c6_b_balancerStates.int_theta;
     *chartInstance->c6_desired_velocity = c6_b_desired_velocity;
-    _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_desired_velocity, 18U);
+    _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_desired_velocity, 19U);
     *chartInstance->c6_battery = c6_c_battery;
-    _SFD_DATA_RANGE_CHECK(*chartInstance->c6_battery, 19U);
+    _SFD_DATA_RANGE_CHECK(*chartInstance->c6_battery, 20U);
     sf_call_output_fcn_call(chartInstance->S, 1, "balance_ctrl", 0);
     c6_c_cmd = *chartInstance->c6_cmd;
-    c6_updateDataWrittenToVector(chartInstance, 10U);
-    _SFD_DATA_RANGE_CHECK((real_T)c6_c_cmd, 20U);
+    c6_updateDataWrittenToVector(chartInstance, 11U);
+    _SFD_DATA_RANGE_CHECK((real_T)c6_c_cmd, 21U);
     _SFD_SYMBOL_SCOPE_POP();
-    _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 20U, chartInstance->c6_sfEvent);
+    _SFD_UNSET_DATA_VALUE_PTR(21U);
     _SFD_UNSET_DATA_VALUE_PTR(20U);
     _SFD_UNSET_DATA_VALUE_PTR(19U);
     _SFD_UNSET_DATA_VALUE_PTR(18U);
-    _SFD_UNSET_DATA_VALUE_PTR(17U);
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 20U, chartInstance->c6_sfEvent);
     chartInstance->c6_forwardPWM = c6_c_cmd;
     c6_updateDataWrittenToVector(chartInstance, 6U);
     _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_forwardPWM, 11U);
@@ -1375,6 +1566,7 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     c6_updateDataWrittenToVector(chartInstance, 0U);
     _SFD_SYMBOL_SCOPE_POP();
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 2U, chartInstance->c6_sfEvent);
+    c6_SeesawLogic(chartInstance);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, chartInstance->c6_sfEvent);
     break;
 
@@ -1382,11 +1574,15 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     CV_STATE_EVAL(0, 0, 2);
     _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
     chartInstance->c6_tp_StandUp = 0U;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 18U, chartInstance->c6_sfEvent);
     chartInstance->c6_isStable = false;
     chartInstance->c6_is_see_saw_mode = c6_IN_Balancing;
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 1U, chartInstance->c6_sfEvent);
     chartInstance->c6_tp_Balancing = 1U;
+    chartInstance->c6_isStable = false;
+    chartInstance->c6_is_active_After = 1U;
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
+    chartInstance->c6_tp_After = 1U;
     chartInstance->c6_isStable = false;
     chartInstance->c6_is_active_SeesawLogic = 1U;
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 3U, chartInstance->c6_sfEvent);
@@ -1394,7 +1590,7 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 1U, chartInstance->c6_sfEvent);
     chartInstance->c6_isStable = false;
     chartInstance->c6_is_SeesawLogic = c6_IN_MoveForwardSlowly;
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
     chartInstance->c6_temporalCounter_i1 = 0U;
     chartInstance->c6_tp_MoveForwardSlowly = 1U;
     _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_e_debug_family_names,
@@ -1413,12 +1609,11 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     c6_updateDataWrittenToVector(chartInstance, 1U);
     *(real32_T *)&((char_T *)chartInstance->c6_initFlags)[8] = 0.0F;
     c6_updateDataWrittenToVector(chartInstance, 1U);
+    chartInstance->c6_des_vel = 0.0005F;
+    c6_updateDataWrittenToVector(chartInstance, 7U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
     _SFD_SYMBOL_SCOPE_POP();
-    chartInstance->c6_isStable = false;
-    chartInstance->c6_is_active_After = 1U;
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 2U, chartInstance->c6_sfEvent);
-    chartInstance->c6_tp_After = 1U;
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 18U, chartInstance->c6_sfEvent);
     break;
 
    case c6_IN_Waiting:
@@ -1438,10 +1633,10 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
     if (c6_out) {
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 3U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_Waiting = 0U;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 19U, chartInstance->c6_sfEvent);
       chartInstance->c6_isStable = false;
       chartInstance->c6_is_see_saw_mode = c6_IN_StandUp;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 18U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_StandUp = 1U;
       _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_d_debug_family_names,
         c6_debug_family_var_map);
@@ -1461,7 +1656,7 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
       c6_updateDataWrittenToVector(chartInstance, 1U);
       _SFD_SYMBOL_SCOPE_POP();
     } else {
-      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U,
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 19U,
                    chartInstance->c6_sfEvent);
       _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_c_debug_family_names,
         c6_debug_family_var_map);
@@ -1478,7 +1673,7 @@ static void c6_see_saw_mode(SFc6_et_roboconInstanceStruct *chartInstance)
       _SFD_SYMBOL_SCOPE_POP();
     }
 
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 19U, chartInstance->c6_sfEvent);
     break;
 
    default:
@@ -1500,65 +1695,52 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
   uint32_T c6_b_debug_family_var_map[2];
   real_T c6_b_nargin = 0.0;
   real_T c6_b_nargout = 0.0;
-  uint16_T c6_u3;
-  void *c6_outputVarPtrs[1];
-  int32_T c6_outputVarSizes[1];
   real_T c6_c_nargin = 0.0;
   real_T c6_c_nargout = 0.0;
-  real32_T c6_hoistedGlobal;
-  c6_Sensors_Bus c6_b_hoistedGlobal;
-  real32_T c6_c_hoistedGlobal;
-  real32_T c6_d_hoistedGlobal;
-  real32_T c6_e_hoistedGlobal;
-  real32_T c6_f_hoistedGlobal;
-  void *c6_inputVarPtrs[3];
-  int32_T c6_inputVarSizes[3];
-  real32_T c6_f1;
   real_T c6_d_nargin = 0.0;
-  real_T c6_d_nargout = 0.0;
-  real32_T c6_g_hoistedGlobal;
-  real32_T c6_h_hoistedGlobal;
-  real32_T c6_i_hoistedGlobal;
-  real32_T c6_j_hoistedGlobal;
-  real32_T c6_f2;
-  real_T c6_e_nargin = 0.0;
-  real_T c6_e_nargout = 1.0;
+  real_T c6_d_nargout = 1.0;
   boolean_T c6_b_out;
+  real_T c6_e_nargin = 0.0;
+  real_T c6_e_nargout = 0.0;
+  uint16_T c6_u3;
+  void *c6_inputVarPtrs[1];
+  int32_T c6_inputVarSizes[1];
   real_T c6_f_nargin = 0.0;
   real_T c6_f_nargout = 0.0;
   real_T c6_g_nargin = 0.0;
-  real_T c6_g_nargout = 0.0;
-  real_T c6_h_nargin = 0.0;
-  real_T c6_h_nargout = 1.0;
+  real_T c6_g_nargout = 1.0;
   boolean_T c6_c_out;
+  real_T c6_h_nargin = 0.0;
+  real_T c6_h_nargout = 0.0;
+  uint16_T c6_u4;
   real_T c6_i_nargin = 0.0;
   real_T c6_i_nargout = 0.0;
-  uint16_T c6_u4;
   real_T c6_j_nargin = 0.0;
-  real_T c6_j_nargout = 0.0;
-  real_T c6_k_nargin = 0.0;
-  real_T c6_k_nargout = 1.0;
+  real_T c6_j_nargout = 1.0;
   boolean_T c6_d_out;
+  real_T c6_k_nargin = 0.0;
+  real_T c6_k_nargout = 0.0;
   real_T c6_l_nargin = 0.0;
-  real_T c6_l_nargout = 0.0;
-  uint16_T c6_u5;
+  real_T c6_l_nargout = 1.0;
+  boolean_T c6_e_out;
   real_T c6_m_nargin = 0.0;
   real_T c6_m_nargout = 0.0;
+  uint16_T c6_u5;
   real_T c6_n_nargin = 0.0;
   real_T c6_n_nargout = 1.0;
-  boolean_T c6_e_out;
+  boolean_T c6_f_out;
   real_T c6_o_nargin = 0.0;
   real_T c6_o_nargout = 0.0;
+  uint16_T c6_u6;
   boolean_T guard1 = false;
   boolean_T guard2 = false;
   boolean_T guard3 = false;
   _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 3U, chartInstance->c6_sfEvent);
   switch (chartInstance->c6_is_SeesawLogic) {
-   case c6_IN_ApproachtoRamp_1:
+   case c6_IN_ConstantSpeed:
     CV_STATE_EVAL(3, 0, 1);
-    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 12U,
-                 chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_w_debug_family_names,
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 7U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_ib_debug_family_names,
       c6_debug_family_var_map);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
       c6_sf_marshallIn);
@@ -1566,152 +1748,13 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
       c6_sf_marshallIn);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_out, 2U, c6_b_sf_marshallOut,
       c6_b_sf_marshallIn);
-    c6_out = CV_EML_IF(12, 0, 0, *(real32_T *)&((char_T *)
-      chartInstance->c6_sensors)[28] != 0.0F);
-    _SFD_SYMBOL_SCOPE_POP();
-    if (c6_out) {
-      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
-      chartInstance->c6_tp_ApproachtoRamp_1 = 0U;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
-      chartInstance->c6_isStable = false;
-      chartInstance->c6_is_SeesawLogic = c6_IN_BridgeTest;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
-      chartInstance->c6_tp_BridgeTest = 1U;
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_f_debug_family_names,
-        c6_b_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
-        c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
-        c6_sf_marshallIn);
-      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
-                           NULL);
-      c6_u3 = 3001U;
-      c6_outputVarPtrs[0U] = (void *)&c6_u3;
-      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
-      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
-                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
-                           NULL);
-      chartInstance->c6_des_vel = 0.0F;
-      c6_updateDataWrittenToVector(chartInstance, 7U);
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
-      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
-        chartInstance->c6_states)[24];
-      c6_updateDataWrittenToVector(chartInstance, 8U);
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
-      _SFD_SYMBOL_SCOPE_POP();
-    } else {
-      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 4U,
-                   chartInstance->c6_sfEvent);
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_s_debug_family_names,
-        c6_b_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargin, 0U, c6_sf_marshallOut,
-        c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargout, 1U, c6_sf_marshallOut,
-        c6_sf_marshallIn);
-      c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 209U, 150, 15);
-      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 209U, 217, 11);
-      c6_hoistedGlobal = chartInstance->c6_normalizedLight;
-      c6_b_hoistedGlobal.theta_L = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[0];
-      c6_b_hoistedGlobal.theta_R = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[4];
-      c6_b_hoistedGlobal.theta_T = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[8];
-      c6_b_hoistedGlobal.light = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[12];
-      c6_b_hoistedGlobal.gyro = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[16];
-      c6_b_hoistedGlobal.sonar = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[20];
-      c6_b_hoistedGlobal.battery = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[24];
-      c6_b_hoistedGlobal.touch = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[28];
-      c6_b_hoistedGlobal.time = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[32];
-      c6_b_hoistedGlobal.ok_button = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[36];
-      c6_b_hoistedGlobal.BT_status_in = *(real32_T *)&((char_T *)
-        chartInstance->c6_sensors)[40];
-      c6_c_hoistedGlobal = chartInstance->c6_desired_phi;
-      c6_d_hoistedGlobal = c6_c_hoistedGlobal;
-      c6_e_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
-      c6_f_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)
-        [24];
-      c6_inputVarPtrs[0U] = (void *)&c6_d_hoistedGlobal;
-      c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
-      c6_inputVarPtrs[1U] = (void *)&c6_e_hoistedGlobal;
-      c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
-      c6_inputVarPtrs[2U] = (void *)&c6_f_hoistedGlobal;
-      c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
-      c6_outputVarPtrs[0U] = (void *)&c6_f1;
-      c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
-      sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
-                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
-                           c6_outputVarPtrs, (void *)c6_outputVarSizes);
-      chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
-        c6_hoistedGlobal, 1.0F, (real_T)c6_b_hoistedGlobal.battery) + c6_f1;
-      c6_updateDataWrittenToVector(chartInstance, 3U);
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
-      _SFD_SYMBOL_SCOPE_POP();
-    }
-
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
-    break;
-
-   case c6_IN_BridgeTest:
-    CV_STATE_EVAL(3, 0, 2);
-    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_g_debug_family_names,
-      c6_b_debug_family_var_map);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargin, 0U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargout, 1U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    chartInstance->c6_des_vel = 0.03F;
-    c6_updateDataWrittenToVector(chartInstance, 7U);
-    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
-    c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 243U, 158, 11);
-    c6_g_hoistedGlobal = chartInstance->c6_desired_phi;
-    c6_h_hoistedGlobal = c6_g_hoistedGlobal;
-    c6_i_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
-    c6_j_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)[24];
-    c6_inputVarPtrs[0U] = (void *)&c6_h_hoistedGlobal;
-    c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
-    c6_inputVarPtrs[1U] = (void *)&c6_i_hoistedGlobal;
-    c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
-    c6_inputVarPtrs[2U] = (void *)&c6_j_hoistedGlobal;
-    c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
-    c6_outputVarPtrs[0U] = (void *)&c6_f2;
-    c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
-    sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
-                         c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
-                         c6_outputVarPtrs, (void *)c6_outputVarSizes);
-    chartInstance->c6_turningPWM = c6_f2;
-    c6_updateDataWrittenToVector(chartInstance, 3U);
-    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
-    _SFD_SYMBOL_SCOPE_POP();
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
-    break;
-
-   case c6_IN_ConstantSpeed:
-    CV_STATE_EVAL(3, 0, 3);
-    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 8U, chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_bb_debug_family_names,
-      c6_debug_family_var_map);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargin, 0U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargout, 1U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_out, 2U, c6_b_sf_marshallOut,
-      c6_b_sf_marshallIn);
     guard3 = false;
-    if (CV_EML_COND(8, 0, 0, CV_RELATIONAL_EVAL(5U, 8U, 0, 30.0, (real_T)
+    if (CV_EML_COND(7, 0, 0, CV_RELATIONAL_EVAL(5U, 7U, 0, 30.0, (real_T)
           *(real32_T *)&((char_T *)chartInstance->c6_states)[24], -1, 2U, 30.0F <
           *(real32_T *)&((char_T *)chartInstance->c6_states)[24]))) {
       guard3 = true;
     } else {
-      if (CV_EML_COND(8, 0, 1, CV_RELATIONAL_EVAL(5U, 8U, 1, (real_T)*(real32_T *)
+      if (CV_EML_COND(7, 0, 1, CV_RELATIONAL_EVAL(5U, 7U, 1, (real_T)*(real32_T *)
             &((char_T *)chartInstance->c6_states)[24], -30.0, -1, 2U, *(real32_T
              *)&((char_T *)chartInstance->c6_states)[24] < -30.0F))) {
         guard3 = true;
@@ -1719,26 +1762,26 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
     }
 
     if (guard3 == true) {
-      CV_EML_COND(8, 0, 2, false);
+      CV_EML_COND(7, 0, 2, false);
     }
 
-    CV_EML_MCDC(8, 0, 0, false);
-    CV_EML_IF(8, 0, 0, false);
-    c6_b_out = false;
+    CV_EML_MCDC(7, 0, 0, false);
+    CV_EML_IF(7, 0, 0, false);
+    c6_out = false;
     _SFD_SYMBOL_SCOPE_POP();
-    if (c6_b_out) {
-      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+    if (c6_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_ConstantSpeed = 0U;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
       chartInstance->c6_isStable = false;
       chartInstance->c6_is_SeesawLogic = c6_IN_Curvature;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_Curvature = 1U;
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_j_debug_family_names,
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_h_debug_family_names,
         c6_b_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargin, 0U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
         c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargout, 1U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
         c6_sf_marshallIn);
       sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
                            NULL);
@@ -1747,68 +1790,73 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
       sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
                            NULL);
       _SFD_SYMBOL_SCOPE_POP();
-      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
       chartInstance->c6_isStable = false;
       chartInstance->c6_is_Curvature = c6_IN_Slowdown;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_Slowdown = 1U;
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_k_debug_family_names,
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_i_debug_family_names,
         c6_b_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargin, 0U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargin, 0U, c6_sf_marshallOut,
         c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargout, 1U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargout, 1U, c6_sf_marshallOut,
         c6_sf_marshallIn);
       chartInstance->c6_des_vel = 0.2F;
       c6_updateDataWrittenToVector(chartInstance, 7U);
       _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
       _SFD_SYMBOL_SCOPE_POP();
     } else {
-      _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 7U,
+      _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 16U,
                    chartInstance->c6_sfEvent);
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_cb_debug_family_names,
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_pb_debug_family_names,
         c6_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargin, 0U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargin, 0U, c6_sf_marshallOut,
         c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargout, 1U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargout, 1U, c6_sf_marshallOut,
         c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_out, 2U, c6_b_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_out, 2U, c6_b_sf_marshallOut,
         c6_b_sf_marshallIn);
       guard2 = false;
-      if (CV_EML_COND(7, 0, 0, *(real32_T *)&((char_T *)
+      if (CV_EML_COND(16, 0, 0, *(real32_T *)&((char_T *)
             chartInstance->c6_sensors)[28] != 0.0F)) {
         guard2 = true;
-      } else if (CV_EML_COND(7, 0, 1, CV_RELATIONAL_EVAL(5U, 7U, 0, (real_T)
+      } else if (CV_EML_COND(16, 0, 1, CV_RELATIONAL_EVAL(5U, 16U, 0, (real_T)
                    *(real32_T *)&((char_T *)(c6_Balancer_States_Bus *)&((char_T *)
-          chartInstance->c6_states)[0])[8], 0.699999988079071, -3, 2U,
+          chartInstance->c6_states)[0])[8], 0.800000011920929, -3, 2U,
                    *(real32_T *)&((char_T *)(c6_Balancer_States_Bus *)&((char_T *)
-          chartInstance->c6_states)[0])[8] < 0.7F))) {
+          chartInstance->c6_states)[0])[8] < 0.8F))) {
         guard2 = true;
       } else {
-        CV_EML_MCDC(7, 0, 0, false);
-        CV_EML_IF(7, 0, 0, false);
-        c6_c_out = false;
+        CV_EML_MCDC(16, 0, 0, false);
+        CV_EML_IF(16, 0, 0, false);
+        c6_b_out = false;
       }
 
       if (guard2 == true) {
-        CV_EML_MCDC(7, 0, 0, true);
-        CV_EML_IF(7, 0, 0, true);
-        c6_c_out = true;
+        CV_EML_MCDC(16, 0, 0, true);
+        CV_EML_IF(16, 0, 0, true);
+        c6_b_out = true;
       }
 
       _SFD_SYMBOL_SCOPE_POP();
-      if (c6_c_out) {
-        _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
+      if (c6_b_out) {
+        _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
         chartInstance->c6_tp_ConstantSpeed = 0U;
-        _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
         chartInstance->c6_isStable = false;
-        chartInstance->c6_is_SeesawLogic = c6_IN_ApproachtoRamp_1;
-        _SFD_CS_CALL(STATE_ACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
-        chartInstance->c6_tp_ApproachtoRamp_1 = 1U;
-        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_r_debug_family_names,
+        chartInstance->c6_is_SeesawLogic = c6_IN_Ramp;
+        _SFD_CS_CALL(STATE_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+        chartInstance->c6_tp_Ramp = 1U;
+        _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
+        chartInstance->c6_isStable = false;
+        chartInstance->c6_is_Ramp = c6_IN_RampUpOne;
+        _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+        chartInstance->c6_tp_RampUpOne = 1U;
+        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_q_debug_family_names,
           c6_b_debug_family_var_map);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargin, 0U, c6_sf_marshallOut,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargin, 0U, c6_sf_marshallOut,
           c6_sf_marshallIn);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargout, 1U,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargout, 1U,
           c6_sf_marshallOut, c6_sf_marshallIn);
         chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
           chartInstance->c6_states)[24];
@@ -1816,27 +1864,27 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
         sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
                              NULL);
-        c6_u4 = 304U;
-        c6_outputVarPtrs[0U] = (void *)&c6_u4;
-        c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+        c6_u3 = 3061U;
+        c6_inputVarPtrs[0U] = (void *)&c6_u3;
+        c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
         sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
-                             c6_outputVarPtrs, (void *)c6_outputVarSizes, 0,
-                             NULL, NULL);
-        chartInstance->c6_des_vel = 0.1F;
+                             c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
+                             NULL);
+        chartInstance->c6_des_vel = 0.05F;
         c6_updateDataWrittenToVector(chartInstance, 7U);
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
         _SFD_SYMBOL_SCOPE_POP();
       } else {
-        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 6U,
+        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 4U,
                      chartInstance->c6_sfEvent);
-        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_q_debug_family_names,
+        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_o_debug_family_names,
           c6_b_debug_family_var_map);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargin, 0U, c6_sf_marshallOut,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargin, 0U, c6_sf_marshallOut,
           c6_sf_marshallIn);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargout, 1U,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargout, 1U,
           c6_sf_marshallOut, c6_sf_marshallIn);
-        c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 217U, 99, 15);
-        chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
+        c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 217U, 100, 15);
+        chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.15F,
           chartInstance->c6_normalizedLight, 1.2F, (real_T)*(real32_T *)
           &((char_T *)chartInstance->c6_sensors)[24]);
         c6_updateDataWrittenToVector(chartInstance, 3U);
@@ -1845,31 +1893,31 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
       }
     }
 
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 6U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
     break;
 
    case c6_IN_Curvature:
-    CV_STATE_EVAL(3, 0, 4);
-    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 11U,
+    CV_STATE_EVAL(3, 0, 2);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 10U,
                  chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_y_debug_family_names,
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_gb_debug_family_names,
       c6_debug_family_var_map);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargin, 0U, c6_sf_marshallOut,
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargin, 0U, c6_sf_marshallOut,
       c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargout, 1U, c6_sf_marshallOut,
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargout, 1U, c6_sf_marshallOut,
       c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_out, 2U, c6_b_sf_marshallOut,
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_out, 2U, c6_b_sf_marshallOut,
       c6_b_sf_marshallIn);
     guard1 = false;
-    if (CV_EML_COND(11, 0, 0, CV_RELATIONAL_EVAL(5U, 11U, 0, (real_T)*(real32_T *)
+    if (CV_EML_COND(10, 0, 0, CV_RELATIONAL_EVAL(5U, 10U, 0, (real_T)*(real32_T *)
           &((char_T *)chartInstance->c6_states)[24], 15.0, -1, 2U, *(real32_T *)
           &((char_T *)chartInstance->c6_states)[24] < 15.0F))) {
-      if (CV_EML_COND(11, 0, 1, CV_RELATIONAL_EVAL(5U, 11U, 1, -15.0, (real_T)
+      if (CV_EML_COND(10, 0, 1, CV_RELATIONAL_EVAL(5U, 10U, 1, -15.0, (real_T)
             *(real32_T *)&((char_T *)chartInstance->c6_states)[24], -1, 2U,
             -15.0F < *(real32_T *)&((char_T *)chartInstance->c6_states)[24]))) {
-        CV_EML_MCDC(11, 0, 0, true);
-        CV_EML_IF(11, 0, 0, true);
-        c6_d_out = true;
+        CV_EML_MCDC(10, 0, 0, true);
+        CV_EML_IF(10, 0, 0, true);
+        c6_c_out = true;
       } else {
         guard1 = true;
       }
@@ -1878,49 +1926,49 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
     }
 
     if (guard1 == true) {
-      CV_EML_MCDC(11, 0, 0, false);
-      CV_EML_IF(11, 0, 0, false);
-      c6_d_out = false;
+      CV_EML_MCDC(10, 0, 0, false);
+      CV_EML_IF(10, 0, 0, false);
+      c6_c_out = false;
     }
 
     _SFD_SYMBOL_SCOPE_POP();
-    if (c6_d_out) {
-      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+    if (c6_c_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
       c6_exit_internal_Curvature(chartInstance);
       chartInstance->c6_tp_Curvature = 0U;
-      _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
       chartInstance->c6_isStable = false;
       chartInstance->c6_is_SeesawLogic = c6_IN_SpeedUp;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
       chartInstance->c6_tp_SpeedUp = 1U;
-      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_n_debug_family_names,
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_l_debug_family_names,
         c6_b_debug_family_var_map);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargin, 0U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargin, 0U, c6_sf_marshallOut,
         c6_sf_marshallIn);
-      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargout, 1U, c6_sf_marshallOut,
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargout, 1U, c6_sf_marshallOut,
         c6_sf_marshallIn);
       sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
                            NULL);
-      c6_u5 = 304U;
-      c6_outputVarPtrs[0U] = (void *)&c6_u5;
-      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      c6_u4 = 304U;
+      c6_inputVarPtrs[0U] = (void *)&c6_u4;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
       sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
-                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
                            NULL);
       _SFD_SYMBOL_SCOPE_POP();
     } else {
-      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 7U,
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U,
                    chartInstance->c6_sfEvent);
       switch (chartInstance->c6_is_Curvature) {
        case c6_IN_Const:
-        CV_STATE_EVAL(7, 0, 1);
-        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 8U,
+        CV_STATE_EVAL(5, 0, 1);
+        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 6U,
                      chartInstance->c6_sfEvent);
-        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_m_debug_family_names,
+        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_k_debug_family_names,
           c6_b_debug_family_var_map);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargin, 0U, c6_sf_marshallOut,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargin, 0U, c6_sf_marshallOut,
           c6_sf_marshallIn);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargout, 1U,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargout, 1U,
           c6_sf_marshallOut, c6_sf_marshallIn);
         c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 238U, 53, 15);
         chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
@@ -1929,42 +1977,42 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
         c6_updateDataWrittenToVector(chartInstance, 3U);
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
         _SFD_SYMBOL_SCOPE_POP();
-        _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c6_sfEvent);
+        _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 6U, chartInstance->c6_sfEvent);
         break;
 
        case c6_IN_Slowdown:
-        CV_STATE_EVAL(7, 0, 2);
-        _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 10U,
+        CV_STATE_EVAL(5, 0, 2);
+        _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 9U,
                      chartInstance->c6_sfEvent);
-        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_u_debug_family_names,
+        _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_jb_debug_family_names,
           c6_debug_family_var_map);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_n_nargin, 0U, c6_sf_marshallOut,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargin, 0U, c6_sf_marshallOut,
           c6_sf_marshallIn);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_n_nargout, 1U,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargout, 1U,
           c6_sf_marshallOut, c6_sf_marshallIn);
-        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_out, 2U, c6_b_sf_marshallOut,
+        _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_out, 2U, c6_b_sf_marshallOut,
           c6_b_sf_marshallIn);
         c6_errorIfDataNotWrittenToFcn(chartInstance, 7U, 12U, 239U, 1, 7);
-        c6_e_out = CV_EML_IF(10, 0, 0, CV_RELATIONAL_EVAL(5U, 10U, 0, (real_T)
+        c6_d_out = CV_EML_IF(9, 0, 0, CV_RELATIONAL_EVAL(5U, 9U, 0, (real_T)
           chartInstance->c6_des_vel, 0.09, -1, 3U, (real_T)
           chartInstance->c6_des_vel <= 0.09));
         _SFD_SYMBOL_SCOPE_POP();
-        if (c6_e_out) {
-          _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+        if (c6_d_out) {
+          _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
           chartInstance->c6_tp_Slowdown = 0U;
-          _SFD_CS_CALL(STATE_INACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+          _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
           chartInstance->c6_isStable = false;
           chartInstance->c6_is_Curvature = c6_IN_Const;
-          _SFD_CS_CALL(STATE_ACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+          _SFD_CS_CALL(STATE_ACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
           chartInstance->c6_tp_Const = 1U;
         } else {
-          _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 9U,
+          _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 7U,
                        chartInstance->c6_sfEvent);
-          _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_l_debug_family_names,
+          _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_j_debug_family_names,
             c6_b_debug_family_var_map);
-          _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_o_nargin, 0U,
+          _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargin, 0U,
             c6_sf_marshallOut, c6_sf_marshallIn);
-          _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_o_nargout, 1U,
+          _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargout, 1U,
             c6_sf_marshallOut, c6_sf_marshallIn);
           c6_errorIfDataNotWrittenToFcn(chartInstance, 7U, 12U, 235U, 56, 7);
           chartInstance->c6_des_vel -= 0.0005F;
@@ -1979,33 +2027,125 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
           _SFD_SYMBOL_SCOPE_POP();
         }
 
-        _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 9U, chartInstance->c6_sfEvent);
+        _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 7U, chartInstance->c6_sfEvent);
         break;
 
        default:
-        CV_STATE_EVAL(7, 0, 0);
+        CV_STATE_EVAL(5, 0, 0);
         chartInstance->c6_is_Curvature = c6_IN_NO_ACTIVE_CHILD;
-        _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+        _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
         break;
       }
     }
 
-    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 7U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
     break;
 
    case c6_IN_MoveForwardSlowly:
-    CV_STATE_EVAL(3, 0, 5);
-    c6_MoveForwardSlowly(chartInstance);
+    CV_STATE_EVAL(3, 0, 3);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 4U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_eb_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_e_out = CV_EML_IF(4, 0, 0, chartInstance->c6_temporalCounter_i1 >= 500);
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_e_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_MoveForwardSlowly = 0U;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_SeesawLogic = c6_IN_StationnaryBalance;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
+      chartInstance->c6_temporalCounter_i1 = 0U;
+      chartInstance->c6_tp_StationnaryBalance = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_f_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      c6_u5 = 303U;
+      c6_inputVarPtrs[0U] = (void *)&c6_u5;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
+                           NULL);
+      chartInstance->c6_des_vel = 0.0005F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+        chartInstance->c6_states)[24];
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 8U,
+                   chartInstance->c6_sfEvent);
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c6_sfEvent);
+    break;
+
+   case c6_IN_Ramp:
+    CV_STATE_EVAL(3, 0, 4);
+    c6_Ramp(chartInstance);
     break;
 
    case c6_IN_SpeedUp:
-    CV_STATE_EVAL(3, 0, 6);
+    CV_STATE_EVAL(3, 0, 5);
     c6_SpeedUp(chartInstance);
     break;
 
    case c6_IN_StationnaryBalance:
-    CV_STATE_EVAL(3, 0, 7);
-    c6_StationnaryBalance(chartInstance);
+    CV_STATE_EVAL(3, 0, 6);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 5U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_fb_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_n_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_n_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_f_out = CV_EML_IF(5, 0, 0, chartInstance->c6_temporalCounter_i1 >= 20);
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_f_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_StationnaryBalance = 0U;
+      c6_exit_atomic_StationnaryBalance(chartInstance);
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 17U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_SeesawLogic = c6_IN_SpeedUp;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_SpeedUp = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_l_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_o_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_o_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      c6_u6 = 304U;
+      c6_inputVarPtrs[0U] = (void *)&c6_u6;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
+                           NULL);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 17U,
+                   chartInstance->c6_sfEvent);
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U, chartInstance->c6_sfEvent);
     break;
 
    default:
@@ -2016,119 +2156,6 @@ static void c6_SeesawLogic(SFc6_et_roboconInstanceStruct *chartInstance)
   }
 
   _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 3U, chartInstance->c6_sfEvent);
-}
-
-static void c6_MoveForwardSlowly(SFc6_et_roboconInstanceStruct *chartInstance)
-{
-  uint32_T c6_debug_family_var_map[3];
-  real_T c6_nargin = 0.0;
-  real_T c6_nargout = 1.0;
-  boolean_T c6_out;
-  uint32_T c6_b_debug_family_var_map[2];
-  real_T c6_b_nargin = 0.0;
-  real_T c6_b_nargout = 0.0;
-  uint16_T c6_u6;
-  void *c6_inputVarPtrs[1];
-  int32_T c6_inputVarSizes[1];
-  _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 4U, chartInstance->c6_sfEvent);
-  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_v_debug_family_names,
-    c6_debug_family_var_map);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
-    c6_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargout, 1U, c6_sf_marshallOut,
-    c6_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_out, 2U, c6_b_sf_marshallOut,
-    c6_b_sf_marshallIn);
-  c6_out = CV_EML_IF(4, 0, 0, chartInstance->c6_temporalCounter_i1 >= 50);
-  _SFD_SYMBOL_SCOPE_POP();
-  if (c6_out) {
-    _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
-    chartInstance->c6_tp_MoveForwardSlowly = 0U;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
-    chartInstance->c6_isStable = false;
-    chartInstance->c6_is_SeesawLogic = c6_IN_StationnaryBalance;
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
-    chartInstance->c6_temporalCounter_i1 = 0U;
-    chartInstance->c6_tp_StationnaryBalance = 1U;
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_h_debug_family_names,
-      c6_b_debug_family_var_map);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL, NULL);
-    c6_u6 = 303U;
-    c6_inputVarPtrs[0U] = (void *)&c6_u6;
-    c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
-    sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
-                         c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
-                         NULL);
-    chartInstance->c6_des_vel = 0.0005F;
-    c6_updateDataWrittenToVector(chartInstance, 7U);
-    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
-    chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
-      chartInstance->c6_states)[24];
-    c6_updateDataWrittenToVector(chartInstance, 8U);
-    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
-    _SFD_SYMBOL_SCOPE_POP();
-  } else {
-    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 10U, chartInstance->c6_sfEvent);
-  }
-
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c6_sfEvent);
-}
-
-static void c6_StationnaryBalance(SFc6_et_roboconInstanceStruct *chartInstance)
-{
-  uint32_T c6_debug_family_var_map[3];
-  real_T c6_nargin = 0.0;
-  real_T c6_nargout = 1.0;
-  boolean_T c6_out;
-  uint32_T c6_b_debug_family_var_map[2];
-  real_T c6_b_nargin = 0.0;
-  real_T c6_b_nargout = 0.0;
-  uint16_T c6_u7;
-  void *c6_inputVarPtrs[1];
-  int32_T c6_inputVarSizes[1];
-  _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 5U, chartInstance->c6_sfEvent);
-  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_x_debug_family_names,
-    c6_debug_family_var_map);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
-    c6_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargout, 1U, c6_sf_marshallOut,
-    c6_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_out, 2U, c6_b_sf_marshallOut,
-    c6_b_sf_marshallIn);
-  c6_out = CV_EML_IF(5, 0, 0, chartInstance->c6_temporalCounter_i1 >= 50);
-  _SFD_SYMBOL_SCOPE_POP();
-  if (c6_out) {
-    _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 5U, chartInstance->c6_sfEvent);
-    chartInstance->c6_tp_StationnaryBalance = 0U;
-    c6_exit_atomic_StationnaryBalance(chartInstance);
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
-    chartInstance->c6_isStable = false;
-    chartInstance->c6_is_SeesawLogic = c6_IN_SpeedUp;
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
-    chartInstance->c6_tp_SpeedUp = 1U;
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_n_debug_family_names,
-      c6_b_debug_family_var_map);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
-      c6_sf_marshallIn);
-    sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL, NULL);
-    c6_u7 = 304U;
-    c6_inputVarPtrs[0U] = (void *)&c6_u7;
-    c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
-    sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
-                         c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
-                         NULL);
-    _SFD_SYMBOL_SCOPE_POP();
-  } else {
-    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 12U, chartInstance->c6_sfEvent);
-  }
-
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c6_sfEvent);
 }
 
 static void c6_exit_atomic_StationnaryBalance(SFc6_et_roboconInstanceStruct
@@ -2143,11 +2170,11 @@ static void c6_exit_atomic_StationnaryBalance(SFc6_et_roboconInstanceStruct
   real32_T c6_d_hoistedGlobal;
   void *c6_inputVarPtrs[3];
   int32_T c6_inputVarSizes[3];
-  real32_T c6_f3;
+  real32_T c6_f1;
   void *c6_outputVarPtrs[1];
   int32_T c6_outputVarSizes[1];
-  _SFD_CS_CALL(STATE_ENTER_EXIT_FUNCTION_TAG, 12U, chartInstance->c6_sfEvent);
-  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_i_debug_family_names,
+  _SFD_CS_CALL(STATE_ENTER_EXIT_FUNCTION_TAG, 17U, chartInstance->c6_sfEvent);
+  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_g_debug_family_names,
     c6_debug_family_var_map);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
     c6_sf_marshallIn);
@@ -2164,16 +2191,16 @@ static void c6_exit_atomic_StationnaryBalance(SFc6_et_roboconInstanceStruct
   c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
   c6_inputVarPtrs[2U] = (void *)&c6_d_hoistedGlobal;
   c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
-  c6_outputVarPtrs[0U] = (void *)&c6_f3;
+  c6_outputVarPtrs[0U] = (void *)&c6_f1;
   c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
   sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
                        c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
                        c6_outputVarPtrs, (void *)c6_outputVarSizes);
-  chartInstance->c6_turningPWM = c6_f3;
+  chartInstance->c6_turningPWM = c6_f1;
   c6_updateDataWrittenToVector(chartInstance, 3U);
   _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
   _SFD_SYMBOL_SCOPE_POP();
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U, chartInstance->c6_sfEvent);
 }
 
 static void c6_exit_internal_Curvature(SFc6_et_roboconInstanceStruct
@@ -2181,23 +2208,23 @@ static void c6_exit_internal_Curvature(SFc6_et_roboconInstanceStruct
 {
   switch (chartInstance->c6_is_Curvature) {
    case c6_IN_Const:
-    CV_STATE_EVAL(7, 1, 1);
+    CV_STATE_EVAL(5, 1, 1);
     chartInstance->c6_tp_Const = 0U;
     chartInstance->c6_is_Curvature = c6_IN_NO_ACTIVE_CHILD;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
     break;
 
    case c6_IN_Slowdown:
-    CV_STATE_EVAL(7, 1, 2);
+    CV_STATE_EVAL(5, 1, 2);
     chartInstance->c6_tp_Slowdown = 0U;
     chartInstance->c6_is_Curvature = c6_IN_NO_ACTIVE_CHILD;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 9U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 7U, chartInstance->c6_sfEvent);
     break;
 
    default:
-    CV_STATE_EVAL(7, 1, 0);
+    CV_STATE_EVAL(5, 1, 0);
     chartInstance->c6_is_Curvature = c6_IN_NO_ACTIVE_CHILD;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
     break;
   }
 }
@@ -2211,13 +2238,13 @@ static void c6_SpeedUp(SFc6_et_roboconInstanceStruct *chartInstance)
   uint32_T c6_b_debug_family_var_map[2];
   real_T c6_b_nargin = 0.0;
   real_T c6_b_nargout = 0.0;
-  uint16_T c6_u8;
+  uint16_T c6_u7;
   void *c6_inputVarPtrs[1];
   int32_T c6_inputVarSizes[1];
   real_T c6_c_nargin = 0.0;
   real_T c6_c_nargout = 0.0;
   _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 6U, chartInstance->c6_sfEvent);
-  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_ab_debug_family_names,
+  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_hb_debug_family_names,
     c6_debug_family_var_map);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
     c6_sf_marshallIn);
@@ -2227,34 +2254,34 @@ static void c6_SpeedUp(SFc6_et_roboconInstanceStruct *chartInstance)
     c6_b_sf_marshallIn);
   c6_errorIfDataNotWrittenToFcn(chartInstance, 7U, 12U, 218U, 1, 7);
   c6_out = CV_EML_IF(6, 0, 0, CV_RELATIONAL_EVAL(5U, 6U, 0, (real_T)
-    chartInstance->c6_des_vel, 0.2, -1, 5U, (real_T)chartInstance->c6_des_vel >=
-    0.2));
+    chartInstance->c6_des_vel, 0.15, -1, 5U, (real_T)chartInstance->c6_des_vel >=
+    0.15));
   _SFD_SYMBOL_SCOPE_POP();
   if (c6_out) {
     _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
     chartInstance->c6_tp_SpeedUp = 0U;
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
     chartInstance->c6_isStable = false;
     chartInstance->c6_is_SeesawLogic = c6_IN_ConstantSpeed;
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 6U, chartInstance->c6_sfEvent);
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 4U, chartInstance->c6_sfEvent);
     chartInstance->c6_tp_ConstantSpeed = 1U;
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_p_debug_family_names,
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_n_debug_family_names,
       c6_b_debug_family_var_map);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
       c6_sf_marshallIn);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
       c6_sf_marshallIn);
     sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL, NULL);
-    c6_u8 = 305U;
-    c6_inputVarPtrs[0U] = (void *)&c6_u8;
+    c6_u7 = 305U;
+    c6_inputVarPtrs[0U] = (void *)&c6_u7;
     c6_inputVarSizes[0U] = (int32_T)sizeof(uint16_T);
     sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
                          c6_inputVarPtrs, (void *)c6_inputVarSizes, 0, NULL,
                          NULL);
     _SFD_SYMBOL_SCOPE_POP();
   } else {
-    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 11U, chartInstance->c6_sfEvent);
-    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_o_debug_family_names,
+    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 16U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_m_debug_family_names,
       c6_b_debug_family_var_map);
     _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargin, 0U, c6_sf_marshallOut,
       c6_sf_marshallIn);
@@ -2264,8 +2291,8 @@ static void c6_SpeedUp(SFc6_et_roboconInstanceStruct *chartInstance)
     chartInstance->c6_des_vel += 0.0005F;
     c6_updateDataWrittenToVector(chartInstance, 7U);
     _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
-    c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 211U, 153, 15);
-    chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
+    c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 211U, 154, 15);
+    chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.15F,
       chartInstance->c6_normalizedLight, 1.2F, (real_T)*(real32_T *)&((char_T *)
       chartInstance->c6_sensors)[24]);
     c6_updateDataWrittenToVector(chartInstance, 3U);
@@ -2273,7 +2300,610 @@ static void c6_SpeedUp(SFc6_et_roboconInstanceStruct *chartInstance)
     _SFD_SYMBOL_SCOPE_POP();
   }
 
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 11U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, chartInstance->c6_sfEvent);
+}
+
+static void c6_Ramp(SFc6_et_roboconInstanceStruct *chartInstance)
+{
+  uint32_T c6_debug_family_var_map[3];
+  real_T c6_nargin = 0.0;
+  real_T c6_nargout = 1.0;
+  boolean_T c6_out;
+  uint32_T c6_b_debug_family_var_map[2];
+  real_T c6_b_nargin = 0.0;
+  real_T c6_b_nargout = 0.0;
+  uint16_T c6_u8;
+  void *c6_outputVarPtrs[1];
+  int32_T c6_outputVarSizes[1];
+  real_T c6_c_nargin = 0.0;
+  real_T c6_c_nargout = 0.0;
+  real32_T c6_hoistedGlobal;
+  real32_T c6_b_hoistedGlobal;
+  real32_T c6_c_hoistedGlobal;
+  real32_T c6_d_hoistedGlobal;
+  void *c6_inputVarPtrs[3];
+  int32_T c6_inputVarSizes[3];
+  real32_T c6_f2;
+  real_T c6_d_nargin = 0.0;
+  real_T c6_d_nargout = 1.0;
+  boolean_T c6_b_out;
+  real_T c6_e_nargin = 0.0;
+  real_T c6_e_nargout = 0.0;
+  uint16_T c6_u9;
+  real_T c6_f_nargin = 0.0;
+  real_T c6_f_nargout = 0.0;
+  real32_T c6_e_hoistedGlobal;
+  c6_Sensors_Bus c6_f_hoistedGlobal;
+  real32_T c6_g_hoistedGlobal;
+  real32_T c6_h_hoistedGlobal;
+  real32_T c6_i_hoistedGlobal;
+  real32_T c6_j_hoistedGlobal;
+  real32_T c6_f3;
+  real_T c6_g_nargin = 0.0;
+  real_T c6_g_nargout = 1.0;
+  boolean_T c6_c_out;
+  real_T c6_h_nargin = 0.0;
+  real_T c6_h_nargout = 0.0;
+  uint16_T c6_u10;
+  real_T c6_i_nargin = 0.0;
+  real_T c6_i_nargout = 0.0;
+  real32_T c6_k_hoistedGlobal;
+  real32_T c6_l_hoistedGlobal;
+  real32_T c6_m_hoistedGlobal;
+  real32_T c6_n_hoistedGlobal;
+  real32_T c6_o_hoistedGlobal;
+  real32_T c6_f4;
+  real_T c6_j_nargin = 0.0;
+  real_T c6_j_nargout = 1.0;
+  boolean_T c6_d_out;
+  real_T c6_k_nargin = 0.0;
+  real_T c6_k_nargout = 0.0;
+  uint16_T c6_u11;
+  real_T c6_l_nargin = 0.0;
+  real_T c6_l_nargout = 0.0;
+  real32_T c6_p_hoistedGlobal;
+  real32_T c6_q_hoistedGlobal;
+  real32_T c6_r_hoistedGlobal;
+  real32_T c6_s_hoistedGlobal;
+  real32_T c6_f5;
+  real_T c6_m_nargin = 0.0;
+  real_T c6_m_nargout = 0.0;
+  real32_T c6_t_hoistedGlobal;
+  real32_T c6_u_hoistedGlobal;
+  real32_T c6_v_hoistedGlobal;
+  real32_T c6_w_hoistedGlobal;
+  real32_T c6_f6;
+  _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 9U, chartInstance->c6_sfEvent);
+  switch (chartInstance->c6_is_Ramp) {
+   case c6_IN_BridgeTest:
+    CV_STATE_EVAL(9, 0, 1);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 12U,
+                 chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_lb_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_out = CV_EML_IF(12, 0, 0, chartInstance->c6_temporalCounter_i1 >= 5500);
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_BridgeTest = 0U;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_Ramp = c6_IN_RampUpTwo;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+      chartInstance->c6_temporalCounter_i1 = 0U;
+      chartInstance->c6_tp_RampUpTwo = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_u_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+        chartInstance->c6_states)[24];
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      c6_u8 = 3063U;
+      c6_outputVarPtrs[0U] = (void *)&c6_u8;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                           NULL);
+      chartInstance->c6_des_vel = 0.04F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 10U,
+                   chartInstance->c6_sfEvent);
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_t_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      chartInstance->c6_des_vel = 0.04F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 248U, 166, 11);
+      c6_hoistedGlobal = chartInstance->c6_desired_phi;
+      c6_b_hoistedGlobal = c6_hoistedGlobal;
+      c6_c_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+      c6_d_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)
+        [24];
+      c6_inputVarPtrs[0U] = (void *)&c6_b_hoistedGlobal;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[1U] = (void *)&c6_c_hoistedGlobal;
+      c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[2U] = (void *)&c6_d_hoistedGlobal;
+      c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+      c6_outputVarPtrs[0U] = (void *)&c6_f2;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes);
+      chartInstance->c6_turningPWM = c6_f2;
+      c6_updateDataWrittenToVector(chartInstance, 3U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+      _SFD_SYMBOL_SCOPE_POP();
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c6_sfEvent);
+    break;
+
+   case c6_IN_RampUpOne:
+    CV_STATE_EVAL(9, 0, 2);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 11U,
+                 chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_kb_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_b_out = CV_EML_IF(11, 0, 0, *(real32_T *)&((char_T *)
+      chartInstance->c6_sensors)[28] != 0.0F);
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_b_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_RampUpOne = 0U;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 11U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_Ramp = c6_IN_BridgeTest;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+      chartInstance->c6_temporalCounter_i1 = 0U;
+      chartInstance->c6_tp_BridgeTest = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_s_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_e_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      c6_u9 = 3062U;
+      c6_outputVarPtrs[0U] = (void *)&c6_u9;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                           NULL);
+      chartInstance->c6_des_vel = 0.04F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+        chartInstance->c6_states)[24];
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 11U,
+                   chartInstance->c6_sfEvent);
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_r_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_f_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 247U, 145, 15);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 247U, 212, 11);
+      c6_e_hoistedGlobal = chartInstance->c6_normalizedLight;
+      c6_f_hoistedGlobal.theta_L = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[0];
+      c6_f_hoistedGlobal.theta_R = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[4];
+      c6_f_hoistedGlobal.theta_T = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[8];
+      c6_f_hoistedGlobal.light = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[12];
+      c6_f_hoistedGlobal.gyro = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[16];
+      c6_f_hoistedGlobal.sonar = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[20];
+      c6_f_hoistedGlobal.battery = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[24];
+      c6_f_hoistedGlobal.touch = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[28];
+      c6_f_hoistedGlobal.time = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[32];
+      c6_f_hoistedGlobal.ok_button = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[36];
+      c6_f_hoistedGlobal.BT_status_in = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[40];
+      c6_g_hoistedGlobal = chartInstance->c6_desired_phi;
+      c6_h_hoistedGlobal = c6_g_hoistedGlobal;
+      c6_i_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+      c6_j_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)
+        [24];
+      c6_inputVarPtrs[0U] = (void *)&c6_h_hoistedGlobal;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[1U] = (void *)&c6_i_hoistedGlobal;
+      c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[2U] = (void *)&c6_j_hoistedGlobal;
+      c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+      c6_outputVarPtrs[0U] = (void *)&c6_f3;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes);
+      chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
+        c6_e_hoistedGlobal, 0.5F, (real_T)c6_f_hoistedGlobal.battery) + c6_f3;
+      c6_updateDataWrittenToVector(chartInstance, 3U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+      _SFD_SYMBOL_SCOPE_POP();
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 11U, chartInstance->c6_sfEvent);
+    break;
+
+   case c6_IN_RampUpTwo:
+    CV_STATE_EVAL(9, 0, 3);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 13U,
+                 chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_mb_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_g_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_c_out = CV_EML_IF(13, 0, 0, chartInstance->c6_temporalCounter_i1 >= 250);
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_c_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_RampUpTwo = 0U;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 12U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_Ramp = c6_IN_SlowtoRotate;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_SlowtoRotate = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_y_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_h_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      c6_u10 = 3064U;
+      c6_outputVarPtrs[0U] = (void *)&c6_u10;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                           NULL);
+      sfcs_request_service(chartInstance->S, "Speak", 0, NULL, NULL, 0, NULL,
+                           NULL);
+      chartInstance->c6_des_vel = 0.03F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+        chartInstance->c6_states)[24];
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 12U,
+                   chartInstance->c6_sfEvent);
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_v_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_i_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 5U, 10U, 250U, 145, 15);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 250U, 212, 11);
+      c6_k_hoistedGlobal = chartInstance->c6_normalizedLight;
+      c6_f_hoistedGlobal.theta_L = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[0];
+      c6_f_hoistedGlobal.theta_R = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[4];
+      c6_f_hoistedGlobal.theta_T = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[8];
+      c6_f_hoistedGlobal.light = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[12];
+      c6_f_hoistedGlobal.gyro = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[16];
+      c6_f_hoistedGlobal.sonar = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[20];
+      c6_f_hoistedGlobal.battery = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[24];
+      c6_f_hoistedGlobal.touch = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[28];
+      c6_f_hoistedGlobal.time = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[32];
+      c6_f_hoistedGlobal.ok_button = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[36];
+      c6_f_hoistedGlobal.BT_status_in = *(real32_T *)&((char_T *)
+        chartInstance->c6_sensors)[40];
+      c6_l_hoistedGlobal = chartInstance->c6_desired_phi;
+      c6_m_hoistedGlobal = c6_l_hoistedGlobal;
+      c6_n_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+      c6_o_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)
+        [24];
+      c6_inputVarPtrs[0U] = (void *)&c6_m_hoistedGlobal;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[1U] = (void *)&c6_n_hoistedGlobal;
+      c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[2U] = (void *)&c6_o_hoistedGlobal;
+      c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+      c6_outputVarPtrs[0U] = (void *)&c6_f4;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes);
+      chartInstance->c6_turningPWM = c6_lineTracker(chartInstance, -0.1F,
+        c6_k_hoistedGlobal, 0.0F, (real_T)c6_f_hoistedGlobal.battery) + c6_f4;
+      c6_updateDataWrittenToVector(chartInstance, 3U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+      _SFD_SYMBOL_SCOPE_POP();
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c6_sfEvent);
+    break;
+
+   case c6_IN_RotateInPlace:
+    CV_STATE_EVAL(9, 0, 4);
+    _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 15U,
+                 chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_ob_debug_family_names,
+      c6_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_j_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_d_out, 2U, c6_b_sf_marshallOut,
+      c6_b_sf_marshallIn);
+    c6_errorIfDataNotWrittenToFcn(chartInstance, 9U, 14U, 259U, 13, 12);
+    c6_d_out = CV_EML_IF(15, 0, 0, CV_RELATIONAL_EVAL(5U, 15U, 0, (real_T)
+      *(real32_T *)&((char_T *)chartInstance->c6_states)[24], (real_T)
+      chartInstance->c6_desiredangle, -3, 5U, *(real32_T *)&((char_T *)
+      chartInstance->c6_states)[24] >= chartInstance->c6_desiredangle));
+    _SFD_SYMBOL_SCOPE_POP();
+    if (c6_d_out) {
+      _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_RotateInPlace = 0U;
+      _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+      chartInstance->c6_isStable = false;
+      chartInstance->c6_is_Ramp = c6_IN_Stop;
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 15U, chartInstance->c6_sfEvent);
+      chartInstance->c6_tp_Stop = 1U;
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_bb_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_k_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      c6_u11 = 3066U;
+      c6_outputVarPtrs[0U] = (void *)&c6_u11;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+      sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                           NULL);
+      chartInstance->c6_des_vel = 0.0F;
+      c6_updateDataWrittenToVector(chartInstance, 7U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+      chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+        chartInstance->c6_states)[24];
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      _SFD_SYMBOL_SCOPE_POP();
+    } else {
+      _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 13U,
+                   chartInstance->c6_sfEvent);
+      _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_x_debug_family_names,
+        c6_b_debug_family_var_map);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargin, 0U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_l_nargout, 1U, c6_sf_marshallOut,
+        c6_sf_marshallIn);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 252U, 244, 11);
+      c6_p_hoistedGlobal = chartInstance->c6_desired_phi;
+      c6_q_hoistedGlobal = c6_p_hoistedGlobal;
+      c6_r_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+      c6_s_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)
+        [24];
+      c6_inputVarPtrs[0U] = (void *)&c6_q_hoistedGlobal;
+      c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[1U] = (void *)&c6_r_hoistedGlobal;
+      c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+      c6_inputVarPtrs[2U] = (void *)&c6_s_hoistedGlobal;
+      c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+      c6_outputVarPtrs[0U] = (void *)&c6_f5;
+      c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+      sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                           c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                           c6_outputVarPtrs, (void *)c6_outputVarSizes);
+      chartInstance->c6_turningPWM = c6_f5;
+      c6_updateDataWrittenToVector(chartInstance, 3U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+      c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 252U, 299, 11);
+      chartInstance->c6_desired_phi += 0.5F;
+      c6_updateDataWrittenToVector(chartInstance, 8U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+      _SFD_SYMBOL_SCOPE_POP();
+    }
+
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c6_sfEvent);
+    break;
+
+   case c6_IN_SlowtoRotate:
+    CV_STATE_EVAL(9, 0, 5);
+    c6_SlowtoRotate(chartInstance);
+    break;
+
+   case c6_IN_Stop:
+    CV_STATE_EVAL(9, 0, 6);
+    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 15U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_cb_debug_family_names,
+      c6_b_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_m_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 258U, 124, 11);
+    c6_t_hoistedGlobal = chartInstance->c6_desired_phi;
+    c6_u_hoistedGlobal = c6_t_hoistedGlobal;
+    c6_v_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+    c6_w_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)[24];
+    c6_inputVarPtrs[0U] = (void *)&c6_u_hoistedGlobal;
+    c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+    c6_inputVarPtrs[1U] = (void *)&c6_v_hoistedGlobal;
+    c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+    c6_inputVarPtrs[2U] = (void *)&c6_w_hoistedGlobal;
+    c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+    c6_outputVarPtrs[0U] = (void *)&c6_f6;
+    c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+    sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                         c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                         c6_outputVarPtrs, (void *)c6_outputVarSizes);
+    chartInstance->c6_turningPWM = c6_f6;
+    c6_updateDataWrittenToVector(chartInstance, 3U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+    _SFD_SYMBOL_SCOPE_POP();
+    _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, chartInstance->c6_sfEvent);
+    break;
+
+   default:
+    CV_STATE_EVAL(9, 0, 0);
+    chartInstance->c6_is_Ramp = c6_IN_NO_ACTIVE_CHILD;
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 10U, chartInstance->c6_sfEvent);
+    break;
+  }
+
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 9U, chartInstance->c6_sfEvent);
+}
+
+static void c6_SlowtoRotate(SFc6_et_roboconInstanceStruct *chartInstance)
+{
+  uint32_T c6_debug_family_var_map[3];
+  real_T c6_nargin = 0.0;
+  real_T c6_nargout = 1.0;
+  boolean_T c6_out;
+  uint32_T c6_b_debug_family_var_map[2];
+  real_T c6_b_nargin = 0.0;
+  real_T c6_b_nargout = 0.0;
+  uint16_T c6_u12;
+  void *c6_outputVarPtrs[1];
+  int32_T c6_outputVarSizes[1];
+  real_T c6_c_nargin = 0.0;
+  real_T c6_c_nargout = 0.0;
+  real32_T c6_hoistedGlobal;
+  real32_T c6_b_hoistedGlobal;
+  real32_T c6_c_hoistedGlobal;
+  real32_T c6_d_hoistedGlobal;
+  void *c6_inputVarPtrs[3];
+  int32_T c6_inputVarSizes[3];
+  real32_T c6_f7;
+  _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 14U, chartInstance->c6_sfEvent);
+  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 3U, 3U, c6_nb_debug_family_names,
+    c6_debug_family_var_map);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargin, 0U, c6_sf_marshallOut,
+    c6_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_nargout, 1U, c6_sf_marshallOut,
+    c6_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_out, 2U, c6_b_sf_marshallOut,
+    c6_b_sf_marshallIn);
+  c6_errorIfDataNotWrittenToFcn(chartInstance, 7U, 12U, 257U, 1, 7);
+  c6_out = CV_EML_IF(14, 0, 0, CV_RELATIONAL_EVAL(5U, 14U, 0, (real_T)
+    chartInstance->c6_des_vel, 0.01, -1, 3U, (real_T)chartInstance->c6_des_vel <=
+    0.01));
+  _SFD_SYMBOL_SCOPE_POP();
+  if (c6_out) {
+    _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+    chartInstance->c6_tp_SlowtoRotate = 0U;
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c6_sfEvent);
+    chartInstance->c6_isStable = false;
+    chartInstance->c6_is_Ramp = c6_IN_RotateInPlace;
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 13U, chartInstance->c6_sfEvent);
+    chartInstance->c6_tp_RotateInPlace = 1U;
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_w_debug_family_names,
+      c6_b_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_b_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    c6_u12 = 3065U;
+    c6_outputVarPtrs[0U] = (void *)&c6_u12;
+    c6_outputVarSizes[0U] = (int32_T)sizeof(uint16_T);
+    sfcs_request_service(chartInstance->S, "StatusLCD", 1, (void *)
+                         c6_outputVarPtrs, (void *)c6_outputVarSizes, 0, NULL,
+                         NULL);
+    chartInstance->c6_des_vel = 0.0F;
+    c6_updateDataWrittenToVector(chartInstance, 7U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+    chartInstance->c6_desiredangle = *(real32_T *)&((char_T *)
+      chartInstance->c6_states)[24] + 180.0F;
+    c6_updateDataWrittenToVector(chartInstance, 9U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desiredangle, 14U);
+    chartInstance->c6_desired_phi = *(real32_T *)&((char_T *)
+      chartInstance->c6_states)[24] + 0.5F;
+    c6_updateDataWrittenToVector(chartInstance, 8U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_desired_phi, 13U);
+    _SFD_SYMBOL_SCOPE_POP();
+  } else {
+    _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c6_sfEvent);
+    _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 2U, 2U, c6_ab_debug_family_names,
+      c6_b_debug_family_var_map);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargin, 0U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_c_nargout, 1U, c6_sf_marshallOut,
+      c6_sf_marshallIn);
+    c6_errorIfDataNotWrittenToFcn(chartInstance, 7U, 12U, 254U, 123, 7);
+    chartInstance->c6_des_vel -= 0.01F;
+    c6_updateDataWrittenToVector(chartInstance, 7U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_des_vel, 12U);
+    c6_errorIfDataNotWrittenToFcn(chartInstance, 8U, 13U, 254U, 172, 11);
+    c6_hoistedGlobal = chartInstance->c6_desired_phi;
+    c6_b_hoistedGlobal = c6_hoistedGlobal;
+    c6_c_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_states)[24];
+    c6_d_hoistedGlobal = *(real32_T *)&((char_T *)chartInstance->c6_sensors)[24];
+    c6_inputVarPtrs[0U] = (void *)&c6_b_hoistedGlobal;
+    c6_inputVarSizes[0U] = (int32_T)sizeof(real32_T);
+    c6_inputVarPtrs[1U] = (void *)&c6_c_hoistedGlobal;
+    c6_inputVarSizes[1U] = (int32_T)sizeof(real32_T);
+    c6_inputVarPtrs[2U] = (void *)&c6_d_hoistedGlobal;
+    c6_inputVarSizes[2U] = (int32_T)sizeof(real32_T);
+    c6_outputVarPtrs[0U] = (void *)&c6_f7;
+    c6_outputVarSizes[0U] = (int32_T)sizeof(real32_T);
+    sfcs_request_service(chartInstance->S, "phiController", 3, (void *)
+                         c6_inputVarPtrs, (void *)c6_inputVarSizes, 1, (void *)
+                         c6_outputVarPtrs, (void *)c6_outputVarSizes);
+    chartInstance->c6_turningPWM = c6_f7;
+    c6_updateDataWrittenToVector(chartInstance, 3U);
+    _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c6_turningPWM, 7U);
+    _SFD_SYMBOL_SCOPE_POP();
+  }
+
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c6_sfEvent);
 }
 
 static void init_script_number_translation(uint32_T c6_machineNumber, uint32_T
@@ -2412,10 +3042,10 @@ static real32_T c6_d_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId)
 {
   real32_T c6_y;
-  real32_T c6_f4;
+  real32_T c6_f8;
   (void)chartInstance;
-  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), &c6_f4, 1, 1, 0U, 0, 0U, 0);
-  c6_y = c6_f4;
+  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), &c6_f8, 1, 1, 0U, 0, 0U, 0);
+  c6_y = c6_f8;
   sf_mex_destroy(&c6_u);
   return c6_y;
 }
@@ -2509,16 +3139,16 @@ static real32_T c6_lineTracker(SFc6_et_roboconInstanceStruct *chartInstance,
   real_T c6_c_battery)
 {
   real32_T c6_c_cmd;
-  _SFD_DATA_RANGE_CHECK((real_T)c6_b_desiredLight, 22U);
-  _SFD_DATA_RANGE_CHECK((real_T)c6_c_light, 23U);
-  _SFD_DATA_RANGE_CHECK((real_T)c6_b_trackingPower, 24U);
-  _SFD_DATA_RANGE_CHECK(c6_c_battery, 25U);
-  _SFD_SET_DATA_VALUE_PTR(21U, &c6_c_cmd);
-  _SFD_SET_DATA_VALUE_PTR(25U, &c6_c_battery);
-  _SFD_SET_DATA_VALUE_PTR(24U, &c6_b_trackingPower);
-  _SFD_SET_DATA_VALUE_PTR(23U, &c6_c_light);
-  _SFD_SET_DATA_VALUE_PTR(22U, &c6_b_desiredLight);
-  _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_b_desiredLight, 23U);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_c_light, 24U);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_b_trackingPower, 25U);
+  _SFD_DATA_RANGE_CHECK(c6_c_battery, 26U);
+  _SFD_SET_DATA_VALUE_PTR(22U, &c6_c_cmd);
+  _SFD_SET_DATA_VALUE_PTR(26U, &c6_c_battery);
+  _SFD_SET_DATA_VALUE_PTR(25U, &c6_b_trackingPower);
+  _SFD_SET_DATA_VALUE_PTR(24U, &c6_c_light);
+  _SFD_SET_DATA_VALUE_PTR(23U, &c6_b_desiredLight);
+  _SFD_CS_CALL(FUNCTION_ACTIVE_TAG, 21U, chartInstance->c6_sfEvent);
   _SFD_SYMBOL_SCOPE_PUSH(5U, 0U);
   _SFD_SYMBOL_SCOPE_ADD_IMPORTABLE("desiredLight", &c6_b_desiredLight,
     c6_c_sf_marshallOut, c6_c_sf_marshallIn);
@@ -2530,27 +3160,27 @@ static real32_T c6_lineTracker(SFc6_et_roboconInstanceStruct *chartInstance,
     c6_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD_IMPORTABLE("cmd", &c6_c_cmd, c6_c_sf_marshallOut,
     c6_c_sf_marshallIn);
-  _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 16U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 21U, chartInstance->c6_sfEvent);
   *chartInstance->c6_desiredLight = c6_b_desiredLight;
-  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_desiredLight, 22U);
+  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_desiredLight, 23U);
   *chartInstance->c6_b_light = c6_c_light;
-  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_b_light, 23U);
+  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_b_light, 24U);
   *chartInstance->c6_trackingPower = c6_b_trackingPower;
-  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_trackingPower, 24U);
+  _SFD_DATA_RANGE_CHECK((real_T)*chartInstance->c6_trackingPower, 25U);
   *chartInstance->c6_b_battery = c6_c_battery;
-  _SFD_DATA_RANGE_CHECK(*chartInstance->c6_b_battery, 25U);
+  _SFD_DATA_RANGE_CHECK(*chartInstance->c6_b_battery, 26U);
   sf_call_output_fcn_call(chartInstance->S, 2, "lineTracker", 0);
   c6_c_cmd = *chartInstance->c6_b_cmd;
-  c6_updateDataWrittenToVector(chartInstance, 11U);
-  _SFD_DATA_RANGE_CHECK((real_T)c6_c_cmd, 21U);
+  c6_updateDataWrittenToVector(chartInstance, 12U);
+  _SFD_DATA_RANGE_CHECK((real_T)c6_c_cmd, 22U);
   _SFD_SYMBOL_SCOPE_POP();
-  _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 16U, chartInstance->c6_sfEvent);
-  _SFD_UNSET_DATA_VALUE_PTR(21U);
+  _SFD_CS_CALL(FUNCTION_INACTIVE_TAG, 21U, chartInstance->c6_sfEvent);
+  _SFD_UNSET_DATA_VALUE_PTR(22U);
+  _SFD_UNSET_DATA_VALUE_PTR(26U);
   _SFD_UNSET_DATA_VALUE_PTR(25U);
   _SFD_UNSET_DATA_VALUE_PTR(24U);
   _SFD_UNSET_DATA_VALUE_PTR(23U);
-  _SFD_UNSET_DATA_VALUE_PTR(22U);
-  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, chartInstance->c6_sfEvent);
+  _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 21U, chartInstance->c6_sfEvent);
   return c6_c_cmd;
 }
 
@@ -2636,10 +3266,10 @@ static uint8_T c6_g_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId)
 {
   uint8_T c6_y;
-  uint8_T c6_u9;
+  uint8_T c6_u13;
   (void)chartInstance;
-  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), &c6_u9, 1, 3, 0U, 0, 0U, 0);
-  c6_y = c6_u9;
+  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), &c6_u13, 1, 3, 0U, 0, 0U, 0);
+  c6_y = c6_u13;
   sf_mex_destroy(&c6_u);
   return c6_y;
 }
@@ -3559,33 +4189,59 @@ static void c6_k_sf_marshallIn(void *chartInstanceVoid, const mxArray
   sf_mex_destroy(&c6_mxArrayInData);
 }
 
-static void c6_p_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
+static uint16_T c6_p_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+  *chartInstance, const mxArray *c6_b_temporalCounter_i1, const char_T
+  *c6_identifier)
+{
+  uint16_T c6_y;
+  emlrtMsgIdentifier c6_thisId;
+  c6_thisId.fIdentifier = c6_identifier;
+  c6_thisId.fParent = NULL;
+  c6_y = c6_q_emlrt_marshallIn(chartInstance, sf_mex_dup(c6_b_temporalCounter_i1),
+    &c6_thisId);
+  sf_mex_destroy(&c6_b_temporalCounter_i1);
+  return c6_y;
+}
+
+static uint16_T c6_q_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+  *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId)
+{
+  uint16_T c6_y;
+  uint16_T c6_u14;
+  (void)chartInstance;
+  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), &c6_u14, 1, 5, 0U, 0, 0U, 0);
+  c6_y = c6_u14;
+  sf_mex_destroy(&c6_u);
+  return c6_y;
+}
+
+static void c6_r_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
   const mxArray *c6_b_dataWrittenToVector, const char_T *c6_identifier,
-  boolean_T c6_y[12])
+  boolean_T c6_y[13])
 {
   emlrtMsgIdentifier c6_thisId;
   c6_thisId.fIdentifier = c6_identifier;
   c6_thisId.fParent = NULL;
-  c6_q_emlrt_marshallIn(chartInstance, sf_mex_dup(c6_b_dataWrittenToVector),
+  c6_s_emlrt_marshallIn(chartInstance, sf_mex_dup(c6_b_dataWrittenToVector),
                         &c6_thisId, c6_y);
   sf_mex_destroy(&c6_b_dataWrittenToVector);
 }
 
-static void c6_q_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
-  const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId, boolean_T c6_y[12])
+static void c6_s_emlrt_marshallIn(SFc6_et_roboconInstanceStruct *chartInstance,
+  const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId, boolean_T c6_y[13])
 {
-  boolean_T c6_bv1[12];
+  boolean_T c6_bv1[13];
   int32_T c6_i3;
   (void)chartInstance;
-  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), c6_bv1, 1, 11, 0U, 1, 0U, 1, 12);
-  for (c6_i3 = 0; c6_i3 < 12; c6_i3++) {
+  sf_mex_import(c6_parentId, sf_mex_dup(c6_u), c6_bv1, 1, 11, 0U, 1, 0U, 1, 13);
+  for (c6_i3 = 0; c6_i3 < 13; c6_i3++) {
     c6_y[c6_i3] = c6_bv1[c6_i3];
   }
 
   sf_mex_destroy(&c6_u);
 }
 
-static const mxArray *c6_r_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+static const mxArray *c6_t_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_b_setSimStateSideEffectsInfo, const char_T
   *c6_identifier)
 {
@@ -3594,13 +4250,13 @@ static const mxArray *c6_r_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   c6_y = NULL;
   c6_thisId.fIdentifier = c6_identifier;
   c6_thisId.fParent = NULL;
-  sf_mex_assign(&c6_y, c6_s_emlrt_marshallIn(chartInstance, sf_mex_dup
+  sf_mex_assign(&c6_y, c6_u_emlrt_marshallIn(chartInstance, sf_mex_dup
     (c6_b_setSimStateSideEffectsInfo), &c6_thisId), false);
   sf_mex_destroy(&c6_b_setSimStateSideEffectsInfo);
   return c6_y;
 }
 
-static const mxArray *c6_s_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
+static const mxArray *c6_u_emlrt_marshallIn(SFc6_et_roboconInstanceStruct
   *chartInstance, const mxArray *c6_u, const emlrtMsgIdentifier *c6_parentId)
 {
   const mxArray *c6_y = NULL;
@@ -3616,7 +4272,7 @@ static void c6_updateDataWrittenToVector(SFc6_et_roboconInstanceStruct
   *chartInstance, uint32_T c6_vectorIndex)
 {
   chartInstance->c6_dataWrittenToVector[(uint32_T)_SFD_EML_ARRAY_BOUNDS_CHECK(0U,
-    (int32_T)c6_vectorIndex, 0, 11, 1, 0)] = true;
+    (int32_T)c6_vectorIndex, 0, 12, 1, 0)] = true;
 }
 
 static void c6_errorIfDataNotWrittenToFcn(SFc6_et_roboconInstanceStruct
@@ -3628,7 +4284,7 @@ static void c6_errorIfDataNotWrittenToFcn(SFc6_et_roboconInstanceStruct
   (void)c6_offsetInSourceObject;
   (void)c6_lengthInSourceObject;
   if (!chartInstance->c6_dataWrittenToVector[(uint32_T)
-      _SFD_EML_ARRAY_BOUNDS_CHECK(0U, (int32_T)c6_vectorIndex, 0, 11, 1, 0)]) {
+      _SFD_EML_ARRAY_BOUNDS_CHECK(0U, (int32_T)c6_vectorIndex, 0, 12, 1, 0)]) {
     _SFD_DATA_READ_BEFORE_WRITE_ERROR(c6_dataNumber);
   }
 }
@@ -3768,10 +4424,10 @@ extern void utFree(void*);
 
 void sf_c6_et_robocon_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2314476447U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(616572536U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(130058553U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1176490256U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3291982842U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4113798690U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(724471698U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1788758608U);
 }
 
 mxArray* sf_c6_et_robocon_get_post_codegen_info(void);
@@ -3785,7 +4441,7 @@ mxArray *sf_c6_et_robocon_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("Vz0VZQKpDZe4btMgiOXEfB");
+    mxArray *mxChecksum = mxCreateString("jnUWg4NzD0rcvza4KUhmPH");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -3927,7 +4583,7 @@ mxArray *sf_c6_et_robocon_get_autoinheritance_info(void)
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
-    mxArray *mxData = mxCreateStructMatrix(1,6,3,dataFields);
+    mxArray *mxData = mxCreateStructMatrix(1,7,3,dataFields);
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -4042,6 +4698,25 @@ mxArray *sf_c6_et_robocon_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,5,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(1);
+      pr[1] = (double)(1);
+      mxSetField(mxData,6,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(9));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,6,"type",mxType);
+    }
+
+    mxSetField(mxData,6,"complexity",mxCreateDoubleScalar(0));
     mxSetField(mxAutoinheritanceInfo,0,"locals",mxData);
   }
 
@@ -4132,11 +4807,11 @@ static const mxArray *sf_get_sim_state_info_c6_et_robocon(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x10'type','srcId','name','auxInfo'{{M[1],M[194],T\"BT_status_out\",},{M[1],M[30],T\"PWM\",},{M[1],M[38],T\"initFlags\",},{M[3],M[199],T\"des_vel\",},{M[3],M[204],T\"desired_phi\",},{M[3],M[39],T\"desired_tail\",},{M[3],M[198],T\"forwardPWM\",},{M[3],M[195],T\"normalizedLight\",},{M[3],M[192],T\"turningPWM\",},{M[8],M[0],T\"is_active_c6_et_robocon\",}}",
-    "100 S1x8'type','srcId','name','auxInfo'{{M[8],M[41],T\"is_active_After\",},{M[8],M[100],T\"is_active_SeesawLogic\",},{M[9],M[0],T\"is_c6_et_robocon\",},{M[9],M[96],T\"is_see_saw_mode\",},{M[9],M[100],T\"is_SeesawLogic\",},{M[9],M[231],T\"is_Curvature\",},{M[11],M[0],T\"temporalCounter_i1\",S'et','os','ct'{{T\"at\",M1x2[107 200],M[1]}}},{M[15],M[0],T\"dataWrittenToVector\",}}"
+    "100 S1x10'type','srcId','name','auxInfo'{{M[1],M[194],T\"BT_status_out\",},{M[1],M[30],T\"PWM\",},{M[1],M[38],T\"initFlags\",},{M[3],M[199],T\"des_vel\",},{M[3],M[204],T\"desired_phi\",},{M[3],M[39],T\"desired_tail\",},{M[3],M[262],T\"desiredangle\",},{M[3],M[198],T\"forwardPWM\",},{M[3],M[195],T\"normalizedLight\",},{M[3],M[192],T\"turningPWM\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[0],T\"is_active_c6_et_robocon\",},{M[8],M[41],T\"is_active_After\",},{M[8],M[100],T\"is_active_SeesawLogic\",},{M[9],M[0],T\"is_c6_et_robocon\",},{M[9],M[96],T\"is_see_saw_mode\",},{M[9],M[100],T\"is_SeesawLogic\",},{M[9],M[231],T\"is_Curvature\",},{M[9],M[246],T\"is_Ramp\",},{M[11],M[0],T\"temporalCounter_i1\",S'et','os','ct'{{T\"at\",M1x4[107 200 248 250],M[1]}}},{M[15],M[0],T\"dataWrittenToVector\",}}"
   };
 
-  mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 18, 10);
+  mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 20, 10);
   mxArray *mxChecksum = mxCreateDoubleMatrix(1, 4, mxREAL);
   sf_c6_et_robocon_get_check_sum(&mxChecksum);
   mxSetField(mxInfo, 0, infoFields[0], mxChecksum);
@@ -4160,10 +4835,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (sfGlobalDebugInstanceStruct,
            _et_roboconMachineNumber_,
            6,
+           23,
            18,
-           13,
            0,
-           26,
+           27,
            0,
            0,
            0,
@@ -4201,18 +4876,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_PROPS(11,0,0,0,"forwardPWM");
           _SFD_SET_DATA_PROPS(12,0,0,0,"des_vel");
           _SFD_SET_DATA_PROPS(13,0,0,0,"desired_phi");
-          _SFD_SET_DATA_PROPS(14,8,0,0,"");
+          _SFD_SET_DATA_PROPS(14,0,0,0,"desiredangle");
           _SFD_SET_DATA_PROPS(15,8,0,0,"");
-          _SFD_SET_DATA_PROPS(16,9,0,0,"");
-          _SFD_SET_DATA_PROPS(17,8,0,0,"");
+          _SFD_SET_DATA_PROPS(16,8,0,0,"");
+          _SFD_SET_DATA_PROPS(17,9,0,0,"");
           _SFD_SET_DATA_PROPS(18,8,0,0,"");
           _SFD_SET_DATA_PROPS(19,8,0,0,"");
-          _SFD_SET_DATA_PROPS(20,9,0,0,"");
+          _SFD_SET_DATA_PROPS(20,8,0,0,"");
           _SFD_SET_DATA_PROPS(21,9,0,0,"");
-          _SFD_SET_DATA_PROPS(22,8,0,0,"");
+          _SFD_SET_DATA_PROPS(22,9,0,0,"");
           _SFD_SET_DATA_PROPS(23,8,0,0,"");
           _SFD_SET_DATA_PROPS(24,8,0,0,"");
           _SFD_SET_DATA_PROPS(25,8,0,0,"");
+          _SFD_SET_DATA_PROPS(26,8,0,0,"");
           _SFD_STATE_INFO(0,0,0);
           _SFD_STATE_INFO(1,1,0);
           _SFD_STATE_INFO(2,0,1);
@@ -4228,41 +4904,56 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_STATE_INFO(12,0,0);
           _SFD_STATE_INFO(13,0,0);
           _SFD_STATE_INFO(14,0,0);
-          _SFD_STATE_INFO(15,0,2);
-          _SFD_STATE_INFO(16,0,2);
-          _SFD_STATE_INFO(17,0,2);
+          _SFD_STATE_INFO(15,0,0);
+          _SFD_STATE_INFO(16,0,0);
+          _SFD_STATE_INFO(17,0,0);
+          _SFD_STATE_INFO(18,0,0);
+          _SFD_STATE_INFO(19,0,0);
+          _SFD_STATE_INFO(20,0,2);
+          _SFD_STATE_INFO(21,0,2);
+          _SFD_STATE_INFO(22,0,2);
           _SFD_CH_SUBSTATE_COUNT(1);
           _SFD_CH_SUBSTATE_DECOMP(0);
           _SFD_CH_SUBSTATE_INDEX(0,0);
           _SFD_ST_SUBSTATE_COUNT(0,3);
           _SFD_ST_SUBSTATE_INDEX(0,0,1);
-          _SFD_ST_SUBSTATE_INDEX(0,1,13);
-          _SFD_ST_SUBSTATE_INDEX(0,2,14);
+          _SFD_ST_SUBSTATE_INDEX(0,1,18);
+          _SFD_ST_SUBSTATE_INDEX(0,2,19);
           _SFD_ST_SUBSTATE_COUNT(1,2);
-          _SFD_ST_SUBSTATE_INDEX(1,0,3);
-          _SFD_ST_SUBSTATE_INDEX(1,1,2);
-          _SFD_ST_SUBSTATE_COUNT(3,7);
+          _SFD_ST_SUBSTATE_INDEX(1,0,2);
+          _SFD_ST_SUBSTATE_INDEX(1,1,3);
+          _SFD_ST_SUBSTATE_COUNT(2,0);
+          _SFD_ST_SUBSTATE_COUNT(3,6);
           _SFD_ST_SUBSTATE_INDEX(3,0,4);
           _SFD_ST_SUBSTATE_INDEX(3,1,5);
-          _SFD_ST_SUBSTATE_INDEX(3,2,6);
-          _SFD_ST_SUBSTATE_INDEX(3,3,7);
-          _SFD_ST_SUBSTATE_INDEX(3,4,10);
-          _SFD_ST_SUBSTATE_INDEX(3,5,11);
-          _SFD_ST_SUBSTATE_INDEX(3,6,12);
+          _SFD_ST_SUBSTATE_INDEX(3,2,8);
+          _SFD_ST_SUBSTATE_INDEX(3,3,9);
+          _SFD_ST_SUBSTATE_INDEX(3,4,16);
+          _SFD_ST_SUBSTATE_INDEX(3,5,17);
           _SFD_ST_SUBSTATE_COUNT(4,0);
-          _SFD_ST_SUBSTATE_COUNT(5,0);
+          _SFD_ST_SUBSTATE_COUNT(5,2);
+          _SFD_ST_SUBSTATE_INDEX(5,0,6);
+          _SFD_ST_SUBSTATE_INDEX(5,1,7);
           _SFD_ST_SUBSTATE_COUNT(6,0);
-          _SFD_ST_SUBSTATE_COUNT(7,2);
-          _SFD_ST_SUBSTATE_INDEX(7,0,8);
-          _SFD_ST_SUBSTATE_INDEX(7,1,9);
+          _SFD_ST_SUBSTATE_COUNT(7,0);
           _SFD_ST_SUBSTATE_COUNT(8,0);
-          _SFD_ST_SUBSTATE_COUNT(9,0);
+          _SFD_ST_SUBSTATE_COUNT(9,6);
+          _SFD_ST_SUBSTATE_INDEX(9,0,10);
+          _SFD_ST_SUBSTATE_INDEX(9,1,11);
+          _SFD_ST_SUBSTATE_INDEX(9,2,12);
+          _SFD_ST_SUBSTATE_INDEX(9,3,13);
+          _SFD_ST_SUBSTATE_INDEX(9,4,14);
+          _SFD_ST_SUBSTATE_INDEX(9,5,15);
           _SFD_ST_SUBSTATE_COUNT(10,0);
           _SFD_ST_SUBSTATE_COUNT(11,0);
           _SFD_ST_SUBSTATE_COUNT(12,0);
-          _SFD_ST_SUBSTATE_COUNT(2,0);
           _SFD_ST_SUBSTATE_COUNT(13,0);
           _SFD_ST_SUBSTATE_COUNT(14,0);
+          _SFD_ST_SUBSTATE_COUNT(15,0);
+          _SFD_ST_SUBSTATE_COUNT(16,0);
+          _SFD_ST_SUBSTATE_COUNT(17,0);
+          _SFD_ST_SUBSTATE_COUNT(18,0);
+          _SFD_ST_SUBSTATE_COUNT(19,0);
         }
 
         _SFD_CV_INIT_CHART(1,0,0,0);
@@ -4280,7 +4971,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          _SFD_CV_INIT_STATE(3,7,1,1,0,0,NULL,NULL);
+          _SFD_CV_INIT_STATE(3,6,1,1,0,0,NULL,NULL);
         }
 
         {
@@ -4288,7 +4979,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          _SFD_CV_INIT_STATE(5,0,0,0,0,0,NULL,NULL);
+          _SFD_CV_INIT_STATE(5,2,1,1,0,0,NULL,NULL);
         }
 
         {
@@ -4296,7 +4987,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          _SFD_CV_INIT_STATE(7,2,1,1,0,0,NULL,NULL);
+          _SFD_CV_INIT_STATE(7,0,0,0,0,0,NULL,NULL);
         }
 
         {
@@ -4304,7 +4995,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          _SFD_CV_INIT_STATE(9,0,0,0,0,0,NULL,NULL);
+          _SFD_CV_INIT_STATE(9,6,1,1,0,0,NULL,NULL);
         }
 
         {
@@ -4339,45 +5030,71 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_CV_INIT_STATE(17,0,0,0,0,0,NULL,NULL);
         }
 
+        {
+          _SFD_CV_INIT_STATE(18,0,0,0,0,0,NULL,NULL);
+        }
+
+        {
+          _SFD_CV_INIT_STATE(19,0,0,0,0,0,NULL,NULL);
+        }
+
+        {
+          _SFD_CV_INIT_STATE(20,0,0,0,0,0,NULL,NULL);
+        }
+
+        {
+          _SFD_CV_INIT_STATE(21,0,0,0,0,0,NULL,NULL);
+        }
+
+        {
+          _SFD_CV_INIT_STATE(22,0,0,0,0,0,NULL,NULL);
+        }
+
         _SFD_CV_INIT_TRANS(0,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(3,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(2,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(1,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(4,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(12,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(5,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(11,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(6,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(8,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(7,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(9,0,NULL,NULL,0,NULL);
         _SFD_CV_INIT_TRANS(10,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(6,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(7,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(16,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(8,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(9,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(17,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(11,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(12,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(13,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(14,0,NULL,NULL,0,NULL);
+        _SFD_CV_INIT_TRANS(15,0,NULL,NULL,0,NULL);
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(14,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(13,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(10,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(5,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(12,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(7,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(9,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(19,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(18,1,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(8,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(11,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(17,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(5,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(7,1,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(6,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(16,1,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(4,1,0,0,0,0,0,0,0,0,0);
         _SFD_CV_INIT_EML(2,1,0,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML(10,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(10,0,0,1,14,1,14);
-        _SFD_CV_INIT_EML_RELATIONAL(10,0,0,1,14,-1,3);
+        _SFD_CV_INIT_EML(11,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(10,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(12,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(13,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(14,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(15,1,0,0,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML(3,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(3,0,0,1,14,1,14);
         _SFD_CV_INIT_EML(4,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(4,0,0,0,14,0,14);
-        _SFD_CV_INIT_EML(12,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(12,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML_IF(4,0,0,0,12,0,12);
         _SFD_CV_INIT_EML(5,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(5,0,0,0,14,0,14);
-        _SFD_CV_INIT_EML(11,0,0,1,0,0,0,0,0,2,1);
-        _SFD_CV_INIT_EML_IF(11,0,0,1,32,1,32);
+        _SFD_CV_INIT_EML_IF(5,0,0,0,15,0,15);
+        _SFD_CV_INIT_EML(10,0,0,1,0,0,0,0,0,2,1);
+        _SFD_CV_INIT_EML_IF(10,0,0,1,32,1,32);
 
         {
           static int condStart[] = { 1, 18 };
@@ -4386,17 +5103,17 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
           static int pfixExpr[] = { 0, 1, -3 };
 
-          _SFD_CV_INIT_EML_MCDC(11,0,0,1,32,2,0,&(condStart[0]),&(condEnd[0]),3,
+          _SFD_CV_INIT_EML_MCDC(10,0,0,1,32,2,0,&(condStart[0]),&(condEnd[0]),3,
                                 &(pfixExpr[0]));
         }
 
-        _SFD_CV_INIT_EML_RELATIONAL(11,0,0,1,14,-1,2);
-        _SFD_CV_INIT_EML_RELATIONAL(11,0,1,18,32,-1,2);
+        _SFD_CV_INIT_EML_RELATIONAL(10,0,0,1,14,-1,2);
+        _SFD_CV_INIT_EML_RELATIONAL(10,0,1,18,32,-1,2);
         _SFD_CV_INIT_EML(6,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(6,0,0,1,13,1,13);
-        _SFD_CV_INIT_EML_RELATIONAL(6,0,0,1,13,-1,5);
-        _SFD_CV_INIT_EML(8,0,0,1,0,0,0,0,0,3,1);
-        _SFD_CV_INIT_EML_IF(8,0,0,1,46,1,46);
+        _SFD_CV_INIT_EML_IF(6,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML_RELATIONAL(6,0,0,1,14,-1,5);
+        _SFD_CV_INIT_EML(7,0,0,1,0,0,0,0,0,3,1);
+        _SFD_CV_INIT_EML_IF(7,0,0,1,46,1,46);
 
         {
           static int condStart[] = { 3, 21, 40 };
@@ -4405,14 +5122,29 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
           static int pfixExpr[] = { 0, 1, -2, 2, -3 };
 
-          _SFD_CV_INIT_EML_MCDC(8,0,0,2,46,3,0,&(condStart[0]),&(condEnd[0]),5,
+          _SFD_CV_INIT_EML_MCDC(7,0,0,2,46,3,0,&(condStart[0]),&(condEnd[0]),5,
                                 &(pfixExpr[0]));
         }
 
-        _SFD_CV_INIT_EML_RELATIONAL(8,0,0,3,17,-1,2);
-        _SFD_CV_INIT_EML_RELATIONAL(8,0,1,21,35,-1,2);
-        _SFD_CV_INIT_EML(7,0,0,1,0,0,0,0,0,2,1);
-        _SFD_CV_INIT_EML_IF(7,0,0,1,61,1,48);
+        _SFD_CV_INIT_EML_RELATIONAL(7,0,0,3,17,-1,2);
+        _SFD_CV_INIT_EML_RELATIONAL(7,0,1,21,35,-1,2);
+        _SFD_CV_INIT_EML(9,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(9,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML_RELATIONAL(9,0,0,1,14,-1,3);
+        _SFD_CV_INIT_EML(11,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(11,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML(12,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(12,0,0,0,13,0,13);
+        _SFD_CV_INIT_EML(13,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(13,0,0,0,12,0,12);
+        _SFD_CV_INIT_EML(14,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(14,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML_RELATIONAL(14,0,0,1,14,-1,3);
+        _SFD_CV_INIT_EML(15,0,0,1,0,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_IF(15,0,0,1,25,1,25);
+        _SFD_CV_INIT_EML_RELATIONAL(15,0,0,1,25,-3,5);
+        _SFD_CV_INIT_EML(16,0,0,1,0,0,0,0,0,2,1);
+        _SFD_CV_INIT_EML_IF(16,0,0,1,61,1,48);
 
         {
           static int condStart[] = { 1, 18 };
@@ -4421,13 +5153,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
           static int pfixExpr[] = { 0, 1, -2 };
 
-          _SFD_CV_INIT_EML_MCDC(7,0,0,1,61,2,0,&(condStart[0]),&(condEnd[0]),3,
+          _SFD_CV_INIT_EML_MCDC(16,0,0,1,61,2,0,&(condStart[0]),&(condEnd[0]),3,
                                 &(pfixExpr[0]));
         }
 
-        _SFD_CV_INIT_EML_RELATIONAL(7,0,0,18,61,-3,2);
-        _SFD_CV_INIT_EML(3,0,0,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_IF(3,0,0,1,14,1,14);
+        _SFD_CV_INIT_EML_RELATIONAL(16,0,0,18,61,-3,2);
         _SFD_SET_DATA_COMPILED_PROPS(0,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_sensors_bus_io,(MexInFcnForType)NULL);
         _SFD_SET_DATA_COMPILED_PROPS(1,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -4458,18 +5188,18 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(14,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(15,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(15,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(16,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_lightCalib_bus_io,(MexInFcnForType)NULL);
-        _SFD_SET_DATA_COMPILED_PROPS(16,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(17,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(17,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(18,SF_STRUCT,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_balancerStates_bus_io,(MexInFcnForType)NULL);
-        _SFD_SET_DATA_COMPILED_PROPS(18,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(19,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(19,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(20,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_sf_marshallOut,(MexInFcnForType)c6_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(20,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(21,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(22,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -4478,9 +5208,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(24,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(25,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(25,SF_SINGLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c6_c_sf_marshallOut,(MexInFcnForType)c6_c_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(26,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c6_sf_marshallOut,(MexInFcnForType)c6_sf_marshallIn);
-        _SFD_SET_DATA_VALUE_PTR(14,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(15,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(16,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(17,(void *)(NULL));
@@ -4492,6 +5223,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_SET_DATA_VALUE_PTR(23,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(24,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(25,(void *)(NULL));
+        _SFD_SET_DATA_VALUE_PTR(26,(void *)(NULL));
         _SFD_SET_DATA_VALUE_PTR(0U, chartInstance->c6_sensors);
         _SFD_SET_DATA_VALUE_PTR(1U, chartInstance->c6_lightCalib_address);
         _SFD_SET_DATA_VALUE_PTR(2U,
@@ -4507,6 +5239,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_SET_DATA_VALUE_PTR(11U, &chartInstance->c6_forwardPWM);
         _SFD_SET_DATA_VALUE_PTR(12U, &chartInstance->c6_des_vel);
         _SFD_SET_DATA_VALUE_PTR(13U, &chartInstance->c6_desired_phi);
+        _SFD_SET_DATA_VALUE_PTR(14U, &chartInstance->c6_desiredangle);
       }
     } else {
       sf_debug_reset_current_state_configuration(sfGlobalDebugInstanceStruct,
@@ -4518,7 +5251,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "ElHEwzzKAkQAxqrzMzd4iB";
+  return "v7AKAthIgjmREtY1dlgLkH";
 }
 
 static void sf_opaque_initialize_c6_et_robocon(void *chartInstanceVar)
@@ -4661,10 +5394,10 @@ static void mdlSetWorkWidths_c6_et_robocon(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(365578980U));
-  ssSetChecksum1(S,(2481713480U));
-  ssSetChecksum2(S,(292228201U));
-  ssSetChecksum3(S,(3892354330U));
+  ssSetChecksum0(S,(3089929208U));
+  ssSetChecksum1(S,(759248024U));
+  ssSetChecksum2(S,(265139019U));
+  ssSetChecksum3(S,(2200757615U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,0);
