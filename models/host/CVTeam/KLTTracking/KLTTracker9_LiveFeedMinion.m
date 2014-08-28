@@ -8,7 +8,7 @@
 % vid.Resolution = '960x720';
 % vid = videoinput('winvideo', 1, 'RGB24_176x144');
 vid = imaq.VideoDevice('winvideo', 1);
-vid.VideoFormat = 'MJPG_960x720';
+vid.VideoFormat = 'MJPG_1280x720';
 % vid = getselectedsource(vid);
 % vid.FramesPerTrigger = 1;
 videoPlayer = vision.VideoPlayer();
@@ -33,7 +33,8 @@ videoFrame = step(vid);
 r = size(videoFrame,1);
 c = size(videoFrame,2);
 [CalibratedImage, MingTForm] = imageCalibration(videoFrame);
-
+warpedImage = imwarp(videoFrame, MingTForm);
+figure; imshow(warpedImage);
 % Get objectRegion from features and ROI of template (for Option 2)
 sceneImage = rgb2gray(videoFrame);
 % boxImage = rgb2gray(template);
@@ -53,63 +54,9 @@ mode = 0;
 % 
 % mode = 10;
 
-%% Get features from template image (Option 2)
+%% Run matchWithTemplate function
 template = imread('media/Mario.jpg');
-bwTemplate = rgb2gray(template);
-
-% Region of interest = [xmin ymin width height]. hard coded for each image
-% ROI = [200 130 210 200]; %For LomographyTemplate.jpg
-% ROI = [84   139   480   205]; %For Gautam.jpg
-ROI = [244 181 106 130]; %For Gautam.jpg 640 x 480
-% ROI = [0 0 size(template,1) size(template,2)];
-% imshow(template);
-% disp('Select rectangular ROI for Template');
-% ROI = round(getPosition(imrect));
-
-pointsTemplate = detectSURFFeatures(bwTemplate); %, 'ROI', ROI);
-imshow(template);
-hold on;
-plot(pointsTemplate);
-title('Template image with detected features');
-
-% Get objectRegion from features and RegionOfInterest of template (Option 2 continued)
-sceneImage = rgb2gray(videoFrame);
-boxImage = bwTemplate;
-scenePoints = detectSURFFeatures(sceneImage);
-boxPoints = pointsTemplate; %converting to variables of demo
-
-% Extract features from both and match
-[boxFeatures, boxPoints] = extractFeatures(boxImage, boxPoints);
-[sceneFeatures, scenePoints] = extractFeatures(sceneImage, scenePoints);
-boxPairs = matchFeatures(boxFeatures, sceneFeatures);
-
-matchedBoxPoints = boxPoints(boxPairs(:, 1), :);
-matchedScenePoints = scenePoints(boxPairs(:, 2), :);
-[tform, inlierBoxPoints, inlierScenePoints] = estimateGeometricTransform(matchedBoxPoints, matchedScenePoints, 'affine');
-
-figure;
-showMatchedFeatures(boxImage, sceneImage, inlierBoxPoints, inlierScenePoints, 'montage');
-title('Matched Points (Inliers Only)');
-
-boxPolygon = [ROI(1), ROI(2); ... %top-left
-    ROI(1)+ ROI(3), ROI(2); ... %top-right
-    ROI(1)+ ROI(3), ROI(2)+ ROI(4); ... %bottom right
-    ROI(1), ROI(2)+ ROI(4); ... bottom-left
-    ROI(1), ROI(2)]; %top-left again to close the loop
-
-newBoxPolygon = transformPointsForward(tform, boxPolygon);
-figure; imshow(sceneImage);
-hold on;
-line(newBoxPolygon(:, 1), newBoxPolygon(:, 2), 'Color', 'y');
-title('Detected Template');
-xmax = max(newBoxPolygon(:,1));
-ymax = max(newBoxPolygon(:,2));
-xmin = min(newBoxPolygon(:,1));
-ymin = min(newBoxPolygon(:,2));
-w = xmax - xmin;
-h = ymax - ymin;
-
-objectRegion = uint16([xmin, ymin, w, h]); % Use this ROI to get features
+objectRegion = matchWithTemplate(videoFrame, template);
 
 mode = 11;
 
@@ -148,6 +95,7 @@ for ii = 1:NFrame
 %     videoFrame = getsnapshot(vid);
 % videoFrame = snapshot(vid);
 videoFrame = step(vid);
+% videoFrame = imwarp(videoFrame, MingTForm);
     TimeReader(ii) = toc;
     
     % Track features in the new frame
@@ -163,13 +111,13 @@ videoFrame = step(vid);
             'Color', 'green', 'Size', 5);
     end
 %     
-%     botMean = mean(visiblePoints); % Mean of all visible features
+    botMean = mean(visiblePoints); % Mean of all visible features
+    TBotMean = transformPointsForward(MingTForm, botMean);
+    position =  [50 50]; % [x y]
+    videoFrame = insertText(videoFrame, position, int2str(TBotMean)); 
 % 
-% %     position =  [50 50]; % [x y]
-% %     videoFrame = insertText(videoFrame, position, int2str(botMean)); 
-% 
-%     % Show the centroids on the output video
-%     videoFrame = insertMarker(videoFrame, botMean , 'x', 'Color', 'red', 'Size', 5);
+    % Show the points on the output video
+    videoFrame = insertMarker(videoFrame, TBotMean , 'x', 'Color', 'red', 'Size', 5);
 %     videoFrame = insertMarker(videoFrame, botMean2 , 'x', 'Color', 'red', 'Size', 5);
 %     
 %     % Display the annotated video frame using the video player object

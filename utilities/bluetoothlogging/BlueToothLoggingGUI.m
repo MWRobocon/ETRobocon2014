@@ -11,7 +11,7 @@ handles.BlueToothSignals    = {};
 handles.LoggedSignalHandles = [];
 handles.BTSignalHandles     = [];
 handles.run_number          = [];
-handles.PERIOD              = 0.01;
+handles.PERIOD              = 0.1;
 handles.WhilePause          = 0.0002;
 
 fh = figure('Visible','on','Name','BlueToothControl');

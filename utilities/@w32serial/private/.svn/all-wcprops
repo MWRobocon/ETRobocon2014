@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private
+END
+communicate.mexw64
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/communicate.mexw64
+END
+communicate.mexw32
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/communicate.mexw32
+END
+communicate.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/communicate.m
+END
+commutil.c
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/commutil.c
+END
+communicate.c
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/communicate.c
+END
+communicate.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/communicate.h
+END
+make_mex.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/asg/asg_repository/!svn/ver/38/trunk/projects/et_robocon/utilities/@w32serial/private/make_mex.m
+END
