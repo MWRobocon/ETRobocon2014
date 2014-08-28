@@ -1,4 +1,5 @@
-videoObj = imaq.VideoDevice('winvideo', 1);
+% videoObj = imaq.VideoDevice('winvideo', 1);
+videoObj = videoinput('winvideo', 1, 'MJPG_640x480');
 videoObj.DeviceProperties.FrameRate = '5';
 frame0 = step(videoObj);
 while true

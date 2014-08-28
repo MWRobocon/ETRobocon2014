@@ -19,7 +19,7 @@ function obj = setupSystemObjects()
         % to the background.
 
         obj.detector = vision.ForegroundDetector('NumGaussians', 3, ...
-            'NumTrainingFrames', 40, 'MinimumBackgroundRatio', 0.7);
+            'NumTrainingFrames', 4, 'MinimumBackgroundRatio', 0.7);
 
         % Connected groups of foreground pixels are likely to correspond to moving
         % objects.  The blob analysis system object is used to find such groups
@@ -28,5 +28,5 @@ function obj = setupSystemObjects()
 
         obj.blobAnalyser = vision.BlobAnalysis('BoundingBoxOutputPort', true, ...
             'AreaOutputPort', true, 'CentroidOutputPort', true, ...
-            'MinimumBlobArea', 400);
+            'MinimumBlobArea', 20);
     end
