@@ -1,6 +1,11 @@
 function [CentroidZ, CentroidS] = detectZumoAndSphero(videoFrame)
 % DETECTZUMOANDSPHERO detects Zumobot and Sphero in first frame, given in
 % input videoFrame
+blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
+        'CentroidOutputPort', false,...
+        'BoundingBoxOutputPort', true,...
+        'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
+        'ExcludeBorderBlobs', true);
 
 %% run MatchWithTemplate to get ROI of zumobot
 template = imread('media/Mario.jpg');
@@ -25,7 +30,7 @@ CentroidZ = [x+w/2, y+h/2];
     
     % Convert saturation into a binary
     threshSat = graythresh(saturation);
-    filteredSat = (saturation > threshSat);
+%     filteredSat = (saturation > threshSat);
     % figure; imshow(filteredSat);
     % title('Filtered Saturation');
     
@@ -40,15 +45,12 @@ CentroidZ = [x+w/2, y+h/2];
     % figure; imshow(filteredBlue);
     % title('Filtered Blue');
     
+    filteredOrange = (hue > 0 & hue < 0.05 & saturation > threshSat);
+    
     % Find connected components
-    blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
-        'CentroidOutputPort', false,...
-        'BoundingBoxOutputPort', true,...
-        'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
-        'ExcludeBorderBlobs', true);
     [CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
     [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
-    
+    [CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
 %     [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');

@@ -7,7 +7,8 @@
 % Initiate camera, video player and video file writer
 vid = imaq.VideoDevice('winvideo', 1);
 % vid.VideoFormat = 'MJPG_1280x720';
-vid.VideoFormat = 'MJPG_640x480';
+% vid.VideoFormat = 'MJPG_640x480';
+vid.VideoFormat = 'MJPG_960x720';
 videoPlayer = vision.VideoPlayer();
 videoWriter = vision.VideoFileWriter('media/MarioLiveFeedT.mp4', 'FileFormat', 'MPEG4');
 tracker = vision.PointTracker('MaxBidirectionalError', 3);
@@ -147,6 +148,10 @@ for ii = 1:NFrame
     % figure; imshow(filteredBlue);
     % title('Filtered Blue');
     
+    filteredOrange = (hue > 0 & hue < 0.05 & saturation > threshSat);
+    % figure; imshow(filteredOrange);
+    % title('Filtered Orange');
+    
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
 %     [CentersBlue, RadiiBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
@@ -155,6 +160,9 @@ for ii = 1:NFrame
 %     [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
+    
+    [CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
+    
     
     %%  Add all annotations to video frame
     
@@ -184,6 +192,15 @@ for ii = 1:NFrame
 %             [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
         videoFrame = insertMarker(videoFrame, CentersYellow, 'x', 'Color',...
             'yellow', 'Size', 5);
+    end
+    
+    if ~isempty(CentersOrange)
+        videoFrame = insertMarker(videoFrame, CentersOrange, 'x', 'Color',...
+            'black', 'Size', 5);
+    else
+        failedFrame = videoFrame;
+        disp('Could not find orange sphero. Exiting');
+        return;
     end
     
     % Display the annotated video frame using the video player object
