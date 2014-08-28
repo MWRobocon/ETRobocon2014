@@ -55,5 +55,5 @@ end
 % %% Show marker on original image
 % % Finally we will plot the center on the original image to clearly evaluate
 % % how well we have found the center.
-% image(snapshot);
-% hold on, plot(pos(1),pos(2),'r.','MarkerSize',30), hold off
+image(snapshot);
+hold on, plot(pos(1),pos(2),'r.','MarkerSize',30), hold off

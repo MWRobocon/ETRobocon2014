@@ -1,7 +1,7 @@
-function dist = moveSphero(sph, xdes, ydes, x, y, clearVars)
+function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, clearVars)
 %%% Assuming that the orientation of the sphero is initially along y
 %%% direction (wrt camera)
-persistent x0 t0 prevu preve prevt prev2e prev2t counter
+persistent x0 t0 prevu preve prevt prev2e prev2t counter flag
 
 if clearVars
     clear x0 t0 prevu preve prevt prev2e prev2t
@@ -30,7 +30,7 @@ end
         angle = 2*pi-angle;
     end
 
-    angle = rad2deg(angle)
+    angle = rad2deg(angle);
 
 dist = pdist([xdes ydes; x y]); %Distance or the error
 
@@ -49,23 +49,28 @@ if isempty(t0)
     prevt = cputime;
     prev2t = cputime;
     counter = 0;
+    flag = 0;
 end
  
 t = cputime;
-
-if dist>40
-    Kp = 0.5;
-elseif dist>20
-    Kp = 2;
-else
-    Kp = 4;
-%     Kp = 1;
+    Kp = 0.7;
+% 
+% if dist>50
+%     Kp = 0.7;
+% elseif dist>20
+%     Kp = 2;
 % else
-%     Kp = 0.5;
-end
+%     Kp = 4;
+% %     Kp = 1;
+% % else
+% %     Kp = 0.5;
+% end
 
-if dist<5
+if dist<5 || flag
     u=0;
+%     flag = 1;
+elseif avgSpeed<5
+    u = 70;
 elseif counter<2
     u = prevu+Kp*(dist-preve)+Ki*(t-prevt)*dist;
 else
