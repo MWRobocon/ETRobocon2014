@@ -40,11 +40,20 @@ CentroidZ = [x+w/2, y+h/2];
     % figure; imshow(filteredBlue);
     % title('Filtered Blue');
     
+    % Find connected components
+    blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
+        'CentroidOutputPort', false,...
+        'BoundingBoxOutputPort', true,...
+        'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
+        'ExcludeBorderBlobs', true);
+    [CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
+    [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
+    
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
-    [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
+%     [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
     
-    [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
+%     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
     CentroidS = CentersBlue(1,:);
