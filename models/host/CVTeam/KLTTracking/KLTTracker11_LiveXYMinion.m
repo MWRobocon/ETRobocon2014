@@ -11,6 +11,12 @@ vid.VideoFormat = 'MJPG_640x480';
 videoPlayer = vision.VideoPlayer();
 videoWriter = vision.VideoFileWriter('media/MarioLiveFeedT.mp4', 'FileFormat', 'MPEG4');
 tracker = vision.PointTracker('MaxBidirectionalError', 3);
+% Blob analysis for sphero
+blobAnalysis = vision.BlobAnalysis('AreaOutputPort', false,...
+    'CentroidOutputPort', true,...
+    'BoundingBoxOutputPort', true,...
+    'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
+    'ExcludeBorderBlobs', false);
 
 % Load camera distortion parameters (intrinsics)
 % load('MSLifeCamParams.mat');
@@ -142,11 +148,13 @@ for ii = 1:NFrame
     % title('Filtered Blue');
     
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
-    [CentersBlue, RadiiBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
+%     [CentersBlue, RadiiBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
+    [CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
     
-    [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
+%     [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
+    [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
     
     %%  Add all annotations to video frame
     
@@ -165,13 +173,17 @@ for ii = 1:NFrame
     
     % Show blue and yellow spheros
     if ~isempty(CentersBlue)
-        videoFrame = insertShape(videoFrame, 'circle', ...
-            [CentersBlue(1,:) RadiiBlue(1)], 'LineWidth', 5, 'Color', 'blue');
+%         videoFrame = insertShape(videoFrame, 'circle', ...
+%             [CentersBlue(1,:) RadiiBlue(1)], 'LineWidth', 5, 'Color', 'blue');
+        videoFrame = insertMarker(videoFrame, CentersBlue , 'x', 'Color',...
+            'blue', 'Size', 5);
     end
     
     if ~isempty(CentersYellow)
-        videoFrame = insertShape(videoFrame, 'circle', ...
-            [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
+%         videoFrame = insertShape(videoFrame, 'circle', ...
+%             [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
+        videoFrame = insertMarker(videoFrame, CentersYellow, 'x', 'Color',...
+            'yellow', 'Size', 5);
     end
     
     % Display the annotated video frame using the video player object
