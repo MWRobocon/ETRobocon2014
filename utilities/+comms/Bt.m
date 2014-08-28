@@ -16,23 +16,21 @@ classdef Bt
     end
     
     properties(GetAccess = public, SetAccess = private)
-        deviceName; 
-        channelNum; 
+        robotId
     end
     
     methods(Access = public)
-        function this = Bt(aDeviceName,aChannelNum)
+        function this = Bt(aRobotId)
             this.debug = false;
-            this.deviceName = aDeviceName;
-            this.channelNum = aChannelNum;
+            this.robotId = aRobotId;
         end
         
         function init(this)
             fprintf('Start Initializing\n');
-            comms.BluetoothStore.add(this.deviceName,this.channelNum);
-            b = comms.BluetoothStore.get(this.deviceName);
+            comms.BluetoothStore.init(this.robotId);
+            b = comms.BluetoothStore.get(this.robotId);
             if(~strcmp(b.Status,'open'))
-                fprintf('Opening connection to %s on channel %u\n',this.deviceName,this.channelNum);
+                fprintf('Opening connection\n');
                 fopen(b);
             end
             pause(1);
@@ -44,7 +42,7 @@ classdef Bt
             rxLength = 0;
             byteArray = zeros([1,numBytes],'uint8');
 
-            b = comms.BluetoothStore.get(this.deviceName);
+            b = comms.BluetoothStore.get(this.robotId);
 
             availLength = b.BytesAvailable;
             if availLength > 0
@@ -57,12 +55,12 @@ classdef Bt
         function write(this,byteArray,txLength)
             this.dprintf('Writing Data\n');
             if(txLength > 0)
-                fwrite(comms.BluetoothStore.get(this.deviceName), uint8(byteArray(1:txLength)));
+                fwrite(comms.BluetoothStore.get(this.robotId), uint8(byteArray(1:txLength)));
             end
         end
 
         function reset(this)
-            b = comms.BluetoothStore.get(this.deviceName);
+            b = comms.BluetoothStore.get(int32(this.robotId));
             if(~isempty(b) && strcmp(b.Status,'open'))
                 fclose(b);
             end
