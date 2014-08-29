@@ -2,10 +2,10 @@ function [CentroidZ, CentroidS] = detectZumoAndSphero(videoFrame)
 % DETECTZUMOANDSPHERO detects Zumobot and Sphero in first frame, given in
 % input videoFrame
 blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
-        'CentroidOutputPort', false,...
+        'CentroidOutputPort', true,...
         'BoundingBoxOutputPort', true,...
-        'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
-        'ExcludeBorderBlobs', true);
+        'MinimumBlobArea', 100, ...
+        'ExcludeBorderBlobs', false);
 
 %% run MatchWithTemplate to get ROI of zumobot
 template = imread('media/Mario.jpg');
@@ -17,7 +17,7 @@ h = objectRegion(4);
 
 CentroidZ = [x+w/2, y+h/2];
 
-%% Detect BLUE Sphero centroid (change code to make it yellow if you want)
+%% Detect Sphero centroid (change code to make it yellow if you want)
     % Convert RGB to HSV, to get the saturation & hue value of each pixel.
     % Saturation can differentiate between colour and grayscale pixel. Hue can
     % differentiate between different colours (used for differentiating between
@@ -48,13 +48,13 @@ CentroidZ = [x+w/2, y+h/2];
     filteredOrange = (hue > 0 & hue < 0.05 & saturation > threshSat);
     
     % Find connected components
-    [CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
-    [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
-    [CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
+    [AreasBlue, CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
+    [AreasYellow, CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
+    [AreasOrange, CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
 %     [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
-    
+
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
