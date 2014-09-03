@@ -15,7 +15,7 @@ if(isempty(isInit))
 end
     
 if nargin>1 && ~varargin{2}
-    clear sph isInit
+    clear vid isInit
     return
 end
 
