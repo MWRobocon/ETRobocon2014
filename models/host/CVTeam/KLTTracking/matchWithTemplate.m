@@ -1,5 +1,4 @@
-function objectRegion = matchWithTemplate(scene, template)
-
+function [objectRegion NMatchedPoints] = matchWithTemplate(scene, template)
 %% Get features from template image
 
 bwTemplate = rgb2gray(template);
@@ -27,6 +26,7 @@ boxPoints = pointsTemplate; %converting to variables of demo
 [boxFeatures, boxPoints] = extractFeatures(bwTemplate, boxPoints);
 [sceneFeatures, scenePoints] = extractFeatures(scene, scenePoints);
 boxPairs = matchFeatures(boxFeatures, sceneFeatures);
+NMatchedPoints = size(boxPairs,1);
 
 matchedBoxPoints = boxPoints(boxPairs(:, 1), :);
 matchedScenePoints = scenePoints(boxPairs(:, 2), :);
