@@ -3,10 +3,7 @@ function [objectRegion NMatchedPoints] = matchWithTemplate(scene, template)
 
 bwTemplate = rgb2gray(template);
 scene = rgb2gray(scene);
-% Region of interest = [xmin ymin width height]. hard coded for each image
-% ROI = [200 130 210 200]; %For LomographyTemplate.jpg
-% ROI = [84   139   480   205]; %For Gautam.jpg
-% ROI = [244 181 106 130]; %For Gautam.jpg 640 x 480
+% Template region of interest = [xmin ymin width height]
 ROI = [0 0 size(template,1) size(template,2)];
 % imshow(template);
 % disp('Select rectangular ROI for Template');
