@@ -17,7 +17,7 @@ classdef hwinfo < handle & matlab.mixin.CustomDisplay
         SpheroObj
     end
     
-    methods %(Access = private)
+    methods (Access = private)
         function [internalname, btaddress, idcolors] = btInfo(obj)
             [responseexpected, seq] = sendCmd(obj.SpheroObj.Api, 'getbtname', [], 1);
             out = readResponse(obj.SpheroObj.Api, responseexpected, seq, obj.SpheroObj.ResponseTimeout);
@@ -113,7 +113,7 @@ classdef hwinfo < handle & matlab.mixin.CustomDisplay
             nargoutchk(0,1);
             
             p = inputParser;
-            p.addRequired(p, 'flag',  @(x) isnumeric(x) && (x==0 || x==1));
+            addRequired(p, 'flag',  @(x) isnumeric(x) && (x==0 || x==1));
             parse(p, flag);
             
             [responseexpected, seq] = sendCmd(obj.SpheroObj.Api, 'setpwrnotify', [], [], [], flag);
@@ -123,7 +123,51 @@ classdef hwinfo < handle & matlab.mixin.CustomDisplay
             
         end
         
-%         function [vlow
+        function [vlow, vcrit] = getVoltageTripPoints(obj)
+        % GETVOLTAGETRIPPOINTS Get the voltage points for what Sphero
+        % considers Low Battery and Critical battery
+            % [VLOW, VCRITICAL] = GETVOLTAGETRIPPOINTS(HWINFOOBJECT)
+            % returns the voltage points for low battery and critical
+            % battery
+            
+            [responseexpected, seq] = sendCmd(obj.SpheroObj.Api, 'getpowertrips', [], 1);
+            response = readResponse(obj.SpheroObj.Api, responseexpected, seq, obj.SpheroObj.ResponseTimeout);
+            
+            vlow = double(response(1))/100; % The returned value is in 100ths of a volt
+            vcrit = double(response(2))/100; % The returned value is in 100ths of a volt
+ 
+        end
+        
+        function varargout = setVoltageTripPoints(obj, vlow, vcrit)
+        % SETVOLTAGETRIPPOINTS Set the voltage points for what Sphero
+        % considers Low Battery and Critical battery
+            % RESULT = SETVOLTAGETRIPPOINTS(HWINFOOBJECT, VLOW, VCRITICAL)
+            % sets the low and critical battery voltage levels for the 
+            % Sphero. The low battery voltage should be in the range 6.5V
+            % to 7.5V. The critical battery voltage should be in the range
+            % 6.0V to 7.0V, and there must be a minimum separation of 0.25V
+            % between the two values.
+            
+            p = inputParser;
+            addRequired(p, 'objectname');
+            addRequired(p, 'vlow',  @(x) isnumeric(x) && (x>=6.5&&x<=7.5));
+            addRequired(p, 'vcrit',  @(x) isnumeric(x) && (x>=6&&x<=7));
+            parse(p, obj, vlow, vcrit);
+            
+            if vlow-vcrit<0.25
+                error(['There must be a minimum separation of 0.25V '...
+                    'between the low and critical battery voltage values']);
+            end
+            
+            
+            [responseexpected, seq] = sendCmd(obj.SpheroObj.Api, 'setpowertrips', [], [], [], vlow*100, vcrit*100);
+            response = readResponse(obj.SpheroObj.Api, responseexpected, seq, obj.SpheroObj.ResponseTimeout);
+            
+            [varargout{1:nargout}] = sphero.simpleResponse(response);
+            
+        end
+        
+       
     end
     
     methods
@@ -151,6 +195,22 @@ classdef hwinfo < handle & matlab.mixin.CustomDisplay
         end
         
         
+    end
+    
+    methods (Hidden = true)
+        function devicemode = deviceMode(obj)
+            [responseexpected, seq] = sendCmd(obj.SpheroObj.Api, 'getdevicemode', [], 1);
+            response = readResponse(obj.SpheroObj.Api, responseexpected, seq, obj.SpheroObj.ResponseTimeout);
+            
+            switch response
+                case 0
+                    devicemode='Normal';
+                case 1
+                    devicemode = 'User Hack';
+                otherwise
+                    devicemode = 'error';
+            end
+        end 
     end
 end
 
