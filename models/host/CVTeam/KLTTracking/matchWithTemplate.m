@@ -33,6 +33,7 @@ figure;
 showMatchedFeatures(bwTemplate, scene, inlierBoxPoints, inlierScenePoints, 'montage');
 title('Matched Points (Inliers Only)');
 
+% Convert ROI params into corners of a box
 boxPolygon = [ROI(1), ROI(2); ... %top-left
     ROI(1)+ ROI(3), ROI(2); ... %top-right
     ROI(1)+ ROI(3), ROI(2)+ ROI(4); ... %bottom right
