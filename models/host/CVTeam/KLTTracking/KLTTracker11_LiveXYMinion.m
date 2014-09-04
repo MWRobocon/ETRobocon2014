@@ -7,10 +7,17 @@
 % Initiate camera, video player and video file writer
 vid = imaq.VideoDevice('winvideo', 1);
 % vid.VideoFormat = 'MJPG_1280x720';
-vid.VideoFormat = 'MJPG_640x480';
+% vid.VideoFormat = 'MJPG_640x480';
+vid.VideoFormat = 'MJPG_960x720';
 videoPlayer = vision.VideoPlayer();
 videoWriter = vision.VideoFileWriter('media/MarioLiveFeedT.mp4', 'FileFormat', 'MPEG4');
 tracker = vision.PointTracker('MaxBidirectionalError', 3);
+% Blob analysis for sphero
+blobAnalysis = vision.BlobAnalysis('AreaOutputPort', false,...
+    'CentroidOutputPort', true,...
+    'BoundingBoxOutputPort', true,...
+    'MinimumBlobArea', 100, 'MaximumBlobArea', 3000, ...
+    'ExcludeBorderBlobs', false);
 
 % Load camera distortion parameters (intrinsics)
 % load('MSLifeCamParams.mat');
@@ -141,12 +148,21 @@ for ii = 1:NFrame
     % figure; imshow(filteredBlue);
     % title('Filtered Blue');
     
-    % Detect centers of blue and yellow spheros (alternative is blob Analysis)
-    [CentersBlue, RadiiBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
-    % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
+    filteredOrange = (hue > 0 & hue < 0.05 & saturation > threshSat);
+    % figure; imshow(filteredOrange);
+    % title('Filtered Orange');
     
-    [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
+    % Detect centers of blue and yellow spheros (alternative is blob Analysis)
+%     [CentersBlue, RadiiBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
+    % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
+    [CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
+    
+%     [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
+    [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
+    
+    [CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
+    
     
     %%  Add all annotations to video frame
     
@@ -165,13 +181,26 @@ for ii = 1:NFrame
     
     % Show blue and yellow spheros
     if ~isempty(CentersBlue)
-        videoFrame = insertShape(videoFrame, 'circle', ...
-            [CentersBlue(1,:) RadiiBlue(1)], 'LineWidth', 5, 'Color', 'blue');
+%         videoFrame = insertShape(videoFrame, 'circle', ...
+%             [CentersBlue(1,:) RadiiBlue(1)], 'LineWidth', 5, 'Color', 'blue');
+        videoFrame = insertMarker(videoFrame, CentersBlue , 'x', 'Color',...
+            'blue', 'Size', 5);
     end
     
     if ~isempty(CentersYellow)
-        videoFrame = insertShape(videoFrame, 'circle', ...
-            [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
+%         videoFrame = insertShape(videoFrame, 'circle', ...
+%             [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
+        videoFrame = insertMarker(videoFrame, CentersYellow, 'x', 'Color',...
+            'yellow', 'Size', 5);
+    end
+    
+    if ~isempty(CentersOrange)
+        videoFrame = insertMarker(videoFrame, CentersOrange, 'x', 'Color',...
+            'black', 'Size', 5);
+    else
+        failedFrame = videoFrame;
+        disp('Could not find orange sphero. Exiting');
+        return;
     end
     
     % Display the annotated video frame using the video player object
