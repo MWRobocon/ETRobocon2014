@@ -3,7 +3,7 @@ function [CentroidZ, CentroidS] = detectZumoAndSphero(videoFrame)
 % input videoFrame
 
 %% run MatchWithTemplate to get ROI of zumobot
-template = imread('..\Media\mario.jpg');
+template = imread('media\mario.jpg');
 objectRegion = matchWithTemplate(videoFrame, template);
 x = objectRegion(1);
 y = objectRegion(2);
