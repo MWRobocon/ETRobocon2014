@@ -1,4 +1,4 @@
-function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, clearVars)
+function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, stopRadius,clearVars)
 %%% Assuming that the orientation of the sphero is initially along y
 %%% direction (wrt camera)
 persistent x0 t0 prevu preve prevt prev2e prev2t counter flag
@@ -10,15 +10,13 @@ end
 
 %% Controller Gains
 Kp = 0.7;
-Ki = 0;
+Ki = 0.5;
 Kd = 0;
+speedIfSlow = 65;
 % Tf = 0;
 % tfinal = 60; %run the model for 1 minute
 
-if x<0 || y<0
-    dist = Inf;
-    return
-end
+
 %% Angle and distance calculation
  
     %Angle of desired position wrt y axis (or orientation of sphero)
@@ -53,7 +51,6 @@ if isempty(t0)
 end
  
 t = cputime;
-    Kp = 0.7;
 % 
 % if dist>50
 %     Kp = 0.7;
@@ -66,13 +63,13 @@ t = cputime;
 % %     Kp = 0.5;
 % end
 
-if dist<5 || flag
+if dist<stopRadius || flag
     u=0;
 %     flag = 1;
 elseif avgSpeed<5
-    u = 70;
-elseif counter<2
-    u = prevu+Kp*(dist-preve)+Ki*(t-prevt)*dist;
+    u = speedIfSlow;
+% elseif counter<2
+%     u = prevu+Kp*(dist-preve)+Ki*(t-prevt)*dist;
 else
 %    u = Kp*dist;
    

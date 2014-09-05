@@ -1719,7 +1719,7 @@ static void c4_info_helper(const mxArray **c4_info)
   sf_mex_addfield(*c4_info, c4_emlrt_marshallOut(
     "[N]C:/ETRobocon2014/Repository/data_types/enumerations/OperationModeStatusEnum.m"),
                   "resolved", "resolved", 0);
-  sf_mex_addfield(*c4_info, c4_b_emlrt_marshallOut(1408487734U), "fileTimeLo",
+  sf_mex_addfield(*c4_info, c4_b_emlrt_marshallOut(1407956216U), "fileTimeLo",
                   "fileTimeLo", 0);
   sf_mex_addfield(*c4_info, c4_b_emlrt_marshallOut(0U), "fileTimeHi",
                   "fileTimeHi", 0);
@@ -3389,10 +3389,10 @@ static void
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(1005823254U));
-  ssSetChecksum1(S,(2791530296U));
-  ssSetChecksum2(S,(456477695U));
-  ssSetChecksum3(S,(2137452093U));
+  ssSetChecksum0(S,(2393788987U));
+  ssSetChecksum1(S,(3867758380U));
+  ssSetChecksum2(S,(3171210108U));
+  ssSetChecksum3(S,(2792982021U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,0);

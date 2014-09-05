@@ -8,6 +8,26 @@
 #include "multiword_types.h"
 
 /* Type Definitions */
+#ifndef enum_OperationModeStatusEnum
+#define enum_OperationModeStatusEnum
+
+enum OperationModeStatusEnum
+{
+  OperationModeStatusEnum_NOT_STARTED,
+  OperationModeStatusEnum_IN_PROGRESS,
+  OperationModeStatusEnum_SUCCESSFULLY_COMPLETED,
+  OperationModeStatusEnum_ABORTED
+};
+
+#endif                                 /*enum_OperationModeStatusEnum*/
+
+#ifndef typedef_c5_OperationModeStatusEnum
+#define typedef_c5_OperationModeStatusEnum
+
+typedef enum OperationModeStatusEnum c5_OperationModeStatusEnum;
+
+#endif                                 /*typedef_c5_OperationModeStatusEnum*/
+
 #ifndef enum_OperationModeEnum
 #define enum_OperationModeEnum
 
@@ -39,26 +59,6 @@ enum OperationModeEnum
 typedef enum OperationModeEnum c5_OperationModeEnum;
 
 #endif                                 /*typedef_c5_OperationModeEnum*/
-
-#ifndef enum_OperationModeStatusEnum
-#define enum_OperationModeStatusEnum
-
-enum OperationModeStatusEnum
-{
-  OperationModeStatusEnum_NOT_STARTED,
-  OperationModeStatusEnum_IN_PROGRESS,
-  OperationModeStatusEnum_SUCCESSFULLY_COMPLETED,
-  OperationModeStatusEnum_ABORTED
-};
-
-#endif                                 /*enum_OperationModeStatusEnum*/
-
-#ifndef typedef_c5_OperationModeStatusEnum
-#define typedef_c5_OperationModeStatusEnum
-
-typedef enum OperationModeStatusEnum c5_OperationModeStatusEnum;
-
-#endif                                 /*typedef_c5_OperationModeStatusEnum*/
 
 #ifndef struct_PWM_bus_tag
 #define struct_PWM_bus_tag

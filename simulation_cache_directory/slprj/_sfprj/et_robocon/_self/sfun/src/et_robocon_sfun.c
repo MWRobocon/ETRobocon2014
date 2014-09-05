@@ -84,10 +84,10 @@ unsigned int sf_et_robocon_process_check_sum_call( int nlhs, mxArray * plhs[],
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2060979339U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1636334390U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1606571439U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2217122078U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(976161991U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1686708575U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(415628U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(978095519U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -212,7 +212,7 @@ unsigned int sf_et_robocon_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 6:
       {
-        if (strcmp(aiChksum, "jnUWg4NzD0rcvza4KUhmPH") == 0) {
+        if (strcmp(aiChksum, "0C34OZVAS3ylZA5bJkqhyD") == 0) {
           extern mxArray *sf_c6_et_robocon_get_autoinheritance_info(void);
           plhs[0] = sf_c6_et_robocon_get_autoinheritance_info();
           break;
