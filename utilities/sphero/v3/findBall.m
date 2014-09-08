@@ -8,7 +8,7 @@ function pos = findBall(vid)
 
 % vid = webcam;
 
-snapshot = getsnapshot(vid);
+snapshot = step(vid);
 figure
 imagesc(snapshot);
 
@@ -37,7 +37,7 @@ close
 %% Threshold the image
 % Now we can set a threshold to separate the parts of the image that we
 % consider to be green from the rest.
-bw = justGreen > 60;
+bw = justGreen > 60/255;
 % imagesc(bw);
 % colormap(gray);
 
@@ -55,5 +55,5 @@ end
 % %% Show marker on original image
 % % Finally we will plot the center on the original image to clearly evaluate
 % % how well we have found the center.
-image(snapshot);
-hold on, plot(pos(1),pos(2),'r.','MarkerSize',30), hold off
+% image(snapshot);
+% hold on, plot(pos(1),pos(2),'r.','MarkerSize',30), hold off

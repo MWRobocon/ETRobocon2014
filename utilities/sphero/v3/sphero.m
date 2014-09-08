@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <<<<<<< HEAD:utilities/sphero/v3/sphero.m
+=======
+>>>>>>> refs/remotes/origin/Minions
 classdef sphero<handle
     %SPHERO Summary of this class goes here
     %   Detailed explanation goes here
@@ -992,6 +995,7 @@ classdef sphero<handle
     
 end
 
+<<<<<<< HEAD
 =======
 classdef sphero<handle
     %SPHERO Summary of this class goes here
@@ -1969,3 +1973,5 @@ classdef sphero<handle
 end
 
 >>>>>>> origin/Hydra:models/sphero/sphero.m
+=======
+>>>>>>> refs/remotes/origin/Minions

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/Minions
 classdef Bt
 % Bt Core API for communication via Bluetooth
 %
@@ -79,6 +82,7 @@ classdef Bt
     end
 end
 
+<<<<<<< HEAD
 =======
 classdef Bt
 % Bt Core API for communication via Bluetooth
@@ -159,3 +163,5 @@ classdef Bt
 end
 
 >>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> refs/remotes/origin/Minions

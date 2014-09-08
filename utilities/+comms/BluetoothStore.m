@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/Minions
 classdef BluetoothStore < handle
     methods(Static, Access = public)
         function add(deviceName,channelNum)
@@ -57,6 +60,7 @@ classdef BluetoothStore < handle
             tf = this.btHash.isKey(key);
         end
     end
+<<<<<<< HEAD
 =======
 classdef BluetoothStore < handle
     methods(Static, Access = public)        
@@ -163,4 +167,6 @@ classdef BluetoothStore < handle
         end
     end
 >>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> refs/remotes/origin/Minions
 end
