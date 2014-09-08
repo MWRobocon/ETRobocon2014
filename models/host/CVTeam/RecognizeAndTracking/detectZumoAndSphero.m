@@ -58,4 +58,7 @@ CentroidZ = [x+w/2, y+h/2];
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
+    % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
+    
+>>>>>>> refs/remotes/origin/CVTeam:models/host/CVTeam/RecognizeAndTracking/detectZumoAndSphero.m
     CentroidS = CentersBlue(1,:);

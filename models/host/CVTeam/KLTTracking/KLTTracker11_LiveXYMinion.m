@@ -160,9 +160,12 @@ for ii = 1:NFrame
 %     [CentersYellow, RadiiYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     [CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
+<<<<<<< HEAD
+=======
     
     [CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
     
+>>>>>>> 49348b51a63c56d87ba47b68ef106e265e871506
     
     %%  Add all annotations to video frame
     
@@ -192,6 +195,8 @@ for ii = 1:NFrame
 %             [CentersYellow(1,:) RadiiYellow(1)], 'LineWidth', 5, 'Color', 'yellow');
         videoFrame = insertMarker(videoFrame, CentersYellow, 'x', 'Color',...
             'yellow', 'Size', 5);
+<<<<<<< HEAD
+=======
     end
     
     if ~isempty(CentersOrange)
@@ -201,6 +206,7 @@ for ii = 1:NFrame
         failedFrame = videoFrame;
         disp('Could not find orange sphero. Exiting');
         return;
+>>>>>>> 49348b51a63c56d87ba47b68ef106e265e871506
     end
     
     % Display the annotated video frame using the video player object

@@ -1,4 +1,4 @@
-function [tracks, nextId] = createNewTracks(tracks, unassignedDetections, centroids, bboxes, nextId)
+function [tracks, nextId] = createNewTracks(tracks, unassignedDetections, centroids, bboxes, nextId, locations)
         centroids = centroids(unassignedDetections, :);
         bboxes = bboxes(unassignedDetections, :);
 
@@ -11,10 +11,23 @@ function [tracks, nextId] = createNewTracks(tracks, unassignedDetections, centro
             kalmanFilter = configureKalmanFilter('ConstantVelocity', ...
                 centroid, [200, 50], [100, 25], 100);
 
+            % Match tracks with objects
+            distence = 800; % diagonal length of 640*480
+            for j = 1:length(locations)
+                diffOfEachDirection = double(locations(j).centroid) - centroid;
+                curDistence = sqrt(diffOfEachDirection(1)^2 + diffOfEachDirection(2)^2);
+                if curDistence < distence
+                    curID = locations(j).name;
+                    distence = curDistence;
+                end
+            end
+            
             % Create a new track.
             newTrack = struct(...
                 'id', nextId, ...
+                'name', curID, ...
                 'bbox', bbox, ...
+                'centroid', centroid, ...
                 'kalmanFilter', kalmanFilter, ...
                 'age', 1, ...
                 'totalVisibleCount', 1, ...
