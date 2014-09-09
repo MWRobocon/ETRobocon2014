@@ -344,7 +344,13 @@ classdef sphero<handle
 %              addRequired(p, 'heading', @(x) x>=0 && x<=360);
 %              parse(p, speed, heading);
 
+            if speed<0
+                heading = heading+180;
+                speed = abs(speed);
+            end
+            
             heading = mod(heading, 360);
+            
                           
             [responseexpected, seq] = sendCmd(obj.Api, 'roll', [], [], [], speed, heading, 1);
             response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
