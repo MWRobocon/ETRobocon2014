@@ -89,4 +89,8 @@ CentroidZ = mean(visiblePoints); % Sparse centroid of zumobot
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
-    CentroidS = CentersOrange(1,:);
+    if isempty(CentersOrange)
+        CentroidS = [-1, -1];
+    else
+        CentroidS = CentersOrange(1,:);
+    end

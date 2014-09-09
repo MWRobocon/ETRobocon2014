@@ -11,15 +11,15 @@ end
 
 %% Controller Gains
 Kp = 0.2;
+Ki = 0.1;
+Kd = 0.05;
+speedIfSlow = 65;
 
 if x<0 || y<0
     dist = Inf;
     return
 end
 
-Ki = 0.1;
-Kd = 0.05;
-speedIfSlow = 65;
 % Tf = 0;
 % tfinal = 60; %run the model for 1 minute
 
