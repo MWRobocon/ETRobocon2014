@@ -1,4 +1,4 @@
-function move_sphero( sphName, speed, angle, varargin)
+function move( sphName, speed, angle, varargin)
 %MOVE Summary of this function goes here
 %   Detailed explanation goes here
 

@@ -1,64 +1,63 @@
 classdef BluetoothApi<sphero.internal.Communication
-    %BLUETOOTHAPI Summary of this class goes here
-    %   Detailed explanation goes here
-    
+    %BLUETOOTHAPI API for sending commands to Sphero over Bluetooth
+    %
+    %   OBJ = BLUETOOTHAPI creates an object for the communication API for 
+    %   communicating with Sphero over Bluetooth. 
     
     properties(Constant, Access = ?sphero)
-        Uint8Max = double(intmax('uint8'));
-        SpheroDeviceNameBeg = 'Sphero';
-        MaxSensorSampleRate = 400;
-    end
-    
-    properties(Constant, Access = {?BluetoothApi, ?sphero})
-        ResponseError = NaN;
-        ResponseInitialValue = Inf;
-        ResponseEmpty = [];
+        Uint8Max = double(intmax('uint8')); % Max value that can be stored with uint8 data type
+        SpheroDeviceNameBeg = 'Sphero'; % Beginning of Bluetooth name of Sphero device
+        MaxSensorSampleRate = 400; % Maximum sample rate for sensor polling
+        ResponseError = NaN; % Value used to indicate error in response from Sphero 
+        ResponseInitialValue = Inf; % Initialization value for the response, before actual response is received
+        ResponseEmpty = []; % Value used to indicate successful 'simple' response received from Sphero
     end
     
     properties(SetObservable)%, Access = {?BluetoothApi, ?sphero})
-        PowerNotification % To Do
-        SensorData
-        PreSleepWarning % To Do
-        CollisionDetected % To Do
-        GyroAxisLimitExceed % To Do
-        ErrorSynchronous
-        ErrorAsynchronous
+        PowerNotification % Asynchronous response for Power Notification
+        SensorData % Asynchronous response for Sensor Polling
+        PreSleepWarning % Asynchronous warning message before going to sleep due to inactivity
+        CollisionDetected % Collision detected by Sphero
+        GyroAxisLimitExceed % Asynchronous message for the limit of Gyro being exceeded
+        ErrorSynchronous % Error caught when receiving synchronous message
+        ErrorAsynchronous % Error caught when receiving asynchronous message
     end
-%     
-%      events
-%         PowerNotificationChange
-%         SensorDataReceived
-%         PreSleepWarningReceived
-%         CollisionDetected
-%         GyroAxisLimitExceeded
-%     end
-    
-    
-    properties %(Access = {?BluetoothApi, ?sphero})
-        SequenceList%Structure containing the sequence number, action, response
-        Rev = '1_50'; %temporarily hard coded. 
-        %Should be based on revision of API, as returned by Sphero
+  
+  
+    properties (Access = ?sphero)
+        %Sequencelist Structure containing the sequence number, action, response
+        % This is used to keep track of the seqeuence numbers for the 
+        % commands which expect a response, as the response mentions the
+        % sequence number to which the response pertains to. This is also
+        % used to return the response value to the user, when the
+        % ReadResponse method is used
+        SequenceList 
         
-        DeviceName
-        Sequence = uint8(1);
-        Handshake = 0;
-        ApiInfo;
-        Bt;
-        Response;
-        BytesToRead  =  Inf;
-        Sensors;
-        SamplesPerPacket;
-        SensorDataPropertySet = 0; %Used in the readSensor method of 
-        % sphero class, because the callback to SensorData listener cannot
-        % be used for 'readSensor' method
+        Rev = '1_50'; % Revision number of Sphero
+        
+        DeviceName % Bluetooth name of Sphero
+        Sequence = uint8(1); % Sequence number for next message
+        Handshake = 0; % Toggle handshaking between machine and Sphero
+        ApiInfo; % Constants and other parameters for communication API
+        Bt; % Bluetooth object for communication
+        Response; % Received response
+        BytesToRead  =  Inf; % Number of bytes to be read for current message
+        Sensors; % Sensors being polled 
+        SamplesPerPacket; % Number of samples being polled per packet
+        
+        %SensorDataPropertySet Whether SensorData property has been set or not
+        % Used in the readSensor method of sphero class, because the 
+        % callback to SensorData listener cannot be used for 'readSensor' method
+        SensorDataPropertySet = 0; 
     end
     
     methods(Access = private, Static = true)
-         function cmd = cmdToByte(cmdIn)
-         % cmd = cmdToByte(h, cmdIn)   Convert multiple byte data to array of uint8
-            % CMD = cmdToByte(h, CMDIN) converts CMDIN to an array of uint8
-            % data. It checks whether the machine is big endian and little
-            % endian, and arranges the uint8 data based on that
+        function cmd = cmdToByte(cmdIn)
+        %CMDTOBYTE Convert multiple byte data to array of uint8
+        %
+        %   CMD = CMDTOBYTE(H, CMDIN) converts CMDIN to an array of uint8
+        %   data. It checks whether the machine is big endian or little
+        %   endian, and arranges the uint8 data based on that
             
              [~,~,endian] = computer;
                
@@ -70,22 +69,24 @@ classdef BluetoothApi<sphero.internal.Communication
         end
         
         function cmd = cmdFromByte(bytedata, varargin)
-         %CMDFROMBYTE    Convert 2 byte data to uint16 data 
-            % CMDTOBYTE(H, BYTEDATA) converts the data represented by the 
-            % BYTEDATA vector (containing Most Significant Bit and Least 
-            % Significant Bit) to an uint16 variable. 
-            % It checks whether the machine is big endian or little
-            % endian, and arranges the data based on that
-            % CMDTOBYTE(H, BYTEDATA, DATATYPE) converts the BYTEDATA to 
-            % the desired DATATYPE
+        %CMDFROMBYTE Convert multi-byte data to specified format (default = uint16) 
+        %
+        %   CMDTOBYTE(H, BYTEDATA) converts the data represented by the 
+        %   BYTEDATA vector (containing Most Significant Bit and Least 
+        %   Significant Bit) to an uint16 variable. 
+        %   It checks whether the machine is big endian or little
+        %   endian, and arranges the data based on that
+        %
+        %   CMDTOBYTE(H, BYTEDATA, DATATYPE) converts the BYTEDATA to 
+        %   the desired DATATYPE
             if nargin>1
-                type = varargin{1};
+                    type = varargin{1};
             else
                 type = 'uint16';
             end
-                
+
             [~,~,endian] = computer;
-            
+
             if strcmp(endian, 'L')
                    cmd = swapbytes(typecast(bytedata, type));
             else
@@ -95,17 +96,22 @@ classdef BluetoothApi<sphero.internal.Communication
                
     end
     
+    %% Private Methods
     methods(Access = private)
         
         function devicename = findDevices(obj)
-    
+        %FINDDEVICES Search for paired Sphero devices and prompt user to select one for connection
+        %
+        %   DEVICENAME = FINDDEVICES(OBJ) searches for the paired Sphero
+        %   devices, prompts the user to select one and to confirm the
+        %   selection
                 devices = instrhwinfo('Bluetooth');
                 checksphero = strncmp(devices.RemoteNames, obj.SpheroDeviceNameBeg, length(obj.SpheroDeviceNameBeg));
                 
                 spherodevices = devices.RemoteNames(checksphero);
             
                 if isempty(spherodevices)
-                    error('Sphero:Api:DeviceNotAvailable', 'No Sphero device available. Please make sure your Sphero device is switched on and is in vicinity');
+                    throwAsCaller(MException('Sphero:Api:DeviceNotAvailable', 'No Sphero device available. Please make sure your Sphero device is switched on and is in vicinity'));
                 else
                     choose = 'Choose one of the available Sphero devices: \n '; 
                     for idx=1:length(spherodevices)
@@ -120,7 +126,7 @@ classdef BluetoothApi<sphero.internal.Communication
                            recheck = ['Are you sure you would like to connect to ' spherodevices{chosen} ' [y/n] : '];
                             response = input(recheck, 's');
                         else
-                            error('Sphero:Api:SelectValidDevice','Please select one of the available devices')
+                            throwAsCaller(MException('Sphero:Api:SelectValidDevice','Please select one of the available devices'));
                         end
                     end
 
@@ -129,102 +135,106 @@ classdef BluetoothApi<sphero.internal.Communication
         end
         
         function chk = computeCheckSum(obj, cmd)
+        %COMPUTECHECKSUM Compute the checksum for last bit of the message being sent
             chk = bitcmp(mod(sum(cmd(obj.ApiInfo.SpheroResponse.mrsp:end)), obj.Uint8Max+1), 'uint8');
         end
         
-        function [did, cid, dlen] = obtainId(obj,action, data)
-        %Get the Device ID, Command ID and Data Length of the action to 
-        %be performed
-
+        function [did, cid, dlen] = obtainId(obj, action, data)
+        %OBTAINID Get the Device ID, Command ID and Data Length of the action to be performed
+        %
+        %   [DID, CID, DLEN] = OBTAINID(OBJ, ACTION, DATA) returns the
+        %   Device ID, Command ID and the length of Data that should be
+        %   sent to Sphero for the ACTION that should be performed. These
+        %   IDs are obtained from the information contained in the ApiInfo
+        %   property
             err = MException('Sphero:Api:InvalidParameter', 'Please enter a valid command');
 
             switch action
                 case 'ping'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdPing; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdPing; dlen = obj.ApiInfo.CmdPingDlen;
                 case 'version'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdVersion; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdVersion; dlen = obj.ApiInfo.CmdVersionDlen;
                 case 'setbtname'
                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSetBtName; dlen = dec2hex(length(data)+1);
                 case 'getbtname'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetBtName; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetBtName; dlen = CmdGetBtNameDlen;
                 case 'setautoreconnect'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSetAutoReconnect; dlen = '03';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSetAutoReconnect; dlen = obj.ApiInfo.CmdSetAutoReconnectDlen;
                 case 'getautoreconnect'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetAutoReconnect; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetAutoReconnect; dlen = obj.ApiInfo.CmdGetAutoReconnectDlen;
                 case 'getpwrstate'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetPwrState; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdGetPwrState; dlen = obj.ApiInfo.CmdGetPwrStateDlen;
                 case 'setpwrnotify'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSetPwrNotify; dlen = '02';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSetPwrNotify; dlen = obj.ApiInfo.CmdSetPwrNotifyDlen;
                 case 'sleep'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSleep; dlen = '06';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdSleep; dlen = obj.ApiInfo.CmdSleepDlen;
                 case 'getpowertrips'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.GetPowerTrips; dlen = '01';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.GetPowerTrips; dlen = obj.ApiInfo.GetPowerTripsDlen;
                 case 'setpowertrips'
-                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.SetPowerTrips; dlen = '05';
+                    did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.SetPowerTrips; dlen = obj.ApiInfo.SetPowerTripsDlen;
                 case 'setinactivetimer'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.SetInactiveTimer; dlen = '03';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.SetInactiveTimer; dlen = obj.ApiInfo.SetInactiveTimerDlen;
                 case 'gotobl'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.GotoBl; dlen = '01';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.GotoBl; dlen = obj.ApiInfo.GotoBlDlen;
                 case 'runl2diags'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdRunL2Diags; dlen = '01';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdRunL2Diags; dlen = obj.ApiInfo.CmdRunL2DiagsDlen;
                 case 'clearcounters'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdClearCounters; dlen = '01';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdClearCounters; dlen = obj.ApiInfo.CmdClearCountersDlen;
                 case 'assigntime'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdAssignTime; dlen = '05';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.CmdAssignTime; dlen = obj.ApiInfo.CmdAssignTimeDlen;
                 case 'polltimes'
-                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.cmdPollTimes; dlen = '05';
-%                 case 'runl1diags'
-%                 case 'btinfo'
-%                     did = 'obj.ApiInfo.DidCore'; cid = '11'; dlen = '01';
+                     did = obj.ApiInfo.DidCore; cid = obj.ApiInfo.cmdPollTimes; dlen = obj.ApiInfo.cmdPollTimesDlen;
                 case 'setcal'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetCal; dlen = '03';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetCal; dlen = obj.ApiInfo.CmdSetCalDlen;
                 case 'setstabiliz'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetStabiliz; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetStabiliz; dlen = obj.ApiInfo.CmdSetStabilizDlen;
                 case 'setrotationrate'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRotationRate; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRotationRate; dlen = obj.ApiInfo.CmdSetRotationRateDlen;
                 case 'getchassisid'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetChassisId; dlen = '01';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetChassisId; dlen = obj.ApiInfo.CmdGetChassisIdDlen;
                 case 'selflevel'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSelfLevel; dlen = '05';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSelfLevel; dlen = obj.ApiInfo.CmdSelfLevelDlen;
                 case 'setdatastreaming'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetDataStreaming; dlen = '0e';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetDataStreaming; dlen = obj.ApiInfo.CmdSetDataStreamingDlen;
                 case 'setcollisiondet'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetCollisionDet; dlen = '07';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetCollisionDet; dlen = obj.ApiInfo.CmdSetCollisionDetDlen;
                 case 'locator'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdLocator; dlen = '08';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdLocator; dlen = obj.ApiInfo.CmdLocatorDlen;
                  case 'setaccelero'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetAccelero; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetAccelero; dlen = obj.ApiInfo.CmdSetAcceleroDlen;
                 case 'readlocator'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdReadLocator; dlen = '01';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdReadLocator; dlen = obj.ApiInfo.CmdReadLocatorDlen;
                 case 'setrgbled'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRgbLed; dlen = '05';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRgbLed; dlen = obj.ApiInfo.CmdSetRgbLedDlen;
                 case 'setbackled'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetBackLed; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetBackLed; dlen = obj.ApiInfo.CmdSetBackLedDlen;
                 case 'getrgbled'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetRgbLed; dlen = '01';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetRgbLed; dlen = obj.ApiInfo.CmdGetRgbLedDlen;
                 case 'roll'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdRoll; dlen = '05';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdRoll; dlen = obj.ApiInfo.CmdRollDlen;
                 case 'boost'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdBoost; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdBoost; dlen = obj.ApiInfo.CmdBoostDlen;
                 case 'setrawmotors'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRawMotors; dlen = '05';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetRawMotors; dlen = obj.ApiInfo.CmdSetRawMotorsDlen;
                 case 'setmotionto'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetMotionTo; dlen = '03';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetMotionTo; dlen = obj.ApiInfo.CmdSetMotionToDlen;
                 case 'setdevicemode'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetDeviceMode; dlen = '02';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdSetDeviceMode; dlen = obj.ApiInfo.CmdSetDeviceModeDlen;
                 case 'getdevicemode'
-                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetDeviceMode; dlen = '01';
+                    did = obj.ApiInfo.DidSphero; cid = obj.ApiInfo.CmdGetDeviceMode; dlen = obj.ApiInfo.CmdGetDeviceModeDlen;
                 
                 otherwise
                     throw(err);
             end
             
-%             did  = uint8(hex2dec(did));
-%             cid  = uint8(hex2dec(cid));
-            dlen = uint8(hex2dec(dlen));
         end
         
         function validAction = validateAction(~,action)
+        %VALIDATEACTION Check whether indicated action string is a valid string for the action that can be performed by Sphero
+        %
+        %   VALIDACTION = VALIDATEACTION(OBJ, ACTION) checks whether ACTION
+        %   is a valid string for the actions that can be performed by
+        %   Sphero
             validActions = {'ping', 'version', 'controluarttx', 'setbtname',...
                 'getbtname', 'setautoreconnect', 'getautoreconnect', ...
                 'getpwrstate', 'setpwrnotify', 'sleep', 'getpowertrips', ...
@@ -256,7 +266,11 @@ classdef BluetoothApi<sphero.internal.Communication
         end
         
         function data = formatCommandData(obj, action, varargin)
-            
+        %FORMATCOMMANDDATA Mold the data to apppropriate format, that can be sent to Sphero for current message
+        %
+        %   DATA = FORMATCOMMANDDATA(OBJ, ACTION, DATAVAL{1}, DATAVAL{2},..., DATAVAL{N})
+        %   returns the modified DATA that can be sent to Sphero as an appropriate
+        %   message for the ACTION that is to be performed
             switch action
                 case 'controluarttx'
                     origdata = cell2mat(varargin);
@@ -303,9 +317,7 @@ classdef BluetoothApi<sphero.internal.Communication
                 case 'setbackled'
                     origdata = cell2mat(varargin);
                     data = uint8(origdata);
-                    
                 case 'setdatastreaming'
-%                     origdata = cell2mat(varargin);
                     data(1:2) = obj.cmdToByte(uint16(varargin{1}));
                     data(3:4) = obj.cmdToByte(uint16(varargin{2}));
                     data(5:8) = obj.cmdToByte(uint32(varargin{3}));
@@ -331,19 +343,22 @@ classdef BluetoothApi<sphero.internal.Communication
                     data(1:2) = obj.cmdToByte(uint16(origdata(1)));
                 otherwise
                     data = [];
-                    
-                    
-                
             end
         end
             
         
         function valid = checkValidityResponse(obj, sop1, sop2, msrp, code, dlen, data, chk, response)
+        %CHECKVALIDITYRESPONSE Check whether received response is a valid message or not
+        %
+        %   VALID = CHECKVALIDITYRESPONSE(OBJ, SOP1, SOP2, MSRP, CODE,
+        %   DLEN, DATA, CHK, RESPONSE) checks whether the received RESPONSE
+        %   is valid or not. It checks the 'Start of packet' bytes (SOP1,
+        %   SOP2); Message Response Code (MSRP) for synchronous messages,
+        %   or ID code for asynchronous messages (CODE); and whether the Data
+        %   Length byte (DLEN) matches the actual length of the DATA
+        
            expectedChk = computeCheckSum(obj, response(1:end-1));
-%            err = MException('Sphero:Api:InvalidResponse',...
-%                'Received response is not valid');
-                
-           
+
            if sop1~=obj.ApiInfo.expectedSop1||...
                    (sop2~=obj.ApiInfo.sop2Acknowledgement && sop2~=obj.ApiInfo.sop2Asynchronous)||...
                    dlen~=length(data)+1||chk~=expectedChk
@@ -361,7 +376,9 @@ classdef BluetoothApi<sphero.internal.Communication
         end
         
         function valid = checkMsrp(obj, msrp)
-            valid = 0;
+        %CHECKMSRP Check whether the Message Response Code (MSPR) is valid or not
+            
+            valid = 0; % Initialize to 0, to indicate invalid message
             switch msrp
                 case obj.ApiInfo.RspCodeOk
                     valid = 1;
@@ -416,7 +433,6 @@ classdef BluetoothApi<sphero.internal.Communication
                         'Message timed out. Please try again.');
                     
                 otherwise
-%                     valid=0;
                     err = MException('Sphero:Api:InvalidCommand:GeneralError','Unrecognized Message Reponse received. Please check API definition');
                  
             end
@@ -429,8 +445,13 @@ classdef BluetoothApi<sphero.internal.Communication
        
         
         function [result, out] = decodeResponseData(obj, data, action)
-%             err = MException('Sphero:Api:InvalidResponse',...
-%                'Received response is not valid');
+        %DECODERESPONSEDATA Decode the data that is received as part of the
+        %Response from Sphero
+        %
+        %   [RESULT, OUT] = DECODERESPONSEDATA(OBJ, DATA, ACTION) decodes
+        %   the data based on the action that the Sphero responded to. It
+        %   returns the result of the decoded response in OUT, and the
+        %   RESULT as 1 if the data is a part of a valid response
             
            switch action
                 case 'version'
@@ -459,15 +480,10 @@ classdef BluetoothApi<sphero.internal.Communication
                         version.ApiMinorRev = apimin;
                         
                         out = version;
-%                         if nargout==0
-%                             disp(version);
-%                       SensorDataPropertySet  else
-%                             varargout{1} = version;
-%                         end
+
                     end
                case 'getbtname'
                    if length(data)~= obj.ApiInfo.RspGetBtNameDlen-1
-%                         error(err)
                          result = 0;
                         out = [];
                    else
@@ -478,19 +494,14 @@ classdef BluetoothApi<sphero.internal.Communication
                       colors = char(data(30:32));
                       
                       out = strvcat(name, address, colors);
-%                       varagout{1} = address;
-%                       varagout{2} = colors;
                    end
                case 'getautoreconnect' % Not being used in hwinfo now
                    if length(data)~= obj.ApiInfo.RspGetAutoReconnectDlen-1
-%                         error(err)
                        result = 0;
                         out = [];
                    else
                        result = 1;
                        out = data;
-%                       out           = data(1);
-%                       varagout{1}   = data(2);
                    end
                case 'getpwrstate'
                    if length(data)~=obj.ApiInfo.RspGetPwrStateDlen-1
@@ -523,7 +534,6 @@ classdef BluetoothApi<sphero.internal.Communication
                        out = [];
                    else
                        result = 1;
-
                                               
                        out{1} = obj.cmdFromByte(data(1:2), 'uint16');
                        out{2} = obj.cmdFromByte(data(4:7), 'uint32');
@@ -534,8 +544,6 @@ classdef BluetoothApi<sphero.internal.Communication
                        out{7} = obj.cmdFromByte(data(24:27), 'uint32');
                        out{8} = obj.cmdFromByte(data(28:31), 'uint32');
                        out{9} = obj.cmdFromByte(data(32:35), 'uint32');
-%                        out{10} = data(36);
-%                        out{11} = obj.cmdFromByte(data(37:68), 'uint32');
                        out{12} = obj.cmdFromByte(data(71:72), 'uint16');
                        out{13} = obj.cmdFromByte(data(73:74), 'uint16');
                        out{14} = obj.cmdFromByte(data(75:78), 'uint32');
@@ -568,9 +576,7 @@ classdef BluetoothApi<sphero.internal.Communication
                        sog = obj.cmdFromByte(data(9:10), 'uint16');
                        
                        out = {xpos ypos xvel yvel sog};
-                       
                    end
-                   
                    
                case 'getdevicemode'
                   if length(data)~= obj.ApiInfo.RspGetDeviceModeDlen-1
@@ -599,8 +605,8 @@ classdef BluetoothApi<sphero.internal.Communication
                            otherwise
                                 result = 0;
                         end
-                       
                    end
+                   
                case 'presleep'
                    out= [];
                    if length(data)~=obj.ApiInfo.RspPreSleepDlen-1
@@ -629,7 +635,6 @@ classdef BluetoothApi<sphero.internal.Communication
                        elseif bitget(axis, 2)
                            obj.CollisionDetected = 'y';
                        end
-                       
                        result = 1;
                    end
                    
@@ -642,9 +647,8 @@ classdef BluetoothApi<sphero.internal.Communication
                        obj.GyroAxisLimitExceed = 1;
                    end
                 case 'sensor'
-
-                   out = [];
-                   sprintf(['Sensor data streaming \n' num2str(data)])%%% Remove after debugging
+                    out = [];
+                   sprintf(['Sensor data streaming \n' num2str(data)])%NOTE: Remove after debugging
                    
                 % Check if the number of elements in the received response
                 % are equal to the samples per packet per sensor * number of sensors
@@ -671,11 +675,9 @@ classdef BluetoothApi<sphero.internal.Communication
                   result=1;
                   obj.SensorData = sensordata;
                   obj.SensorDataPropertySet = 1;
-%                        for i=1:length(sensordata)
-%                             obj.SensorData.(obj.Sensors{i}) = sensordata(i);
-%                        end
-                %% Following cases have not been complately considered yet. 
-                % Just putting placeholders so that doesn't error out
+
+               %%% Following cases have not been complately considered yet. 
+               %%% Just putting placeholders so that doesn't error out
                case 'level1diag'
                    result = 1;
                    out = [];
@@ -713,10 +715,10 @@ classdef BluetoothApi<sphero.internal.Communication
                    result = 1;
                    out = [];
 
-                %% All Other cases for response
-                otherwise
+               otherwise
+                    % Check if valid 'Simple Response' received for other
+                    % actions
                      if length(data)~= obj.ApiInfo.RspSimpleDlen-1
-%                         error(err)
                           result = 0;
                           out = obj.ResponseError;
                      else
@@ -727,9 +729,9 @@ classdef BluetoothApi<sphero.internal.Communication
         end
       
         function action = decodeAction(obj, ack, idx)
+        %DECODEACTION Check which 'action' does the response correspond to
            switch ack
-               case 1
-%                    idx = arrayfun(@(x) find(x.seq==code), obj.SequenceList);
+               case 1 % Synchronous response
                    
                    if ~isempty(idx)
                        action = obj.SequenceList.action{idx(1)};
@@ -748,17 +750,8 @@ classdef BluetoothApi<sphero.internal.Communication
            end
         end
         
-%         function action = decodeAsyncAction(idcode)
-% %             if idcode>length(obj.ApiInfo.RspAsync)
-% %                 result = 0;
-% %                 action = '';
-% %             else
-% %                 result=1;
-%                 action = obj.ApiInfo.RspAsync{idcode};
-% %             end
-%         end
-        
         function dec = packedNibble2Dec(~, hex)
+        %PACKEDNIBBLE2DEC Convert Packed Nibble format to Decimal
             dec = hex2dec(hex(1));
             
             nibble2 = hex2dec(hex(2));
@@ -771,7 +764,12 @@ classdef BluetoothApi<sphero.internal.Communication
         end
         
         function  saveSeq(obj, respond, seq, action)
-        %Save the sequence number in the SequenceList
+        %SAVESEQ Save the sequence number in the SequenceList
+        %
+        %   SAVESEQ(OBJ, RESPOND, SEQ, ACTION) saves the sequence number to
+        %   the SequenceList if RESPOND is true. It saves the sequence
+        %   number (SEQ), action that is going to be performed (ACTION) and
+        %   the Initial value of the response.
             if respond
                 idx = indexOfResponseAction(obj, action);
                 
@@ -785,12 +783,15 @@ classdef BluetoothApi<sphero.internal.Communication
                 end
             end
         end
-        
-            
+                    
         function assembleResponse(obj)
-            %If error occurs on assembling asynchronous response, then 
-            % throw the error. If error occurs during synchronous response,
-            % set the response to NaN (ResponseError)
+        %ASSEMBLERESPONSE Assemble the response that is received from the Sphero
+        %
+        %   ASSEMBLERESPONSE(OBJ) reads the bytes from the Bluetooth
+        %   module and assembles the response into one complete message
+        %   that is then processed. If an error occurs on assembling a 
+        %   response, it is saved to the ErrorSynchronous or 
+        %   ErrorAsynchronous property
             
            processing = 1;
                 
@@ -808,7 +809,6 @@ classdef BluetoothApi<sphero.internal.Communication
                         ack = processResponse(obj, response);
                         obj.Response(1:responseEnd) = [];
                         
-%                         obj.BytesToRead
                         if length(obj.Response)<obj.ApiInfo.SpheroResponse.dlen
                             processing = 0;
                            obj.BytesToRead =  Inf;
@@ -821,7 +821,7 @@ classdef BluetoothApi<sphero.internal.Communication
               flushinput(obj.Bt); 
               obj.Response(1:responseEnd) = [];
               
-              %%%%%%%%% Test if this works in reestablishing the
+              %%%%%%%%% NOTE: Test if this works in reestablishing the
               %%%%%%%%% BytesAvailbale function
               obj.Bt.BytesAvailableFcnCount = 1;
               obj.Bt.BytesAvailableFcnMode = 'byte';
@@ -835,28 +835,24 @@ classdef BluetoothApi<sphero.internal.Communication
               else
                   obj.ErrorAsynchronous = exception;
               end
-%               throwAsCaller(exception)
-%                 rethrow(exception)
-            
           end
-                
         end
+        
         function readBytes(obj, eventSrc, eventData)
-            %
-            % If on reading the additional number of bytes, the length of
-            % the Reponse is more than the number of bytes till 'dlen'
-            % byte, then assemble the Response
-            % Or if the length of response at present is more than the num
-            % of bytes till 'dlen', then check if the additional number of
-            % bytes that can be read will be more than the number of bytes
-            % that should be read to complete the message
+        %READBYTES Listener callback to read appropriate number of bytes from Bluetooth
+        %
+        % If on reading the additional number of bytes, the length of
+        % the Reponse is more than the number of bytes till 'dlen'
+        % byte, then assemble the Response.
+        % Or if the length of response at present is more than the num
+        % of bytes till 'dlen', then check if the additional number of
+        % bytes that can be read will be more than the number of bytes
+        % that should be read to complete the message
             
             lenRsp = length(obj.Response);
             numDlen = obj.ApiInfo.SpheroResponse.dlen;
             
-            avail = eventSrc.BytesAvailable %%% Remove after debugging
-            
-            if (lenRsp<numDlen && lenRsp+eventSrc.BytesAvailable>=numDlen) || ...
+          if (lenRsp<numDlen && lenRsp+eventSrc.BytesAvailable>=numDlen) || ...
                 (lenRsp>=numDlen && eventSrc.BytesAvailable>=obj.BytesToRead)
                 
                 bytesRead = eventSrc.BytesAvailable;
@@ -864,7 +860,7 @@ classdef BluetoothApi<sphero.internal.Communication
                 obj.Response(end+1:end+bytesRead) = fread(eventSrc, bytesRead);
                 
                 %%%%%%%%
-                obj.Response%%% Remove after debugging
+                obj.Response%%%NOTE: Remove after debugging
 %                 error('test');
                 %%%%%%%
                 
@@ -872,14 +868,13 @@ classdef BluetoothApi<sphero.internal.Communication
             end
         end
         
-       
-        
         function ack = processResponse(obj, response)
+        %PROCESSRESPONSE Process the response that is received and save the result in an appropriate property 
+        %   The result is saved in the SequenceList property for synchronous
+        %   messages, or the corresponding property for asynchronous messages 
             err = MException('Sphero:Api:InvalidResponse',...
                'Received response is not valid');
-           
-          
-%            try 
+    
                 [valid, ack, data, code] = decodeResponse(obj, response);
 
                 if ack==1
@@ -887,7 +882,6 @@ classdef BluetoothApi<sphero.internal.Communication
                 else
                     idx = code;
                 end
-
 
                 action = decodeAction(obj, ack, idx);
 
@@ -897,10 +891,6 @@ classdef BluetoothApi<sphero.internal.Communication
                         return
                     else
                         throw(err);
-    %                     obj.Response(1:responseEnd) = [];
-    %                     error('Received response is not valid')
-
-
                     end
                 end
 
@@ -912,32 +902,40 @@ classdef BluetoothApi<sphero.internal.Communication
                     obj.SequenceList.response{idx(1)} = obj.ResponseError;
                 elseif ~result2 %When response is asynchronous & result is 0
                     throw(err)
-    %                 obj.Response(1:responseEnd) = [];
-    %                 error('Received asynchronous response is invalid');
                 end
-                
-%            catch exception
-%                obj.Response(1:responseEnd) = [];
-%                rethrow(exception)
-%             
-%            end
-%         
         end
+        
         function throwAsyncError(obj, src, eventdata)
+        %THROWASYNCERROR Callback to Listener for throwing an error when it is encountered when reading Asynchronous response
             if ~isempty(obj.ErrorAsynchronous)
-%                 err = MException(obj.ErrorAsynchronous.identifier, obj.ErrorAsynchronous.message);
-                
                 warning(['Error occured when reading Asynchronous message: ' obj.ErrorAsynchronous.message]);
                 lastwarn(''); %Added so that instrcb.m does not display the warning again
                 obj.ErrorAsynchronous = [];
             end
         end
         
+         function idx = indexOfResponseSequence(obj, seq)
+         %INDEXOFRESPONSESEQUENCE returns the index number of the sequence number in the SequenceList
+            idx = find(obj.SequenceList.seq==seq); %Index of the sequence 
+            %number which was achnowledged in the response
+         end
+        
+         function idx = indexOfResponseAction(obj, action)
+         %INDEXOFRESPONSEACTION returns the index number for the indicated action, if it is present in the SequenceList
+             idx = find(cellfun(@(x) strcmp(x, action), obj.SequenceList.action));
+         end
     end
     
+    %% Public Methods
     methods
-        
+  
         function obj = BluetoothApi
+        %BLUETOOTHAPI API for sending commands to Sphero over Bluetooth
+        %
+        %   OBJ = BLUETOOTHAPI creates an object for the communication API for 
+        %   communicating with Sphero over Bluetooth. 
+        %   Read the Api information (constants, parameters etc. from the 
+        %   associated function, and add listeners for specific properties
             hInfo = sphero.internal.ApiInfo(obj.Rev);
             obj.ApiInfo = hInfo.Constants;
             obj.ApiInfo.SpheroResponse = hInfo.SpheroResponse;
@@ -950,21 +948,29 @@ classdef BluetoothApi<sphero.internal.Communication
              
         end
         
-%         function sensornames = get.Sensors(obj)
-%             sensornames = obj.sph.SensorPolling.sensors;
-%         end
-        
         function [cmd, respond, seq] = createCommand(obj, action, varargin)
-            % Arguments:
-            % 1. Api object
-            % 2. Action to be performed
-%             % 3. Data
-            % 3. Sequence number ([] if sequence number is to be
-            % automatically selected)
-            % 4. Whether sphero should respond to messge
-            % 5. Reset the inactivity timeout
-            % 6 onwards: Data that has to be sent to device for the action
-            
+        %CREATECOMMAND Assemble the command that can be sent to Sphero for a particular action
+        % 
+        %   [CMD, RESPOND, SEQ} = CREATECOMMAND(OBJ, ACTION) uses the
+        %   default values for creating the command for particular action.
+        %   The Command is returned in CMD, and the sequence number used
+        %   to send the command is returned in SEQ. RESPOND is 1 if a 
+        %   response is expected from the Sphero for the particular
+        %   command.
+        % 
+        %   [CMD, RESPOND, SEQ] = CREATECOMMAND(OBJ, ACTION, SEQNUM,
+        %   RESPONDTOCMD, RESET) specifies the following additional parameters:
+        %       SEQNUM: Sequence number for the command (default = prev
+        %       sequence number+1)
+        %       RESPONDTOCMD: Whether the Sphero should respond to the
+        %       command or not (default = Based on Handshake property)
+        %       RESET: Reset the inactivity timeout after sending the
+        %       command (default = 1)
+        %   
+        %   [CMD, RESPOND, SEQ] = CREATECOMMAND(OBJ, ACTION, SEQNUM,
+        %   RESPONDTOCMD, RESET, DATA{1}, DATA{2}, ..., DATA{N}) specifies
+        %   the data for the particular command as well.
+           
             action = validateAction(obj, action);
                         
             if nargin>2
@@ -1018,16 +1024,6 @@ classdef BluetoothApi<sphero.internal.Communication
                    'of incorrect size according to the Bluetooth API']));
             end
             
-%             cmd(ApiInfo.ClientCommand.sop1) = sop1;
-%             cmd(ApiInfo.ClientCommand.sop2) = sop2;
-%             cmd(ApiInfo.ClientCommand.did)  = did;
-%             cmd(ApiInfo.ClientCommand.cid)  = cid;
-%             cmd(ApiInfo.ClientCommand.seq)  = seq;
-%             cmd(ApiInfo.ClientCommand.dlen) = dlen;
-%             cmd(ApiInfo.ClientCommand.data:ApiInfo.ClientCommand.data+ApiInfo.ClientCommand.dlen-1) = data;
-%             
-%             
-%             
               cmd = [sop1 sop2 did cid seq dlen data];
           
               chk = obj.computeCheckSum(cmd);
@@ -1042,12 +1038,17 @@ classdef BluetoothApi<sphero.internal.Communication
         
         
         function response = readResponse(obj, responseexpected, seq, responseTimeout)
-            % Read the response from the SequenceList structure
-            % If timeout occurs, then give error
-            % If timeout doesnt occur, but the received response is
-            % invalid, then return NaN(ResponseError)
+        %READRESPONSE Read the response from Sphero
+        %
+        %   RESPONSE = READRESPONSE(OBJ, RESPONSEEXPECTED, SEQ,
+        %   RESPONSETIMEOUT) reads the response for SEQ sequence number 
+        %   from the SequenceList structure. If timeout occurs when the 
+        %   response is not received within RESPONSETIMEOUT seconds, then 
+        %   this would error out. If timeout doesnt occur, but the 
+        %   received response is invalid, then ResponseError would be
+        %   returned
+        
             err = MException('Sphero:Api:timeout', 'Response Timeout');
-%             pause(0.5)
             
             if responseexpected
                 idx = indexOfResponseSequence(obj, seq);
@@ -1083,7 +1084,7 @@ classdef BluetoothApi<sphero.internal.Communication
                     end
                     
                 catch exception
-%                     throwAsCaller(exception);
+
                        idx = indexOfResponseSequence(obj, seq);
                         if ~isempty(idx)
                             %Remove the action from the SequenceList
@@ -1097,7 +1098,7 @@ classdef BluetoothApi<sphero.internal.Communication
                         end
 
                     obj.ErrorSynchronous = [];
-                     rethrow(exception);
+                    rethrow(exception);
                 end
                     
             else
@@ -1105,83 +1106,81 @@ classdef BluetoothApi<sphero.internal.Communication
             end
         end
         
-        %% Decode Response
         function [valid, ack, data, code] = decodeResponse(obj, response)
-               
-           response = uint8(response);
+        %DECODERESPONSE Decode the response that is read from the Sphero
+        %
+        %   [VALID, ACK, DATA, CODE] = DECODERESPONSE(OBJ, RESPONSE)
+        %   decodes the response, RESPONSE that is received from the
+        %   Sphero. The output VALID indicates whether the received
+        %   response was valid or not. ACK indicates whether it is an
+        %   acknowledgement or synchronous response to a previously received 
+        %   command (1), or instead an asynchronous response (0). CODE
+        %   indicates the ID Code for asynchronous commands, or the
+        %   sequence number of the command to which this is a synchronous
+        %   response.
+
+            response = uint8(response);
            
-%             try
-                sop1 = response(obj.ApiInfo.SpheroResponse.sop1);
-                sop2 = response(obj.ApiInfo.SpheroResponse.sop2);
-                if sop2==obj.ApiInfo.sop2Acknowledgement
-                    mrsp = response(obj.ApiInfo.SpheroResponse.mrsp);
-                    code  = response(obj.ApiInfo.SpheroResponse.seq);
-                    dlen = response(obj.ApiInfo.SpheroResponse.dlen);
-                    
-%                     idcode = 0;
-%                     msg = 'ack';
-                    ack = 1;
-                    
+            sop1 = response(obj.ApiInfo.SpheroResponse.sop1);
+            sop2 = response(obj.ApiInfo.SpheroResponse.sop2);
+            if sop2==obj.ApiInfo.sop2Acknowledgement
+                mrsp = response(obj.ApiInfo.SpheroResponse.mrsp);
+                code  = response(obj.ApiInfo.SpheroResponse.seq);
+                dlen = response(obj.ApiInfo.SpheroResponse.dlen);
 
-                elseif sop2==obj.ApiInfo.sop2Asynchronous
-                    code  = response(obj.ApiInfo.SpheroResponse.idcode);
-                    dlenmsb = response(obj.ApiInfo.SpheroResponse.dlenmsb);
-                    dlenlsb = response(obj.ApiInfo.SpheroResponse.dlenlsb);
-                    dlen = obj.cmdFromByte([dlenmsb, dlenlsb]);
-                    
-                    mrsp = 0;
-%                     seq = 0;
-%                     msg = 'asy';
-                    ack = 0;
-                    
-                    
-            
-                else
-                    valid = 0;
-                    data = [];
-                    ack = 0;
-                    code = 0;
-                    return
-%                     error(err);
-                end
+                ack = 1;
+
+            elseif sop2==obj.ApiInfo.sop2Asynchronous
+                code  = response(obj.ApiInfo.SpheroResponse.idcode);
+                dlenmsb = response(obj.ApiInfo.SpheroResponse.dlenmsb);
+                dlenlsb = response(obj.ApiInfo.SpheroResponse.dlenlsb);
+                dlen = obj.cmdFromByte([dlenmsb, dlenlsb]);
+
+                mrsp = 0;
+                ack = 0;
+            else
+                valid = 0;
+                data = [];
+                ack = 0;
+                code = 0;
+                return
+            end
                 
-                data = response(obj.ApiInfo.SpheroResponse.data:end-1);
-                chk  = response(end);
+            data = response(obj.ApiInfo.SpheroResponse.data:end-1);
+            chk  = response(end);
 
-                valid = checkValidityResponse(obj, sop1, sop2, mrsp, code, dlen, data, chk, response);
-
-% %                 action = decodeAckAction(seq);
-% %                 action = decodeAsyncAction(idcode);
-%                 
-%                 action = decodeAction(obj, ack, code);
-%                 
-%                 if ~valid || strcmp(action , 'notfound')
-%                     error(err)
-%                 end
-% 
-%                 
-%                 [result2, varagout] = decodeResponseData(obj, data, action);
-%                 
-%                 if ~result1 || ~result2
-%                     error(err)
-%                 end
-%                 
-%             catch
-%                 error(err)
-%             end
-            
+            valid = checkValidityResponse(obj, sop1, sop2, mrsp, code, dlen, data, chk, response);
         end
        
         function delete(obj)
+        %DELETE Delete the BluetoothApi object
             disconnect(obj);
          end
 
         function [responseexpected, seq] = sendCmd(obj, action, varargin)
-            
-            %Other checking
+        %SENDCMD Send a command to the Sphero
+        %
+        %   [RESPONSEEXPECTED, SEQ} = SENDCMD(OBJ, ACTION) sends a command
+        %   to the Sphero for a particular action, ACTION. The command is 
+        %   sent over Bluetooth if the Bluetooth connection is open. 
+        %
+        %   [RESPONSEEXPECTED, SEQ} = SENDCMD(OBJ, ACTION, SEQNUM,
+        %   RESPONDTOCMD, RESET) specifies the following additional parameters:
+        %       SEQNUM: Sequence number for the command (default = prev
+        %       sequence number+1)
+        %       RESPONDTOCMD: Whether the Sphero should respond to the
+        %       command or not (default = Based on Handshake property)
+        %       RESET: Reset the inactivity timeout after sending the
+        %       command (default = 1)
+        %   
+        %   [RESPONSEEXPECTED, SEQ} = SENDCMD(OBJ, ACTION, SEQNUM,
+        %   RESPONDTOCMD, RESET, DATA{1}, DATA{2}, ..., DATA{N}) specifies
+        %   the data for the particular command as well.
             
             if strcmp(obj.Bt.status, 'open')
                 [cmd, responseexpected, seq] = createCommand(obj, action, varargin{:});
+                
+                cmd %NOTE: Remove after debugging
                 fwrite(obj.Bt, cmd);
             else
                 err = MException('Sphero:NotConnected', 'Connection with sphero is not active. Please recheck the connection');
@@ -1190,35 +1189,34 @@ classdef BluetoothApi<sphero.internal.Communication
            
         end
         
-         function idx = indexOfResponseSequence(obj, seq)
-            idx = find(obj.SequenceList.seq==seq); %Index of the sequence 
-            %number which was achnowledged in the response
-         end
-        
-         function idx = indexOfResponseAction(obj, action)
-             idx = find(cellfun(@(x) strcmp(x, action), obj.SequenceList.action));
-         end
-        
         function connect(obj, varargin)
-            
-            channel = 1;
-            
-            if (nargin>1 && ~isempty(varargin{1}))
-                if iscell(varargin{1})
-                    devicename = varargin{1}{1};
+        %CONNECT Connect to a Sphero device over Bluetooth
+        %
+        %   CONNECT(OBJ) searches for the paired Sphero devices, asks user
+        %   to select one of them to connect to, and connects to it over
+        %   Bluetooth. If the connection with a previously connected 
+        %   sphero was broken, it connects to the previous device again. 
+        %
+        %   CONNECT(OBJ, DEVICENAME) connects to the indicated device
+        
+            try
+                channel = 1;
+
+                if (nargin>1 && ~isempty(varargin{1}))
+                    if iscell(varargin{1})
+                        devicename = varargin{1}{1};
+                    else
+                        devicename = varargin{1};
+                    end
+
+
+                elseif ~isempty(obj.DeviceName)
+                    devicename = obj.DeviceName;
                 else
-                    devicename = varargin{1};
+                   devicename = obj.findDevices;
+
                 end
 
-                          
-            elseif ~isempty(obj.DeviceName)
-                devicename = obj.DeviceName;
-            else
-               devicename = obj.findDevices;
-                
-            end
-
-            try
                 obj.Bt = Bluetooth(devicename, channel);
                 %Open the bluetooth channel
                
@@ -1234,21 +1232,25 @@ classdef BluetoothApi<sphero.internal.Communication
                 flushoutput(obj.Bt); 
                 
                 obj.DeviceName = devicename;
-%                 result = ping(obj);
-%                 if ~result
-%                     error('Sphero:Api:InvalildDevice', ...
-%                     'Unable to connect to device. Please check that the device name is correct and the device is discoverable');
-%                 end
-            
-            catch
-                err = MException('Sphero:Api:InvalildDevice', ...
+
+            catch exception
+                if strncmp('Sphero', exception.identifier, 6)
+                    throwAsCaller(exception)
+                else
+                    err = MException('Sphero:Api:InvalildDevice', ...
                     'Unable to connect to device. Please check that the device name is correct and the device is discoverable');
-                throw(err);
+                    exception2 = addCause(err, exception);
+                    throwAsCaller(exception2);
+                end
+                
             end
         end
         
         function disconnect(obj)
-            if strcmp(obj.Bt.Status, 'open')
+        %DISCONNECT Disconnect from Sphero
+        %
+        %   DISCONNECT(OBJ) disconnects from the connected Sphero device
+            if ~isempty(obj.Bt) && strcmp(obj.Bt.Status, 'open')
                 fclose(obj.Bt);
             end
         end

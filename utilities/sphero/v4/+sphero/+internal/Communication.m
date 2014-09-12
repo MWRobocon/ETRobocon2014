@@ -1,23 +1,34 @@
-classdef (Abstract) Communication<handle
-    %SPHEROCOMMUNICATION Summary of this class goes here
-    %   Detailed explanation goes here
+classdef (Abstract) Communication < handle
+    %COMMUNICATION API for communication between Sphero and machine
+    %   Abstract class for Communication between Sphero and the
+    %   connectivity package. Classes for specific communication protocol
+    %   (eg. Bluetooth) inherit from this class.
+
+    properties (Abstract, Access = ?sphero)
+        ApiInfo
+        Handshake
+        Sensors
+        SamplesPerPacket
+        SensorDataPropertySet 
+    end
     
-%    properties
-%       ApiInfo 
-%    end
-   
-    methods 
-%         [did, cid, dlen] = obtainId(action)
-        
-%         cmd = createCommand(action, varargin)
+    properties (Abstract, Constant, Access = ?sphero)
+        Uint8Max
+        SpheroDeviceNameBeg
+        MaxSensorSampleRate
+        ResponseError
+        ResponseInitialValue
+        ResponseEmpty
+    end
+    
+    methods (Abstract)
+        connect(obj, varargin)
+        disconnect(obj)
         [cmd, respond, seq] = createCommand(obj, action, varargin);
-         [valid, ack, data, code] = decodeResponse(obj, response);
-%         varagout = decodeResponse(response)
-%         
+        [responseexpected, seq] = sendCmd(obj, action, varargin)
+        [valid, ack, data, code] = decodeResponse(obj, response);
+        response = readResponse(obj, responseexpected, seq, responseTimeout)
     end
-    methods (Access = private)
-%         checkValidityResponse(varargin)
-    end
-    
+   
 end
 

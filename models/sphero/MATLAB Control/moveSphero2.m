@@ -1,4 +1,4 @@
-function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, stopRadius,clearVars)
+function [dist, angle, u] = moveSphero2(xdes, ydes, x, y, avgSpeed, Kp, Ki, Kd, stopRadius, maxspeed, minspeed, restartspeed,clearVars)
 
 %%% Assuming that the orientation of the sphero is initially along y
 %%% direction (wrt camera)
@@ -9,11 +9,11 @@ if clearVars
     return
 end
 
-%% Controller Gains
-Kp = 0.2;
-Ki = 0.1;
-Kd = 0.05;
-speedIfSlow = 65;
+% %% Controller Gains
+% Kp = 0.2;
+% Ki = 0.1;
+% Kd = 0.05;
+% speedIfSlow = 65;
 
 if x<0 || y<0
     dist = Inf;
@@ -78,7 +78,7 @@ if dist<stopRadius || flag
     u=0;
 %     flag = 1;
 elseif avgSpeed<1
-    u = speedIfSlow;
+    u = restartspeed;
 elseif dt<eps || dt2<eps
         u = prevu+Kp*(dist-preve)+Ki*dt*dist;
 else
@@ -100,16 +100,16 @@ counter = counter+1;
 %% Send command to sphero
 
 %Saturate
-if u>150
-    usend= 150;
-elseif u<-150
-    usend = -150;
+if u>maxspeed
+    u= maxspeed;
+elseif u<minspeed
+    u = minspeed;
 else
-    usend = u;
+    u = u;
 end
 
 % if usend==0
 %     brake(sph)
 % else
-    roll(sph, usend, angle);
+%     roll(sph, usend, angle);
 % end

@@ -24,9 +24,9 @@ if(initFlag)
 template = imread('media/Mario.jpg');
 
 try
-objectRegion = matchWithTemplate(videoFrame, template);
+objectRegion = matchWithTemplate_SIFT(videoFrame, template);
 catch
-   objectRegion = uint16([0 0 0 0]);
+   objectRegion = uint16([0 0 10 10]);
 end
 
 x = objectRegion(1);
@@ -42,11 +42,9 @@ CentroidZ = [x+w/2, y+h/2];
 initFlag = 0; %done initialising
 end
 
-
 [points, isFound] = step(tracker,videoFrame);
 visiblePoints = points(isFound, :);
 CentroidZ = mean(visiblePoints); % Sparse centroid of zumobot
-
 
 %% Detect Sphero centroid (change code to make it yellow if you want)
     % Convert RGB to HSV, to get the saturation & hue value of each pixel.
@@ -89,8 +87,4 @@ CentroidZ = mean(visiblePoints); % Sparse centroid of zumobot
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
-    if isempty(CentersOrange)
-        CentroidS = [-1, -1];
-    else
-        CentroidS = CentersOrange(1,:);
-    end
+    CentroidS = CentersOrange(1,:);
