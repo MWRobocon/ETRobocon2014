@@ -1259,7 +1259,7 @@ classdef sphero<handle
             if ~response
                 error('Unable to set the desired Color of Sphero');
             else
-                obj.Color = rgb;
+%                 obj.Color = rgb;
             end
         end
         
