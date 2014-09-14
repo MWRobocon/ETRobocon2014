@@ -1,0 +1,9 @@
+light sensor calibration
+mine (A): 2400 | 2750
+comm : 4
+C: 2600
+comm : 9
+
+B: 2875 | 2600 
+white surface: 2900
+comm : 6

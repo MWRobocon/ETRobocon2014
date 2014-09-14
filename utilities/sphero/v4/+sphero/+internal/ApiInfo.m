@@ -1,13 +1,16 @@
 classdef ApiInfo<hgsetget
-    %APIINFO Summary of this class goes here
-    %   Detailed explanation goes here
+    %APIINFO Read constants and other parameters for communication API
+    %   Read the constants and other parameters that are required for the
+    %   communication API to function, from specific API function. An
+    %   object of this class is used as a property of the API class to
+    %   access the required parameters
     
+    %% Properties
     properties (SetAccess = 'private')
-        Constants
-        ClientCommand
-        SpheroResponse
+        Constants %Constants associated with the API
+        SpheroResponse %Structure of the Response that is expected from Sphero
     end
-    
+    %% Public Methods
     methods
         function obj = ApiInfo(ApiRev)
             obj.Constants = [];
@@ -21,6 +24,7 @@ classdef ApiInfo<hgsetget
         end 
         
         function deserialize(h, fileName, varargin)
+        %DESERIALIZE Read the function containing information of API and save to structs
             deserializeM(h, fileName, varargin{:});
         end
         
@@ -28,6 +32,7 @@ classdef ApiInfo<hgsetget
     
     methods (Access = 'private')
          function deserializeM(h, fileName, varargin)
+         %DESERIALIZEM Read the file, and save it to structs
             try
                 info = feval(fileName, varargin{:});
                 infofields = fields(info);

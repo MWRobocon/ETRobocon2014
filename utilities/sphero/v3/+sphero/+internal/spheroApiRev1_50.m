@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <<<<<<< HEAD:utilities/sphero/v3/+sphero/+internal/spheroApiRev1_50.m
+=======
+>>>>>>> refs/remotes/origin/Minions
 function info= spheroApiRev1_50()
     %BLUETOOTHAPICONSTANTS Summary of this class goes here
     %   Detailed explanation goes here
@@ -187,6 +190,7 @@ info.SpheroResponse.dlenmsb  = 4;
 info.SpheroResponse.dlenlsb  = 5;
         
 end
+<<<<<<< HEAD
 =======
 function info= spheroApiRev1_50()
     %BLUETOOTHAPICONSTANTS Summary of this class goes here
@@ -377,3 +381,5 @@ info.SpheroResponse.dlenlsb  = 5;
         
 end
 >>>>>>> origin/Hydra:models/sphero/+sphero/+internal/spheroApiRev1_50.m
+=======
+>>>>>>> refs/remotes/origin/Minions

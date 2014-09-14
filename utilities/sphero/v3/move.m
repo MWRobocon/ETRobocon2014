@@ -1,4 +1,4 @@
-function move( sphName, speed, angle, varargin)
+function move_sphero( sphName, speed, angle, varargin)
 %MOVE Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -18,11 +18,11 @@ if ~strcmp(sph.Status, 'open')
     error('Sphero not connected');
 end
 
-if speed==0
-    brake(sph);
-else
+% if speed==0
+%     brake(sph);
+% else
     roll(sph, speed, angle);
-end
+% end
 
 
 end

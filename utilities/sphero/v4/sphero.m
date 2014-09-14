@@ -1,36 +1,99 @@
 classdef sphero<handle
     %SPHERO Connect and communicate with Sphero
     %   
-    % obj = SPHERO() creates a connection to Sphero and assigns the 
-    % connection to a handle. If you do not indicate the name of the device
-    % to connect to, it searches for the paired Sphero devices and asks user
-    % to select one of them to connect to
-    % obj = SPHERO(DEVICENAME) connects to the indicated device through
-    % the default communication protocol 
+    %   OBJ = SPHERO() creates a connection to Sphero and assigns the 
+    %   connection to a handle. If you do not indicate the name of the device
+    %   to connect to, it searches for the paired Sphero devices and asks user
+    %   to select one of them to connect to
+    %   
+    %   obj = SPHERO(DEVICENAME) connects to the indicated device through
+    %   the default communication protocol
+    %   
+    %   sphero properties:
+    %       AccRange            - Accelerometer Range
+    %       BackLEDBrightness   - Brightness of the LED which indicates the back of the Sphero
+    %       CollisionDetection  - Toggle Collision Detection 
+    %       Color               - Color of LED on the Sphero 
+    %       DeviceName          - Bluetooth name of Sphero
+    %       Handshake           - Toggle handshaking between PC and Sphero 
+    %       InactivityTimeout   - Timeout for inactivity (in seconds) (default = 600) 
+    %       MotionTimeout       - Timeout for the last motion command (in seconds) (default = 2) 
+    %       ResponseTimeout     - Timeout for response to be received from Sphero (in seconds) 
+    %       Status              - (Read-only) Status of connection with Sphero
+    %
+    %   sphero methods:
+    %       boost               - Run Sphero in Boost mode, which causes it to movee with high speed in the current direction 
+    %       brake               - Apply optimal braking to stop the Sphero 
+    %       calibrate           - Calibrate the original orientation of the Sphero 
+    %       connect             - Connect to Sphero 
+    %       disconnect          - Disconnect from the Sphero 
+    %       hwinfo              - Create an object for hardware related information of Sphero 
+    %       ping                - Ping the Sphero to check the connection and whether the Sphero is awake and active 
+    %       pollSensors         - Poll the Sphero for specific sensor data, and save the data to a file. 
+    %       rawMotor            - Provide raw motor commands to control the motor speed 
+    %       readLocator         - Read current location of Sphero, component velocities, and speed over ground 
+    %       readSensor          - Read the current value of the indicated sensors 
+    %       roll                - Move the Sphero along a specific direction 
+    %       rotationRate        - Set the rotation rate that Sphero uses 
+    %       sleep               - Force Sphero to go to sleep 
+    %
+    %   Examples:
+    %       
+    %       %Create a Sphero object
+    %       sph = sphero('Sphero-GPG');
+    %
+    %       %Change color of the Sphero LED, and turn on the back LED
+    %       sph.Color = 'r';
+    %       sph.BackLEDBrightness = 255;
+    %       
+    %       %Calibrate the orientation of the sphero
+    %       calibrate(sph, 80);
+    %
+    %       %Command the Sphero to movewith a speed of 20 at 0 degrees,
+    %       %and then turn right after 1 second.
+    %       roll(roll, 70,0); %speed, angle
+    %       pause(1)
+    %       roll(sph, 70, 90);
+    %       pause(1);
+    %       brake(sph);
+    %       
+    %       %Query the Sphero for the distance travelled along X and Y
+    %       %axes since start, whish are measured based on encoder readings
+    %       [x, y] = readSensor(sph, {'distX', 'distY'});
+    % See Also:
+    %   HWINFO
+    %   <a href="matlab:showdemo('sphero_examples')">Sphero Connectivity Package Examples</a>
        
     properties
-        ResponseTimeout = 1; % Timeout for response to be received from Sphero (in seconds)
-        BackLEDBrightness; % Brightness of the LED which indicates the back of the Sphero
+                
+        %ResponseTimeout - Timeout for response to be received from Sphero (in seconds)
+        ResponseTimeout = 1; 
         
-        % Accelerometer Range
+        %BackLEDBrightness - Brightness of the LED which indicates the back of the Sphero
+        % Value of 0 turns off the LED, and 255 sets it to its maximum
+        % brightness
+        BackLEDBrightness;
+        
+        %AccRange - Accelerometer Range
         % 0 indicates a range from -2G to +2G of acceleration, where G represents the acceleration due to gravity. 
         % 1 indicates -4G to 4G
         % 2 indicates -8G to 8G (default value. Required for Collision Detection to be accurate
         % 3 indicates -16G to 16G
         AccRange = 2;
         
-        %Timeout for the last motion command (in seconds) (default = 2)
+        %MotionTimeout - Timeout for the last motion command (in seconds) (default = 2)
         % Modify this value if you would like the 'roll' commands to keep
         % the sphero rolling, instead of stopping after some time.
         MotionTimeout;  
         
-        % Timeout for inactivity (in seconds) (default = 600)
+        %InactivityTimeout - Timeout for inactivity (in seconds) (default = 600)
         % Sphero would go to sleep after the specified period of
         % inactivity. The inactivity timer is reset every time an API
         % command is received ver Bluetooth
         InactivityTimeout;
         
-        CollisionDetection = 0; % Toggle Collision Detection
+        %CollisionDetection - Toggle Collision Detection
+        CollisionDetection = 0; 
         
         %NOTE: To be considered in future
 %         PermOptions %would have a set method
@@ -46,7 +109,7 @@ classdef sphero<handle
     end
     
     properties(Access = {?sphero, ?BluetoothApi})
-       % Temporarily save the data from the sensors being polled, before saving them to a file
+       %SensorPolling - Temporarily save the data from the sensors being polled, before saving them to a file
        % It is a struct with the following fields:
        %    filename
        %    sensors
@@ -64,28 +127,31 @@ classdef sphero<handle
     end
     
     properties (Dependent=true)
-        Handshake; %Toggle handshaking between PC and Sphero
-        Color; % LED Color on the Sphero
+        Handshake; % Toggle handshaking between PC and Sphero
+        Color; % Color of LED on the Sphero 
 
     end
     
      properties (Dependent=true, SetAccess = private)
        Status % Status of connection with Sphero
+       DeviceName; % Bluetooth name of Sphero
 
     end
     
-    properties(Access = private, Constant)
+    properties(GetAccess = private, Constant)
         RateResolution = 0.784; % Resolution of Rotation Rate of sphero
         RateMax = 400; % Maximum possible Rotation rate
     end
     
-    methods(Static, Access = private)
+    methods(Static)
         function varargout = simpleResponse(response)
-        % Checks if received response is valid or not
-            % SIMPLERESPONSE(RESPONSE) would error out if the response is invalid
-            % valid = SIMPLERESPONSE(RESPONSE) returns 1 if rerponse is
-            % invalid, otherwise it will return 0
-                if nargout
+        %SIMPLERESPONSE Checks if received response is valid or not
+        %
+        %   SIMPLERESPONSE(RESPONSE) would error out if the response is invalid
+        %   
+        %   valid = SIMPLERESPONSE(RESPONSE) returns 1 if reponse is
+        %   valid, otherwise it will return 0
+            if nargout
                 if isempty(response)
                     varargout{1} = 1;
                 else
@@ -97,11 +163,13 @@ classdef sphero<handle
                     throwAsCaller(err);
                 end
             end
-        end
-        
+        end  
+    end
+    methods(Static, Access = private)
+         
         function [Mask, Mask2] = DataStreamingMask(sensors)
-        % Create the Masks that are used to create the command to stream
-        % sensor data from Sphero
+        %DATASTREAMINGMASK Create the Masks that are used to create the 
+        % command to stream sensor data from Sphero
         
             Mask = uint32(0);
             Mask2 = uint32(0);
@@ -169,7 +237,7 @@ classdef sphero<handle
                     case 'velY'
                         Mask2 = bitset(Mask2, 24);
                     otherwise
-                        err = MException('pollSensors:IncorrectInput', ...
+                        err = MException('Sphero:PollSensors:IncorrectInput', ...
                             'Undefined sensor name');
                         throw(err);
                 end
@@ -178,16 +246,16 @@ classdef sphero<handle
         
        
         function powerNotify(~, eventdata) 
-        % Callback for Listener for PowerNotification property of
+        %POWERNOTIFY Callback for Listener for PowerNotification property of
         % CommunicationApi. By default it will just display a warning.
-        %src.Name will be 'PowerNotification'
         
+        % src.Name will be 'PowerNotification'
             warning(eventdata.AffectedObject.PowerNotification);
             lastwarn(''); %Added so that instrcb.m does not display the warning again
         end
         
         function preSleepWarning(~, eventdata)
-        % Callback for Listener for PreSleepWarning property of
+        %PRESLEEPWARNING Callback for Listener for PreSleepWarning property of
         % CommunicationApi. By default it will just display a warning.
         
             if eventdata.AffectedObject.PreSleepWarning
@@ -197,17 +265,17 @@ classdef sphero<handle
                
         end
         
-        function collisionDetection(~, eventdata)
-        % Callback for Listener for CollisionDetection property of
-        % CommunicationApi. By default it will just display a warning
+        function collisionDetect(~, eventdata)
+        %COLLISIONDETECT Callback for Listener for CollisionDetection 
+        % property of CommunicationApi. By default it will just display a warning
         
             warning('Collision occured along %c-direction', eventdata.AffectedObject.CollisionDetected);
             lastwarn(''); %Added so that instrcb.m does not display the warning again
         end
         
         function gyroAxisLimitExceed(~, ~)
-        % Callback for Listener for GyroAxisLimitExceed property of
-        % CommunicationApi. By default it will just display a warning
+        %GYROAXISLIMITEXCEEDED Callback for Listener for GyroAxisLimitExceed 
+        % property of CommunicationApi. By default it will just display a warning
         
             warning('Gyro Axis Limit Exceeded');
             lastwarn(''); %Added so that instrcb.m does not display the warning again
@@ -217,8 +285,8 @@ classdef sphero<handle
     methods(Access = private)
                       
         function sensorDataStreaming(obj, ~, ~)
-        %Callback for Listener for the SensorData property, for Logging the
-        %sensor data
+        %SENSORDATASTREAMING Callback for Listener for the SensorData 
+        % property, for Logging the sensor data
 
             if isempty(obj.SensorPolling.filename)
                 warning(['Sphero is sending Sensor Data that is to be polled'...
@@ -267,9 +335,10 @@ classdef sphero<handle
         end
         
          function varargout = heading(obj, angle)
-         % Adjust the heading direction of the sphero
-            % HEADING(SPH, ANGLE) sets the new heading to ANGLE, where ANGLE
-            % is in degrees
+         %HEADING Adjust the heading direction of the sphero
+         % 
+         %  HEADING(SPH, ANGLE) sets the new heading to ANGLE, where ANGLE
+         %  is in degrees
          
             nargoutchk(0, 1)
              
@@ -283,9 +352,11 @@ classdef sphero<handle
         end
         
         function varargout = stabilization(obj, flag)
-        % Toggle the stabilization
-            % STABILIZATION(SPH, FLAG) toggles the stabilization property
-            % of the Sphero based on the FLAG value
+        %STABILIZATION Toggle the stabilization
+        %   
+        %   STABILIZATION(SPH, FLAG) toggles the stabilization property
+        %   of the Sphero based on the FLAG value
+        
             nargoutchk(0, 1)
             p = inputParser;
             addRequired(p, 'flag', @(x) isnumeric(x) && (x==0 || x==1));
@@ -300,14 +371,16 @@ classdef sphero<handle
         end
     
         function varargout = configureCollisionDetection(obj, method, xt, xspd, yt, yspd, dead)
-        % Configure the options for Collision Detection
-            % CONFIGURECOLLISIONDETECTION(SPH, METHOD, XT, XSPD, YT, YSPD, DEAD)
-            % sets the following options for the collision detection
-            % METHOD: 0 to disable, 1 to enable collision detection
-            % XT, YT: Threshold for X and Y axes of Sphero, at speed 0  
-            % XSPD, YSPD: Value added to XT and YT at maximum speed, for
-            % the threshold at maximum speed
-            % DEAD  : Dead time to prevent retrigerring. Specified in ms 
+        %CONFIGURECOLLISIONDETECTION Configure the options for Collision Detection
+        % 
+        %   CONFIGURECOLLISIONDETECTION(SPH, METHOD, XT, XSPD, YT, YSPD, DEAD)
+        %   sets the following options for the collision detection
+        % 
+        %   METHOD: 0 to disable, 1 to enable collision detection
+        %   XT, YT: Threshold for X and Y axes of Sphero, at speed 0  
+        %   XSPD, YSPD: Value added to XT and YT at maximum speed, for
+        %   the threshold at maximum speed
+        %   DEAD  : Dead time to prevent retrigerring. Specified in ms 
              p = inputParser;
             addRequired(p, 'objectname');
             addRequired(p, 'method', @(x) isnumeric(x) && (x==0 || x==1));
@@ -338,24 +411,84 @@ classdef sphero<handle
             end
             
         end
+        
+        function varargout = configureLocator(obj, x, y, flag, yawtare)
+        %CONFIGURELOCATOR Reset the location of the robot and change the alignment of locator coordinates with respect to IMU heading
+        %
+        %   CONFIGURELOCATOR(SPH, X, Y) configures the current X, Y
+        %   coordinates of the Sphero
+        %
+        %   CONFIGURELOCATOR(SPH, FLAG, X, Y, YAWTARE) configures the
+        %   internal locator of the Sphero based on the input values.
+        %   X, Y denote the current coordinates of the Sphero on the ground
+        %   in cm.
+        %   FLAG determines whether the yaw tare value is automatically
+        %   corrected when calibrate command is used. (default = 1).
+        %   YAWTARE controls how the X, Y-plane is aligned with the
+        %   Sphero's internal heading coordinate system. When this is set
+        %   to 0, it means that when rotation of Sphero is 0 (yaw=0), it
+        %   corresponds to facing down the +Y-axis. (default = 0)
+        %
+        %   RESULT = CONFIGURELOCATOR(SPH, X, Y) returns 1 if the command 
+        %   succeeds, otherwise it returns 0
+        
+            nargoutchk(0, 1);
+            p = inputParser;
+            addRequired(p, 'objectname');
+            addRequired(p, 'x', @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
+            addRequired(p, 'y', @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
+            addOptional(p, 'flag', 1, @(x) isnumeric(x) && (x==0 || x==1));
+            addOptional(p, 'yawtare', 0, @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
+            parse(p, obj, x, y, flag, yawtare);
+                        
+            [responseexpected, seq] = sendCmd(obj.Api, 'locator', [], [], [], p.Results.flag, p.Results.x, p.Results.y, p.Results.yawtare);
+            
+            response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
+              
+            [varargout{1:nargout}] = sphero.simpleResponse(response);
+        end
+        
+        function delete(obj)
+        %DELETE Delete the Sphero object and close the connection
+            if ~isempty(obj.Listeners)
+                delete(obj.Listeners.PowerNotificationList);
+                delete(obj.Listeners.PreSleepWarningList);
+                delete(obj.Listeners.CollisionDetectionList);
+                delete(obj.Listeners.GyroAxisLimitExceedList);
+            end
+            
+             if ~isempty(obj.Api.Bt) && strcmp(obj.Api.Bt.Status, 'open')
+                obj.BackLEDBrightness = 0;
+            end
+             delete(obj.Api);
+        end
     end
     
     methods
         function obj = sphero(varargin)
         %SPHERO    Create an object of class sphero 
-            % obj = SPHERO() searches for the paired Sphero devices and asks user
-            % to select one of them to connect to
-            % obj = SPHERO(DEVICENAME) connects to the indicated device through
-            % the communication protocol 
-            % obj = SPHERO(DEVICENAME, CONNECT) connects to the device if CONNECT
-            % is logically true. Otherwise it just creates an object
-            % without connecting to the device
-            % obj = SPHERO(DEVICENAME, CONNECT, COMMUNICATIONAPI) connects 
-            % to the device using the indicated COMMUNICATIONAPI if 
-            % CONNECT is logically true. COMMUNICATIONAPI is a string,
-            % which corresponds to the name of a class which inherits from
-            % 'Communication' class under sphero.internal package and is
-            % present in the package
+        % 
+        %   obj = SPHERO() searches for the paired Sphero devices and asks user
+        %   to select one of them to connect to
+        % 
+        %   obj = SPHERO(DEVICENAME) connects to the indicated device through
+        %   the communication protocol 
+        % 
+        %   obj = SPHERO(DEVICENAME, CONNECT) connects to the device if CONNECT
+        %   is logically true. Otherwise it just creates an object
+        %   without connecting to the device
+        % 
+        %   obj = SPHERO(DEVICENAME, CONNECT, COMMUNICATIONAPI) connects 
+        %   to the device using the indicated COMMUNICATIONAPI if 
+        %   CONNECT is logically true. COMMUNICATIONAPI is a string,
+        %   which corresponds to the name of a class which inherits from
+        %   'Communication' class under sphero.internal package and is
+        %   present in the package
+        %
+        %   Examples:
+        %       
+        %       %Create a Sphero object
+        %       sph = sphero('Sphero-GPG');
             
             import('sphero.*') %Import sphero package so that the 
             % classes inside 'internal' package can be accessed through
@@ -387,16 +520,17 @@ classdef sphero<handle
            %default callback functions
            obj.Listeners.PowerNotificationList = addlistener(obj.Api, 'PowerNotification',  'PostSet',  @sphero.powerNotify);
            obj.Listeners.PreSleepWarningList = addlistener(obj.Api, 'PreSleepWarning', 'PostSet', @sphero.preSleepWarning);
-           obj.Listeners.CollisionDetectionList = addlistener(obj.Api, 'CollisionDetected', 'PostSet', @sphero.collisionDetection);
+           obj.Listeners.CollisionDetectionList = addlistener(obj.Api, 'CollisionDetected', 'PostSet', @sphero.collisionDetect);
            obj.Listeners.GyroAxisLimitExceedList = addlistener(obj.Api, 'GyroAxisLimitExceed', 'PostSet', @sphero.gyroAxisLimitExceed);
            
         end
         
         function result = ping(obj)
-        % PING Ping the Sphero to check the connection and whether the Sphero is awake and active
-            % RESULT = PING(SPH) returns the result of the ping as 1 if the
-            % connection is active. Otherwise it returns 0.
-            
+        %PING Ping the Sphero to check the connection and whether the Sphero is awake and active
+        % 
+        %   RESULT = PING(SPH) returns the result of the ping as 1 if the
+        %   connection is active. Otherwise it returns 0.
+
             [responseexpected, seq] = sendCmd(obj.Api, 'ping', [], 1);
            
             response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
@@ -411,27 +545,34 @@ classdef sphero<handle
         
                    
         function connect(obj, varargin)
-        % CONNECT Connect to Sphero
-            % CONNECT(SPH) would connect to the previous Sphero device if
-            % it is detected. Otherwise it will search for paired devices
-            % and prompt the user to select one
-            % CONNECT(SPH, DEVICENAME) would try to connect to the
-            % specified device
-             connect(obj.Api, varargin{:});
+        %CONNECT Connect to Sphero
+        % 
+        %   CONNECT(SPH) would connect to the previous Sphero device if
+        %   it is detected. Otherwise it will search for paired devices
+        %   and prompt the user to select one
+        % 
+        %   CONNECT(SPH, DEVICENAME) would try to connect to the
+        %   specified device
+            try
+                 connect(obj.Api, varargin{:});
+            catch exception
+                throwAsCaller(exception);
+            end
         end
         
         
         function varargout = roll(obj, speed, heading)
-        % ROLL Move the Sphero along a specific direction
-            % ROLL(SPH, SPEED, HEADING) would cause the Sphero to move
-            % at the angle specified by HEADING, with speed of SPEED.
-            % HEADING is specified with regards to the original orientation
-            % that is set when the Sphero is first connected, or calibrated
-            % to. 
-            % SPEED can be between -255 and 255
-            %
-            % RESULT = ROLL(SPH, SPEED, HEADING) would return 1 if the
-            % command succeeds. Otherwise it returns 0.
+        %ROLL Move the Sphero along a specific direction
+        %
+        %   ROLL(SPH, SPEED, HEADING) would cause the Sphero to move
+        %   at the angle specified by HEADING, with speed of SPEED.
+        %   HEADING is specified with regards to the original orientation
+        %   that is set when the Sphero is first connected, or calibrated
+        %   to. 
+        %   SPEED can be between -255 and 255
+        %
+        %   RESULT = ROLL(SPH, SPEED, HEADING) would return 1 if the
+        %   command succeeds. Otherwise it returns 0.
             
              nargoutchk(0, 1)
              
@@ -452,10 +593,12 @@ classdef sphero<handle
         end
         
         function varargout = brake(obj)
-        % BRAKE Apply optimal braking to stop the Sphero
-            % BRAKE(SPH) would apply optimal braking to zero speed
-            % RESULT = BRAKE(SPH) returns 1 if the command succeeds,
-            % otherwise it returns 0
+        %BRAKE Apply optimal braking to stop the Sphero
+        % 
+        %   BRAKE(SPH) would apply optimal braking to zero speed
+        %   
+        %   RESULT = BRAKE(SPH) returns 1 if the command succeeds,
+        %   otherwise it returns 0
                nargoutchk(0, 1)
              
               [responseexpected, seq]  = sendCmd(obj.Api, 'roll', [], [], [], 0, 0, 0);
@@ -466,27 +609,32 @@ classdef sphero<handle
         end
        
         function pollSensors(obj, rate, varargin)
-        % pollSensors Poll the Sphero for specific sensor data, and save the data to a file.
-            % POLLSENSORS(sph, rate) saves the data of the distance
-            % travelled along x and y direction of the robot (based on
-            % initial orientation) in a MAT file that is named log.mat by
-            % default. The sensors will be polled indefinitely at the rate 
-            % specified by RATE (0-400Hz), with 1 value per packet being 
-            % transmitted back to the machine
-            %
-            % pollSensors(SPH, RATE, FRAMESPERPACKET, PACKETS) can be used
-            % to configure the number of frames to be relayed back to the 
-            % Sphero per packet, and also specify the number of packets to
-            % be returned for the current sensors that are being polled
-            % (distX and distY by default)
-            %
-            %  These input parameters can be followed by  parameter/value 
-            %  pairs to specify additional properties, such as:
-            % 'sensorname'  : Cell array of sensors to be polled
-            % 'filename'    : Name of MAT file to which data should be saved
-            % 'append'      : Specify 1 in order to append data to the file
-            % 
-            % For example: pollSensors(sph, RATE, 'sensorname', {'accelX', 'accelY'}, 'filename', 'myfile.mat', 'append', 1) 
+        %POLLSENSORS Poll the Sphero for specific sensor data, and save the data to a file.
+        % 
+        %   POLLSENSORS(sph, rate) saves the data of the distance
+        %   travelled along x and y direction of the robot (based on
+        %   initial orientation) in a MAT file that is named log.mat by
+        %   default. The sensors will be polled indefinitely at the rate 
+        %   specified by RATE (0-400Hz), with 1 value per packet being 
+        %   transmitted back to the machine
+        %
+        %   POLLSENSORS(SPH, RATE, FRAMESPERPACKET, PACKETS) can be used
+        %   to configure the number of frames to be relayed back to the 
+        %   Sphero per packet, and also specify the number of packets to
+        %   be returned for the current sensors that are being polled
+        %   (distX and distY by default)
+        %
+        %   POLLSENSORS(____, Name, Value) provides additional options 
+        %   specified by one or more Name, Value pair arguments. Name must
+        %   appear inside single quotes (''). You can specify several 
+        %   name-value pair arguments in any order as Name1, Value1, ..., 
+        %   NameN, ValueN: 
+        %       'sensorname'  - Cell array of sensors to be polled
+        %       'filename'    - Name of MAT file to which data should be saved
+        %       'append'      - Specify 1 in order to append data to the file
+        % 
+        %   Examples: 
+        %       pollSensors(sph, 1, 'sensorname', {'accelX', 'accelY'}, 'filename', 'myfile.mat', 'append', 1) 
             
             %Arguments
             % 1. Sphero object
@@ -661,10 +809,22 @@ classdef sphero<handle
             sendCmd(obj.Api, 'setdatastreaming', [], [], [], N, M, Mask, Pcnt, Mask2);
         end
         
-        function value = readSensor(obj, sensorname)
-        % READSENSOR Read the current value of the indicated sensors
-            % VALUE = READSENSOR(SPH, SENSORNAME) returns the current value
-            % of the sensors
+        function [value, varargout] = readSensor(obj, sensors)
+        %READSENSOR Read the current value of the indicated sensors
+        % 
+        %   VALUE = READSENSOR(SPH, SENSORNAME) returns the current value
+        %   of the sensors as a structure with the field names being the
+        %   same as the indicated sensor names indicated in SENSORNAME
+        % 
+        %   [VAL1, VAL2, ..., VALN] = READSENSOR(SPH, SENSORNAME) returns
+        %   the current value read from the sensors into the individual
+        %   outputs specified for the function. VAL1 would contain the
+        %   value of the first sensor mentioned in SENSORNAME, and so
+        %   forth.
+        %
+        %   Examples:
+        %
+        %       [distx, velx] = readSensor(sph, {'distX', 'velX'});
             
             N = 1;
             M = 1;
@@ -678,19 +838,35 @@ classdef sphero<handle
                 'Q0', 'Q1', 'Q2', 'Q3', 'distX', 'distY', 'accelOne', ...
                 'velX', 'velY'};
             
-           if iscell(sensorname)
-                    valid = all(cell2mat(cellfun(@(y) any(validatestring(y, validSensors)), sensorname, 'UniformOutput', false)));
+           if iscell(sensors)
+                    valid = all(cell2mat(cellfun(@(y) any(validatestring(y, validSensors)), sensors, 'UniformOutput', false)));
             else
-                    valid = any(validatestring(sensorname, validSensors));
+                    valid = any(validatestring(sensors, validSensors));
             end
            
-            if ~iscell(sensorname)
-                sensorname = cellstr(sensorname);
+            if ~iscell(sensors)
+                sensors = cellstr(sensors);
             end
             
-            [Mask, Mask2] = sphero.DataStreamingMask(sensorname);
+            sensornum = length(sensors);
             
-            obj.SensorPolling.sensors = sensorname;
+             %Create a cell array of the sensor names sorted in the order
+            %that response is expected.
+            sortedSensors = {};
+            for i=1:length(validSensors)
+              if any(strcmp(sensors, validSensors{i}));
+                    sortedSensors{end+1} = validSensors{i}; %#ok<AGROW>
+              end
+            end
+            
+            
+            if nargout>1 && nargout~=sensornum
+                error('Sphero:readSensor:NumOutputs', 'Expected number of outputs is either 1 or %i (number of sensors being read)', sensornum);
+            end
+            
+            [Mask, Mask2] = sphero.DataStreamingMask(sortedSensors);
+            
+            obj.SensorPolling.sensors = sortedSensors;
             obj.SensorPolling.freq = obj.Api.MaxSensorSampleRate/N;
             obj.SensorPolling.samples = M*Pcnt;
             obj.SensorPolling.samplesPerPacket = M;
@@ -732,10 +908,22 @@ classdef sphero<handle
                 % keeps on executing and prevents the callback from being executed
             end
             
-            if length(sensorname)==1
-                value = obj.Api.SensorData.(sensorname{1});
+            if sensornum==1
+                value = obj.Api.SensorData.(sensors{1});
+            elseif nargout==1 || nargout==0
+                value = orderfields(obj.Api.SensorData, sensors); %Retrieve sensor data when it is received
+                % Reorder the data that is received in the 'sortedSensor'
+                % fields, into the order that the user had input (i.e.
+                % sensors), so that the returned values are in the same
+                % order as the user requested
             else
-                value = obj.Api.SensorData; %Retrieve sensor data when it is received
+                sensordata = struct2cell(orderfields(obj.Api.SensorData, sensors));
+                
+                value = sensordata{1};% sensordata.(sensors{1});
+                
+                varargout = sensordata(2:end);
+                
+                
             end
             
             
@@ -747,17 +935,17 @@ classdef sphero<handle
         end
         
         function varargout = rotationRate(obj, rate)
-        % rotationRate Set the rotation rate that Sphero uses
-            %
-            % This Rotation Rate is used by the Sphero when responding to
-            % Heading commands. A lower value offers better control but
-            % a higher value will yield quick turns.
-            %
-            % ROTATIONRATE(SPH, RATE) sets the rotation rate of the Sphero
-            % to the indicated RATE, which is specified in degrees/sec.
-            %
-            % RESULT = ROTATIONRATE(SPH, RATE) returns 1 if the command 
-            % succeeds, otherwise it returns 0
+        %ROTATIONRATE Set the rotation rate that Sphero uses
+        %
+        % This rotation rate is used by the Sphero when responding to
+        % Heading commands. A lower value offers better control but
+        % a higher value will yield quick turns.
+        %
+        %   ROTATIONRATE(SPH, RATE) sets the rotation rate of the Sphero
+        %   to the indicated RATE, which is specified in degrees/sec.
+        %
+        %   RESULT = ROTATIONRATE(SPH, RATE) returns 1 if the command 
+        %   succeeds, otherwise it returns 0
             nargoutchk(0, 1)
              
             validateattributes(rate, {'numeric'}, {'>=',obj.RateResolution, '<=', obj.RateMax});
@@ -772,6 +960,21 @@ classdef sphero<handle
         end
         
         function [out1, varargout] = readLocator(obj)
+        %READLOCATOR Read current location of Sphero, component velocities, and speed over ground
+        %
+        %   OUT = READLOCATOR(SPH) returns the x, y position, velocities
+        %   along x and y direction, and the speed of the Sphero as a
+        %   structure. The position is signed value in cm, velocities are
+        %   signed in cm/sec, and the speed is unsigned in cm/sec.
+        %   
+        %   [XPOS, YPOS] = READLOCATOR(SPH) returns the x and y position of
+        %   the Sphero with regards to the original position and
+        %   orientation when it was calibrated.
+        %
+        %   [XPOS, YPOS, XVEL, YVEL, SPEED] = READLOCATOR(SPH) returns the 
+        %   x, y position, velocities along x and y direction, and the 
+        %   speed of the Sphero.
+        
             nargoutchk(0, 5);
              
             [responseexpected, seq] = sendCmd(obj.Api, 'readlocator', [], 1, []);
@@ -801,32 +1004,45 @@ classdef sphero<handle
             end
         end
         
-        function varargout = configureLocator(obj, flag, x, y, yawtare)
-            nargoutchk(0, 1);
-            p = inputParser;
-            addRequired(p, 'objectname');
-            addRequired(p, 'flag', @(x) isnumeric(x) && (x==0 || x==1));
-            addRequired(p, 'x', @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
-            addRequired(p, 'y', @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
-            addRequired(p, 'yawtare', @(x) isnumeric(x) && x>=intmin('int16') && x<=intmax('int16'));
-            parse(p, obj, flag, x, y, yawtare);
-                        
-            [responseexpected, seq] = sendCmd(obj.Api, 'locator', [], [], [], p.Results.flag, p.Results.x, p.Results.y, p.Results.yawtare);
-            
-            response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
-              
-            [varargout{1:nargout}] = sphero.simpleResponse(response);
-        end
-        
-        function calibrate(obj, angle)
-           roll(obj, 0, angle);
-           pause(obj.ResponseTimeout);
-           heading(obj, 0);
-           configureLocator(obj, 0, 0, 0, 0);
+        function varargout = calibrate(obj, angle)
+        %CALIBRATE Calibrate the original orientation of the Sphero
+        %   CALIBRATE(SPH, ANGLE) rotates the Sphero by angle specified by
+        %   ANGLE, and sets that as the 0 heading angle for subsequent
+        %   motions. The orientation of the Sphero can be observed by
+        %   setting the Brightness of its back LED by using the
+        %   BackLEDBrightness property
+        %
+        %   RESULT = CALIBRATE(OBJ, ANGLE) returns 1 if the command 
+        %   succeeds, otherwise it returns 0
+        %
+        %   See also SPHERO.BACKLEDBRIGHTNESS
+           if nargout
+               roll(obj, 0, angle);
+                pause(obj.ResponseTimeout); % pause for short while while the Sphero changes its orientation
+                heading(obj, 0);
+                configureLocator(obj, 0, 0, 0, 0);
+           else
+               result1 = roll(obj, 0, angle);
+               pause(obj.ResponseTimeout);
+               result2 = heading(obj, 0);
+               result3 = configureLocator(obj, 0, 0, 0, 0);
+               if result1 && result2 && result3
+                   varargout{1} = 1;
+               else
+                   varargout{1} = 0;
+               end
+           end
            
         end
         
         function varargout = boost(obj, flag)
+        %BOOST Run Sphero in Boost mode, which causes it to move with high speed in the current direction
+        %   BOOST(SPH, FLAG) turns the boost mode on or off based on the
+        %   FLAG
+        %
+        %   RESULT = BOOST(SPH, FLAG) returns 1 if the command succeeds,
+        %   otherwise it returns 0
+        
             nargoutchk(0, 1);
             p = inputParser;
             addRequired(p, 'objectname');
@@ -841,6 +1057,22 @@ classdef sphero<handle
         end
         
         function varargout = rawMotor(obj, varargin)
+        %RAWMOTOR Provide raw motor commands to control the motor speed
+        %
+        %   RAWMOTOR(SPH, Name, Value) takes in name-value pairs in order 
+        %   to configure the motion of the motors. Name must appear inside 
+        %   single quotes (''). You can specify several name-value pair 
+        %   arguments in any order as Name1, Value1, ..., NameN, ValueN: 
+        %       'left'      - Power value for left motor between 0 and 255 (default = 0)
+        %       'right'     - Power value for right motor between 0 and 255 (default = 0)
+        %       'leftmode'  - Mode for left motor (default = 'ignore')
+        %       'rightmode' - Mode for right motor (default = 'ignore')
+        %                     The mode can be one of the following: 'off',
+        %                     'forward', 'reverse', 'brake', 'ignore'
+        %
+        %   Examples: 
+        %       rawMotor(sph, 'left', 150, 'leftmode', 'forward') 
+        %   
             nargoutchk(0, 1);
             narginchk(2,8);
             
@@ -884,7 +1116,7 @@ classdef sphero<handle
             pause(obj.ResponseTimeout);
             
             if obj.Handshake
-                result = stabilization(obj, 1);
+                result = stabilization(obj, 1); % Turn on stabilization again after running this command
                 
                 if ~result
                     error('Sphero:RawMotorStabilization', 'Unable to set stabilization again, after running rawMotor command');
@@ -897,38 +1129,68 @@ classdef sphero<handle
         
    
         function disconnect(obj)
-            obj.BackLEDBrightness = 0;
+        %DISCONNECT Disconnect from the Sphero
+        %
+        %   DISCONNECT(SPH) disconnects from the connected Sphero device
+        
+            if ~isempty(obj.Api.Bt) && strcmp(obj.Status, 'open')
+                obj.BackLEDBrightness = 0;
+            end
             disconnect(obj.Api);
         end
         
          function varargout = sleep(obj, varargin)
-            %%% Add InputParser
-             
-             wakeup      = 0;
-            macro       = 0;
-            orbBasic    = 0;
-            
-
-            err = MException('Sleep:InvalidProperty', 'Please enter a valid property or value for the Sleep function');
-
-            for i=1:2:length(varargin)
-                switch varargin{i}
-                    case 'wakeup'
-                        wakeup = varargin{i+1};
-                    case 'macro'
-                        macro = varargin{i+1};
-                    case 'orbBasic'
-                        orbBasic = varargin{i+1};
-                    otherwise
-                        throw(err);
-                end
-             end
+         %SLEEP Force Sphero to go to sleep
+         %  
+         %  SLEEP(SPH) makes the sphero go to sleep
+         % 
+         %  SLEEP(SPH, Name, Value) takes in name-value pairs in order 
+         %  to configure what the Sphero should do on waking up. 
+         %  Name must appear inside single quotes (''). You can specify 
+         %  several name-value pair arguments in any order as Name1, 
+         %  Value1, ..., NameN, ValueN: 
+         %       'wakeup'    - The number of seconds Sphero should sleep
+         %       for and then automatically reaqaken. 0 causes it to sleep
+         %       forever (default = 0)
+         %       'macro'     - If non-zero, Sphero will attempt to run this 
+         %       macro ID upon wakeup(default = 0)
+         %       'orbBasic'  - If non-zero, Sphero will attempt to run an
+         %       orbBasic program in Flash from this line number (default =
+         %       0)
+    
+            p = inputParser;
+            addRequired(p, 'objectname');
+            addParameter(p, 'wakeup', 0, @(x) isnumeric(x) && (x>=0 && x<=intmax('uint16')));
+            addParameter(p, 'macro', 0, @(x) isnumeric(x) && (x>=0 && x<=255));
+            addParameter(p, 'orbBasic',  0, @(x) isnumeric(x) && (x>=0 && x<=intmax('uint16')));
+            parse(p, obj, varargin{:}); 
+%             
+%          
+%          wakeup      = 0;
+%             macro       = 0;
+%             orbBasic    = 0;
+%             
+% 
+%             err = MException('Sleep:InvalidProperty', 'Please enter a valid property or value for the Sleep function');
+% 
+%             for i=1:2:length(varargin)
+%                 switch varargin{i}
+%                     case 'wakeup'
+%                         wakeup = varargin{i+1};
+%                     case 'macro'
+%                         macro = varargin{i+1};
+%                     case 'orbBasic'
+%                         orbBasic = varargin{i+1};
+%                     otherwise
+%                         throw(err);
+%                 end
+%              end
+%                 
+%             if ~isnumeric([wakeup macro orbBasic])
+%                 throw(err)
+%             end
                 
-            if ~isnumeric([wakeup macro orbBasic])
-                throw(err)
-            end
-                
-            [responseexpected, seq] = sendCmd(obj.Api, 'sleep', [], [], [], wakeup, macro, orbBasic);
+            [responseexpected, seq] = sendCmd(obj.Api, 'sleep', [], [], [], p.Results.wakeup, p.Results.macro, p.Results.orbBasic);
             
             response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
               
@@ -937,28 +1199,15 @@ classdef sphero<handle
             disconnect(obj.Api)
             
         end
-        
-        function delete(obj)
-            delete(obj.Listeners.PowerNotificationList);
-            delete(obj.Listeners.PreSleepWarningList);
-            delete(obj.Listeners.CollisionDetectionList);
-            delete(obj.Listeners.GyroAxisLimitExceedList);
-            
-%             delete(obj.Listeners.SensorDataList);
-%             L = import;
-%             i = strcmp(L, 'sphero.*');
-%             L(i) = [];
-%             
-%             clear import
-%             import(L{:});
-            
-             obj.BackLEDBrightness = 0;
-             delete(obj.Api);
-%             disconnect(obj)
-%             disp('Deleting sphero object');
-        end
-        
+              
         function hwinfoObj = hwinfo(obj, varargin)
+        %HWINFO Create an object for hardware related information of Sphero
+        %   HWINFOOBJ = HWINFO(SPH) creates ab object for hardware related
+        %   information of Sphero
+        %
+        %   See also: 
+        %       SPHERO.INTERNAL.HWINFO 
+        %       <a href="matlab:showdemo('sphero_examples')">Sphero Connectivity Package Examples</a>
             hwinfoObj = sphero.internal.hwinfo(obj, varargin{:});
         end
     end
@@ -966,6 +1215,7 @@ classdef sphero<handle
     methods
          % GET / SET methods
         function set.Color(obj, value)
+        %set.Color Custom setter for Color property. Sends command to Sphero to change the color of LED
             message = sprintf(['The color should be specified as a RGB value',... 
                 '(0 to 1, or 0 to %i) or one of the predefined `s'], ...
                 obj.Api.Uint8Max);
@@ -1006,29 +1256,42 @@ classdef sphero<handle
             [responseexpected, seq] = sendCmd(obj.Api, 'setrgbled', [], [], [], rgb, uint8(obj.SaveLedColor));
             response = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
           
+            if ~response
+                error('Unable to set the desired Color of Sphero');
+            else
+%                 obj.Color = rgb;
+            end
         end
         
         function rgb = get.Color(obj)
+        %get.Color Custom getter for Color property. Retrieves the Color from the Sphero
            [responseexpected, seq] = sendCmd(obj.Api, 'getrgbled', [], 1);
            
            rgb = readResponse(obj.Api, responseexpected, seq, obj.ResponseTimeout);
-%             rgb = [255 0 0];
         end
         
         function set.Handshake(obj, value)
+        %set.Handshake Custom setter for Color property
            obj.Api.Handshake = value;
         end
         
         function handshaking = get.Handshake(obj)
+        %get.Handshake Custom getter for Color property
             handshaking = obj.Api.Handshake;
         end
           
         function status = get.Status(obj)
+        %get.Status Custom getter for Status property
             status = obj.Api.Bt.status;
         end
         
+        function devicename = get.DeviceName(obj)
+        %get.DeviceName Custom getter for DeviceName property
+            devicename = obj.Api.DeviceName;
+        end
+        
         function set.BackLEDBrightness(obj, brightness)
-            
+        %set.BackLEDBrightness Custom setter for BackLEDBrightness property    
             if brightness>0 && brightness<1
                 brightness = uint8(brightness*(obj.Api.Uint8Max));
             end
@@ -1045,6 +1308,7 @@ classdef sphero<handle
         end
         
         function set.AccRange(obj, acc)
+        %set.AccRange Custom setter for AccRange property
             if acc>3 || acc<0
                 error('The range for the index for acceleration range is 0 to 3')
             end
@@ -1062,6 +1326,7 @@ classdef sphero<handle
         end
         
         function set.SensorPolling(obj,val)
+        %set.SensorPolling Custom setter for SensorPolling property    
             obj.SensorPolling = val;
            obj.Api.Sensors = obj.SensorPolling.sensors;
            obj.Api.SamplesPerPacket = obj.SensorPolling.samplesPerPacket;
@@ -1069,6 +1334,7 @@ classdef sphero<handle
         end
         
         function set.CollisionDetection(obj, flag)
+        %set.CollisionDetection Custom setter for CollisionDetection property
             p = inputParser;
             addRequired(p, 'objectname');
             addRequired(p, 'flag', @(x) isnumeric(x) && (x==0 || x==1));
@@ -1095,6 +1361,7 @@ classdef sphero<handle
         end
         
         function set.MotionTimeout(obj, time)
+        %set.MotionTimeout Custom setter for MotionTimeout property
             p = inputParser;
             addRequired(p, 'objectname');
             addRequired(p, 'time', @(x) isnumeric(x) && ((x>=0 && x<=intmax('uint16')/1000) || isinf(x)));
@@ -1119,6 +1386,7 @@ classdef sphero<handle
         end
         
         function set.InactivityTimeout(obj, time)
+        %set.InactivityTimeout Custom setter for InactivityTimeout property
             p = inputParser;
             addRequired(p, 'objectname');
             addRequired(p, 'time', @(x) isnumeric(x) && (x>=60 && x<=intmax('uint16')));

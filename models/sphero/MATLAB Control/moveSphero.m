@@ -1,24 +1,29 @@
-function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, clearVars)
+function [dist, angle, u] = moveSphero(sph, xdes, ydes, x, y, avgSpeed, stopRadius,clearVars)
+
 %%% Assuming that the orientation of the sphero is initially along y
 %%% direction (wrt camera)
 persistent x0 t0 prevu preve prevt prev2e prev2t counter flag
 
 if clearVars
-    clear x0 t0 prevu preve prevt prev2e prev2t
+    clear x0 t0 prevu preve prevt prev2e prev2t counter flag
     return
 end
 
 %% Controller Gains
-Kp = 0.7;
-Ki = 0;
-Kd = 0;
-% Tf = 0;
-% tfinal = 60; %run the model for 1 minute
+Kp = 0.2;
+Ki = 0.1;
+Kd = 0.05;
+speedIfSlow = 65;
 
 if x<0 || y<0
     dist = Inf;
     return
 end
+
+% Tf = 0;
+% tfinal = 60; %run the model for 1 minute
+
+
 %% Angle and distance calculation
  
     %Angle of desired position wrt y axis (or orientation of sphero)
@@ -53,7 +58,9 @@ if isempty(t0)
 end
  
 t = cputime;
-    Kp = 0.7;
+dt = t-prevt;
+dt2 = prevt-prev2t;
+
 % 
 % if dist>50
 %     Kp = 0.7;
@@ -66,17 +73,16 @@ t = cputime;
 % %     Kp = 0.5;
 % end
 
-if dist<5 || flag
+
+if dist<stopRadius || flag
     u=0;
 %     flag = 1;
-elseif avgSpeed<5
-    u = 70;
-elseif counter<2
-    u = prevu+Kp*(dist-preve)+Ki*(t-prevt)*dist;
+elseif avgSpeed<1
+    u = speedIfSlow;
+elseif dt<eps || dt2<eps
+        u = prevu+Kp*(dist-preve)+Ki*dt*dist;
 else
-%    u = Kp*dist;
-   
-    u = prevu+Kp*(dist-preve)+Ki*(t-prevt)*dist; % + Kd*((dist-preve)/(t-prevt) - (preve-prev2e)/(prevt-prev2t));
+        u = prevu+Kp*(dist-preve)+Ki*dt*dist + Kd*((dist-preve)/dt - (preve-prev2e)/dt2);
 end
 
 prevu = u;
@@ -92,8 +98,18 @@ counter = counter+1;
 % end
 
 %% Send command to sphero
-if u==0
-    brake(sph)
+
+%Saturate
+if u>150
+    usend= 150;
+elseif u<-150
+    usend = -150;
 else
-    roll(sph, u, angle);
+    usend = u;
 end
+
+% if usend==0
+%     brake(sph)
+% else
+    roll(sph, usend, angle);
+% end

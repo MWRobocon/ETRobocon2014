@@ -1,0 +1,108 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   15 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "isStable"\
+      Description  "IsstableBool"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c6_et_robocon"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_see_saw_mode"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "see_saw_mode"\
+    }\
+    ChartData {\
+      Name         "is_SeesawLogic"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.SeesawLogic"\
+    }\
+    ChartData {\
+      Name         "is_active_SeesawLogic"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.SeesawLogic"\
+    }\
+    ChartData {\
+      Name         "is_Curvature"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.SeesawLogic.Curvature"\
+    }\
+    ChartData {\
+      Name         "is_Ramp"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.SeesawLogic.Ramp"\
+    }\
+    ChartData {\
+      Name         "is_active_After"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "see_saw_mode.Balancing.After"\
+    }\
+    ChartData {\
+      Name         "desired_tail"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "desired_tail"\
+    }\
+    ChartData {\
+      Name         "turningPWM"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "turningPWM"\
+    }\
+    ChartData {\
+      Name         "normalizedLight"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "normalizedLight"\
+    }\
+    ChartData {\
+      Name         "des_vel"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "des_vel"\
+    }\
+    ChartData {\
+      Name         "desired_phi"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "desired_phi"\
+    }\
+    ChartData {\
+      Name         "desiredangle"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "desiredangle"\
+    }\
+    ChartData {\
+      Name         "temporalCounter_i1"\
+      Description  "TemporalCounter"\
+      SFName       ""\
+      Path         ""\
+    }\
+  }
+  %return ChartDataElements
+%endfunction
