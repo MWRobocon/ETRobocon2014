@@ -1,0 +1,337 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Getting Started with Sphero Connectivity Package</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-09-12"><meta name="DC.source" content="sphero_getting_started.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Getting Started with Sphero Connectivity Package</h1><!--introduction--><p>This example shows how the Sphero Connectivity Package can be used to connect to a Sphero device and perform basic operations on the hardware, such as change the LED color, calibrate the orientation of the robot and move it in a particular direction.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Required Hardware</a></li><li><a href="#4">Setup hardware</a></li><li><a href="#6">Creating a sphero object</a></li><li><a href="#11">Perform simple operations on Sphero</a></li><li><a href="#18">Move Sphero</a></li><li><a href="#26">Read Sensor Data</a></li><li><a href="#28">Disconnect or Make the Sphero go to Sleep</a></li><li><a href="#29">See Also</a></li></ul></div><h2>Introduction<a name="1"></a></h2><p>The Sphero Connectivity Package enables us to communicate with a Sphero device remotely from a computer running MATLAB. The package includes command line interface to control the robotic ball.</p><p>In this example we will learn how to create a <b>sphero</b> object to connect to the Sphero device from within MATLAB. We will examine the properties and methods of this object to control the robot and its peripherals.</p><h2>Required Hardware<a name="2"></a></h2><p>To run this example, the following hardware is required:</p><div><ul><li>Sphero 2.0</li><li>Computer which is Bluetooth-capable, or a Bluetooth dongle</li></ul></div><h2>Setup hardware<a name="4"></a></h2><p>In order to connect to the Sphero, first make sure that the Sphero is awake and ready for connection. The following steps to set up the Sphero for connection can also be found in the Quick Start Guide that comes with the Sphero</p><p>
+<ol type="1">
+<li> Connect the Charger to a wall socket</li>
+<li> Place the Sphero in the charger with its heavy part at the
+bottom.</li>
+<li> Remove the Sphero from the charger after it lights up after a few
+seconds. It will be asleep at after it is taken out from teh charger</li>
+<li>Double tap the Sphero with your fingers to wake it up</li>
+<li>The Sphero blinks 3 unique colors until it is connected to another
+device. Sphero's Bluetooth name will contain the initials of the 3 unique
+colors it is blinking with.
+<br>     R = RED
+<br>     B = BLUE
+<br>     G = GREEN
+<br>     Y = YELLOW
+<br>     O = ORANGE
+<br>     P = PURPLE
+<br>     W = WHITE
+<li> Pair the Sphero device with your phone, and launch the Sphero app.
+This would automatically update the firmware on the device </li>
+<li> Turn on Bluetooth on your computer, and pair the Sphero to it. Once it
+ is paired, we can start using the Connectivity Package to communicate
+ with the Sphero device</li>
+</ol>
+</p><h2>Creating a sphero object<a name="6"></a></h2><p>Create a <b>sphero</b> object</p><pre class="codeinput">sph = sphero();
+</pre><p>The sph is a handle to a sphero object. While creating the sph object, MATLAB searches for the paired sphero devices and prompts the user to select one for connection. It then opens the Bluetooth connection with the Sphero.</p><p>If you face any issues creating the sphero object, please refer to the <a href="matlab:showdemo('sphero_troubleshoot_connection')">Troubleshooting Connection Issues with Sphero</a> page.</p><p>The properties of the sphero object show information such as the status of the connection and Bluetooth name of the connected device. It also has properties that can be used to modify the color of the LED on the Sphero, the brightness of the back LED, timeouts for motion, response and inactivity among other things.</p><p><a id = "simple"></a></p><h2>Perform simple operations on Sphero<a name="11"></a></h2><p>The various methods of the sphero object can be used to perform different operations. The status of the Bluetooth connection can be checked by using the 'Status' property of the object:</p><pre class="codeinput">s = sph.Status
+</pre><p>We can also check whether the Sphero is able to receive and respond to messages by using the following command:</p><pre class="codeinput">result = ping(sph)
+</pre><p>If you receive an error when running these commands, please refer to the <a href="matlab:showdemo('sphero_troubleshoot_connection')">Troubleshooting Connection Issues with Sphero</a> page.</p><p>The Color of the LED on the Sphero, and the brightness of the back LED can be changed by using the appropriate properties of the object</p><pre class="codeinput">sph.Color = <span class="string">'r'</span>; <span class="comment">% Change color of LED to red</span>
+sph.BackLEDBrightness = 255; <span class="comment">%255 sets it to maximum brighness</span>
+</pre><p> The back LED of the Sphero indicates the back of the Sphero. We will
+learn more about this in the <a href = "#move">Move Sphero </a>
+section.
+</p><pre class="codeinput">sph.Color = [127 127 127]; <span class="comment">% A custom color can also be provided for the LED by specifying RGB values</span>
+</pre><p><a id = "move"></a></p><h2>Move Sphero<a name="18"></a></h2><p>The sphero object provides basic commands for moving the Sphero. But before we start moving it, we need to make sure that the Sphero is oriented in the correct direction.</p><p>
+The calibrate method can be used to calibrate the orientation of the
+Sphero. As mentioned in the <a href = "#simple">Perform simple operations
+on Sphero</a> section, the back LED indicates the back of the robot. Thus
+the y-axis, 0 angle or the front of the robot is indicated by the
+direction opposite to the back LED.%</p><p>Thus we would need to calibrate the orienatation of the robot so that its back is oriented towards you. The <b>calibrate</b> command might have to be used multiple times in order to fine tune and calibrate the robot's orientation</p><pre class="codeinput">sph.BackLEDBrightness = 255; <span class="comment">% turn on the back LED before we start calibrating the orientation of the robot</span>
+
+calibrate(sph, 60); <span class="comment">% Observe that the sphero is going to rotate by 60 degrees and reset its orientation.</span>
+<span class="comment">% Run this command again with a different value for the angle if the back</span>
+<span class="comment">% of the robot is not oriented towards you at present.</span>
+</pre><p>Once the robot is orientated properly, we can move it along a particular direction. Please note that all the 'angle' values that the following commands use are the angles from the original calibrated orientation of the robot</p><pre class="codeinput">speed = 70;
+angle = 0;
+
+roll(sph, speed, angle);
+</pre><pre class="codeinput"><span class="comment">%Turn it by 90 degrees</span>
+roll(sph, speed, 90);
+</pre><p>For all the aforementioned commands, we can turn on handshaking to make sure that the sphero is receiving and responding to the commands that are being sent to it</p><pre class="codeinput">sph.Handshake = 1;
+</pre><p>You will notice that the Sphero rolls in the particular direction for a small amount of time and then it stops automatically. This is due to the MotionTimeout property of the object. The robot keeps moving until the time in seconds that is specified by this property</p><pre class="codeinput">sph.MotionTimeout = Inf; <span class="comment">% Set the timeout for motion to infinity so that the robot keeps on moving unless a differnt move command is used</span>
+roll(sph, speed, angle);
+
+pause(5); <span class="comment">% Wait for 5 seconds and then brake the Sphero</span>
+brake(sph);
+</pre><p>There are other move commands such as <b>boost</b> or <b>rawMotor</b> which can be used to move the sphero with high speed and provide raw motor commands to control the speed of the motors respectively</p><h2>Read Sensor Data<a name="26"></a></h2><p>To read the data of a set of sensors from the Sphero, execute the command similar to the following.</p><pre class="codeinput">[accX, accY, distX, distY] = readSensor(sph, {<span class="string">'accelX'</span>, <span class="string">'accelY'</span>, <span class="string">'distX'</span>, <span class="string">'distY'</span>});
+</pre><p>In order to read the value of a set of sensors at a particular rate, and save it to a MAT file, use the following command.</p><pre class="codeinput">pollSensors(sph, 1, <span class="string">'sensorname'</span>, {<span class="string">'accelX'</span>, <span class="string">'accelY'</span>}); <span class="comment">%Poll accelerometer X and Y data at 1Hz</span>
+</pre><h2>Disconnect or Make the Sphero go to Sleep<a name="28"></a></h2><p>We can disconnect from the Sphero by using the <b>disconnect</b> command. It is possible to reconnect to it again by using the <b>connect</b> command. If a different Sphero device name is specified as an input argument to the <b>connect</b> command, it will try to connect to the new device instead of the previous one. The <b>sleep</b> command can be used to force the currently connected Sphero to go to sleep</p><pre class="codeinput">disconnect(sph);
+
+connect(sph); <span class="comment">% This would try to connect to the previously connected device, if it is awake</span>
+prevdevice = sph.DeviceName
+
+sleep(sph);
+
+connect(sph, <span class="string">'Sphero-PGP'</span>); <span class="comment">% This would try to connect to the Sphero-PGP device, instead of the 'prevdevice'</span>
+newdevice = sph.DeviceName
+</pre><h2>See Also<a name="29"></a></h2><div><ul><li><a href="matlab:showdemo('sphero_troubleshoot_connection')">Troubleshooting Connection Issues with Sphero</a></li><li><a href="matlab:showdemo('sphero_motion_control')">Sphero Motion Control</a></li></ul></div><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Getting Started with Sphero Connectivity Package
+% This example shows how the Sphero Connectivity Package can be used to
+% connect to a Sphero device and perform basic operations on the hardware,
+% such as change the LED color, calibrate the orientation of the robot and
+% move it in a particular direction.
+
+%% Introduction
+% The Sphero Connectivity Package enables us to communicate with a
+% Sphero device remotely from a computer running MATLAB. The package
+% includes command line interface to control the robotic ball.
+%
+% In this example we will learn how to create a *sphero* object to connect
+% to the Sphero device from within MATLAB. We will examine the properties
+% and methods of this object to control the robot and its peripherals.
+
+%% Required Hardware
+% To run this example, the following hardware is required:
+%%
+% * Sphero 2.0
+% * Computer which is Bluetooth-capable, or a Bluetooth dongle 
+% 
+%% Setup hardware
+% In order to connect to the Sphero, first make sure that
+% the Sphero is awake and ready for connection. The following steps to set
+% up the Sphero for connection can also be found in the Quick Start Guide
+% that comes with the Sphero
+%%
+% <html>
+% <ol type="1">
+% <li> Connect the Charger to a wall socket</li>
+% <li> Place the Sphero in the charger with its heavy part at the
+% bottom.</li>
+% <li> Remove the Sphero from the charger after it lights up after a few
+% seconds. It will be asleep at after it is taken out from teh charger</li>
+% <li>Double tap the Sphero with your fingers to wake it up</li>
+% <li>The Sphero blinks 3 unique colors until it is connected to another
+% device. Sphero's Bluetooth name will contain the initials of the 3 unique
+% colors it is blinking with.
+% <br>     R = RED
+% <br>     B = BLUE
+% <br>     G = GREEN
+% <br>     Y = YELLOW
+% <br>     O = ORANGE
+% <br>     P = PURPLE
+% <br>     W = WHITE
+% <li> Pair the Sphero device with your phone, and launch the Sphero app. 
+% This would automatically update the firmware on the device </li>
+% <li> Turn on Bluetooth on your computer, and pair the Sphero to it. Once it
+%  is paired, we can start using the Connectivity Package to communicate 
+%  with the Sphero device</li>
+% </ol>
+% </html>
+% 
+
+%% Creating a sphero object
+% Create a *sphero* object
+sph = sphero();
+%%
+% The sph is a handle to a sphero object. While creating the sph object,
+% MATLAB searches for the paired sphero devices and prompts the user to
+% select one for connection. It then opens the Bluetooth connection with
+% the Sphero. 
+%%
+% If you face any issues creating the sphero object, please
+% refer to the <matlab:showdemo('sphero_troubleshoot_connection') Troubleshooting Connection Issues with Sphero> page.
+% 
+%%
+% The properties of the sphero object show information such as the status of the
+% connection and Bluetooth name of the connected device. It also has properties 
+% that can be used to modify the color of the LED on the Sphero,
+% the brightness of the back LED, timeouts for motion, response and 
+% inactivity among other things.
+%
+
+%%
+% <html><a id = "simple"></a></html>
+%% Perform simple operations on Sphero
+% The various methods of the sphero object can be used to perform different
+% operations. The status of the Bluetooth connection can be checked by
+% using the 'Status' property of the object:
+s = sph.Status
+
+%%
+% We can also check whether the Sphero is able to receive and respond to
+% messages by using the following command:
+result = ping(sph)
+
+%%
+% If you receive an error when running these commands, please 
+% refer to the <matlab:showdemo('sphero_troubleshoot_connection') 
+% Troubleshooting Connection Issues with Sphero> page.
+
+%%
+% The Color of the LED on the Sphero, and the brightness of the back LED 
+% can be changed by using the appropriate properties of the object
+sph.Color = 'r'; % Change color of LED to red
+sph.BackLEDBrightness = 255; %255 sets it to maximum brighness
+%%
+% <html> The back LED of the Sphero indicates the back of the Sphero. We will
+% learn more about this in the <a href = "#move">Move Sphero </a>
+% section.
+% </html>
+% 
+%%
+sph.Color = [127 127 127]; % A custom color can also be provided for the LED by specifying RGB values
+
+%%
+% <html><a id = "move"></a></html>
+%% Move Sphero
+% The sphero object provides basic commands for moving the Sphero. But
+% before we start moving it, we need to make sure that the Sphero is
+% oriented in the correct direction.
+%%
+% <html>
+% The calibrate method can be used to calibrate the orientation of the
+% Sphero. As mentioned in the <a href = "#simple">Perform simple operations 
+% on Sphero</a> section, the back LED indicates the back of the robot. Thus
+% the y-axis, 0 angle or the front of the robot is indicated by the
+% direction opposite to the back LED.%</html>
+%%
+% Thus we would need to calibrate the orienatation of the robot so that its
+% back is oriented towards you. The *calibrate* command might have to be used
+% multiple times in order to fine tune and calibrate the robot's
+% orientation
+sph.BackLEDBrightness = 255; % turn on the back LED before we start calibrating the orientation of the robot
+
+calibrate(sph, 60); % Observe that the sphero is going to rotate by 60 degrees and reset its orientation. 
+% Run this command again with a different value for the angle if the back
+% of the robot is not oriented towards you at present.
+
+%%
+% Once the robot is orientated properly, we can move it along a particular
+% direction. Please note that all the 'angle' values that the following
+% commands use are the angles from the original calibrated orientation of
+% the robot
+speed = 70;
+angle = 0;
+
+roll(sph, speed, angle);
+%%
+%Turn it by 90 degrees
+roll(sph, speed, 90);
+
+%%
+% For all the aforementioned commands, we can turn on handshaking to make
+% sure that the sphero is receiving and responding to the commands that are
+% being sent to it
+sph.Handshake = 1;
+
+%%
+% You will notice that the Sphero rolls in the particular direction for a
+% small amount of time and then it stops automatically. This is due to the 
+% MotionTimeout property of the object. The robot keeps moving until the 
+% time in seconds that is specified by this property
+sph.MotionTimeout = Inf; % Set the timeout for motion to infinity so that the robot keeps on moving unless a differnt move command is used
+roll(sph, speed, angle);
+
+pause(5); % Wait for 5 seconds and then brake the Sphero
+brake(sph); 
+
+%%
+% There are other move commands such as *boost* or *rawMotor* which can be
+% used to move the sphero with high speed and provide raw motor commands 
+% to control the speed of the motors respectively
+
+%% Read Sensor Data
+% To read the data of a set of sensors from the Sphero, execute the command
+% similar to the following.
+[accX, accY, distX, distY] = readSensor(sph, {'accelX', 'accelY', 'distX', 'distY'});
+
+%% 
+% In order to read the value of a set of sensors at a particular rate, and
+% save it to a MAT file, use the following command.
+pollSensors(sph, 1, 'sensorname', {'accelX', 'accelY'}); %Poll accelerometer X and Y data at 1Hz
+
+%% Disconnect or Make the Sphero go to Sleep
+% We can disconnect from the Sphero by using the *disconnect* command. It
+% is possible to reconnect to it again by using the *connect* command. If a different
+% Sphero device name is specified as an input argument to the *connect*
+% command, it will try to connect to the new device instead of the previous
+% one. The *sleep* command can be used to force the currently connected
+% Sphero to go to sleep
+
+disconnect(sph);
+
+connect(sph); % This would try to connect to the previously connected device, if it is awake
+prevdevice = sph.DeviceName
+
+sleep(sph);
+
+connect(sph, 'Sphero-PGP'); % This would try to connect to the Sphero-PGP device, instead of the 'prevdevice'
+newdevice = sph.DeviceName
+
+%% See Also
+% * <matlab:showdemo('sphero_troubleshoot_connection') Troubleshooting Connection Issues with Sphero>
+% * <matlab:showdemo('sphero_motion_control') Sphero Motion Control>
+
+
+
+##### SOURCE END #####
+--></body></html>
