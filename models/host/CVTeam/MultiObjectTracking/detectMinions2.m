@@ -1,4 +1,4 @@
-function [CentroidZ, CentroidSO, CentroidSB] = detectMinions2(videoFrame, varargin)
+function [CentroidZ, CentroidS] = detectMinions2(videoFrame, varargin)
 % DETECTZUMOANDSPHERO detects Zumobot and Sphero in first frame, given in
 % input videoFrame
 persistent blobAnalysis tracker NFeaturesToTrack initFlag;
@@ -88,13 +88,12 @@ CentroidZ = mean(visiblePoints); % Sparse centroid of zumobot
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     if isempty(CentersOrange)
-        CentroidSO = [-1 -1];
+        CentroidS = [-1 -1];
     else
-        CentroidSO = CentersOrange(1,:);
+        CentroidS = CentersOrange(1,:);
     end
     
     if isempty(CentersBlue)
-        CentroidSB = [-1 -1];
+        CentroidB = [-1 -1];
     else
-        CentroidSB = CentersBlue(1, :);
-    end
+        
