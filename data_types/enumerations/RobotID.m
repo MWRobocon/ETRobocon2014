@@ -13,7 +13,7 @@ classdef  ( ...
         NXT2                ( 2 )
         ARDUINO             ( 3 )
         LEDCUBE             ( 4 )
-        NXT_BEN             ( 5 );
+        NXT                 ( 5 );
         ZUMO_ADAFRUIT_32B0 ( 6 );
         SPHERO_ORANGE      ( 7 );
         SPHERO_BLUE        ( 8 );
