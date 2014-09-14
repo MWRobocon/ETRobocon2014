@@ -8,7 +8,7 @@ blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
         'ExcludeBorderBlobs', false);
 
 %% run MatchWithTemplate to get ROI of zumobot
-template = imread('media/Mario.jpg');
+template = imread('media\mario.jpg');
 objectRegion = matchWithTemplate(videoFrame, template);
 x = objectRegion(1);
 y = objectRegion(2);
@@ -52,13 +52,15 @@ CentroidZ = [x+w/2, y+h/2];
     [AreasYellow, CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
     [AreasOrange, CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
+    [CentersBlue] = imfindcircles(filteredBlue, [15 30], 'Sensitivity', 0.95);
+    % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
+    
+    [CentersYellow] = imfindcircles(filteredYellow, [15 30], 'Sensitivity', 0.97);
+
 %     [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
 
 %     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
-    
-    % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
-    
->>>>>>> refs/remotes/origin/CVTeam:models/host/CVTeam/RecognizeAndTracking/detectZumoAndSphero.m
+
     CentroidS = CentersBlue(1,:);
