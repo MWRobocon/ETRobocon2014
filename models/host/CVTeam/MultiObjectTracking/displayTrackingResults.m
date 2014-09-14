@@ -19,18 +19,19 @@ function displayTrackingResults(obj, frame, mask, tracks)
                 % Get bounding boxes.
                 bboxes = cat(1, reliableTracks.bbox);
 
-                % Get ids.
-                ids = int32([reliableTracks(:).id]);
-
                 % Create labels for objects indicating the ones for
                 % which we display the predicted rather than the actual
                 % location.
-                labels = cellstr(int2str(ids'));
+                labels = cellstr(reliableTracks.name);
                 predictedTrackInds = ...
                     [reliableTracks(:).consecutiveInvisibleCount] > 0;
                 isPredicted = cell(size(labels));
                 isPredicted(predictedTrackInds) = {' predicted'};
                 labels = strcat(labels, isPredicted);
+                
+                % Undistorted points
+%                 load('logitechCameraParams.mat');
+                reliableTracks.undistortedCentroid = undistortPoints(reliableTracks.centroid, cameraParams);
 
                 % Draw the objects on the frame.
                 frame = insertObjectAnnotation(frame, 'rectangle', ...

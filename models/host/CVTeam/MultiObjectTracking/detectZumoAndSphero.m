@@ -1,14 +1,9 @@
 function [CentroidZ, CentroidS] = detectZumoAndSphero(videoFrame)
 % DETECTZUMOANDSPHERO detects Zumobot and Sphero in first frame, given in
 % input videoFrame
-blobAnalysis = vision.BlobAnalysis('AreaOutputPort', true,...
-        'CentroidOutputPort', true,...
-        'BoundingBoxOutputPort', true,...
-        'MinimumBlobArea', 100, ...
-        'ExcludeBorderBlobs', false);
 
 %% run MatchWithTemplate to get ROI of zumobot
-template = imread('media/Mario.jpg');
+template = imread('..\Media\mario.jpg');
 objectRegion = matchWithTemplate(videoFrame, template);
 x = objectRegion(1);
 y = objectRegion(2);
@@ -17,7 +12,7 @@ h = objectRegion(4);
 
 CentroidZ = [x+w/2, y+h/2];
 
-%% Detect Sphero centroid (change code to make it yellow if you want)
+%% Detect BLUE Sphero centroid (change code to make it yellow if you want)
     % Convert RGB to HSV, to get the saturation & hue value of each pixel.
     % Saturation can differentiate between colour and grayscale pixel. Hue can
     % differentiate between different colours (used for differentiating between
@@ -30,7 +25,7 @@ CentroidZ = [x+w/2, y+h/2];
     
     % Convert saturation into a binary
     threshSat = graythresh(saturation);
-%     filteredSat = (saturation > threshSat);
+    filteredSat = (saturation > threshSat);
     % figure; imshow(filteredSat);
     % title('Filtered Saturation');
     
@@ -45,17 +40,11 @@ CentroidZ = [x+w/2, y+h/2];
     % figure; imshow(filteredBlue);
     % title('Filtered Blue');
     
-    filteredOrange = (hue > 0 & hue < 0.05 & saturation > threshSat);
-    
-    % Find connected components
-    [AreasBlue, CentersBlue, BoxBlue] = step(blobAnalysis, filteredBlue);
-    [AreasYellow, CentersYellow, BoxYellow] = step(blobAnalysis, filteredYellow);
-    [AreasOrange, CentersOrange, BoxOrange] = step(blobAnalysis, filteredOrange);
     % Detect centers of blue and yellow spheros (alternative is blob Analysis)
-%     [CentersBlue] = imfindcircles(filteredBlue, [50 70], 'Sensitivity', 0.95);
+    [CentersBlue] = imfindcircles(filteredBlue, [15 30], 'Sensitivity', 0.95);
     % viscircles(CentersBlue, RadiiBlue, 'EdgeColor', 'b');
-
-%     [CentersYellow] = imfindcircles(filteredYellow, [50 70], 'Sensitivity', 0.97);
+    
+    [CentersYellow] = imfindcircles(filteredYellow, [15 30], 'Sensitivity', 0.97);
     % viscircles(CentersYellow, RadiiYellow, 'EdgeColor', 'y');
     
     CentroidS = CentersBlue(1,:);
