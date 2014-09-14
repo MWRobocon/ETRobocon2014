@@ -855,7 +855,7 @@ classdef BluetoothApi<sphero.internal.Communication
           if (lenRsp<numDlen && lenRsp+eventSrc.BytesAvailable>=numDlen) || ...
                 (lenRsp>=numDlen && eventSrc.BytesAvailable>=obj.BytesToRead)
                 
-                bytesRead = eventSrc.BytesAvailable;
+                bytesRead = eventSrc.BytesAvailable %%%NOTE: Add ; after debugging
                 
                 obj.Response(end+1:end+bytesRead) = fread(eventSrc, bytesRead);
                 

@@ -57,8 +57,10 @@ classdef SpheroStore < handle
             keys = this.spheroHash.keys();
             
             for k = 1:numel(keys)
+                sph = this.getImpl(int32(keys{k}));
+                
                 robotName = strtrim(evalc('disp(RobotID(keys{k}));'));
-                fprintf('ID:%s\n',robotName);
+                fprintf('ID:%s \t\t Device Name: %s\n',robotName, sph.DeviceName);
             end
         end
     end

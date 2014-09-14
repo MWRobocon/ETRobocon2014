@@ -15,10 +15,11 @@ classdef sphero<handle
     %       CollisionDetection  - Toggle Collision Detection 
     %       Color               - Color of LED on the Sphero 
     %       DeviceName          - Bluetooth name of Sphero
+    %       InitialOrientation  - Initial Orientation of the Sphero w.r.t. world coordinates during calibration
     %       Handshake           - Toggle handshaking between PC and Sphero 
     %       InactivityTimeout   - Timeout for inactivity (in seconds) (default = 600) 
     %       MotionTimeout       - Timeout for the last motion command (in seconds) (default = 2) 
-    %       ResponseTimeout     - Timeout for response to be received from Sphero (in seconds) 
+    %       ResponseTimeout     - Timeout for response to be received from Sphero (in seconds)  (default = 2)
     %       Status              - (Read-only) Status of connection with Sphero
     %
     %   sphero methods:
@@ -66,8 +67,8 @@ classdef sphero<handle
        
     properties
                 
-        %ResponseTimeout - Timeout for response to be received from Sphero (in seconds)
-        ResponseTimeout = 1; 
+        %ResponseTimeout - Timeout for response to be received from Sphero (in seconds)(default = 2)
+        ResponseTimeout = 2; 
         
         %BackLEDBrightness - Brightness of the LED which indicates the back of the Sphero
         % Value of 0 turns off the LED, and 255 sets it to its maximum
@@ -94,6 +95,9 @@ classdef sphero<handle
         
         %CollisionDetection - Toggle Collision Detection
         CollisionDetection = 0; 
+        
+        %InitialOrientation - Initial Orientation of the Sphero w.r.t. world coordinates during calibration
+        InitialOrientation = 0;
         
         %NOTE: To be considered in future
 %         PermOptions %would have a set method
@@ -575,6 +579,8 @@ classdef sphero<handle
         %   command succeeds. Otherwise it returns 0.
             
              nargoutchk(0, 1)
+             
+             heading = heading-obj.InitialOrientation;
              
              if speed>255||speed<-255
                 error('Please enter a value for SPEED that is between -255 and 255');

@@ -91,7 +91,7 @@ info.Constants.CmdCommitToFlash         = uint8(hex2dec('65'));
 
 %% Dlen for Commands sent to Sphero
 % Did = 0
-info.Constants.CmdPingDlenDlen          = uint8(hex2dec('01'));
+info.Constants.CmdPingDlen              = uint8(hex2dec('01'));
 info.Constants.CmdVersionDlen           = uint8(hex2dec('01'));
 info.Constants.CmdControlUartTxDlen     = uint8(hex2dec('02'));
 info.Constants.CmdGetBtNameDlen         = uint8(hex2dec('01'));

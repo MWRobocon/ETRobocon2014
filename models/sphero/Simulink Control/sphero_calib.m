@@ -37,6 +37,7 @@ function [ sph_calibration_angle ] = sphero_calib( sph, vid )
         sph_calibration_angle = 0;
         warning('Please re-calibrate. Enough data for calibration not received');
     end
-
+    
+    sph.InitialOrientation = sph_calibration_angle;
 end
 

@@ -9,12 +9,13 @@ classdef  ( ...
     % robots available in the ET Robocon Architect performance.
     
     enumeration
-        NXT1           ( 1 )
-        NXT2           ( 2 )
-        ARDUINO        ( 3 )
-        LEDCUBE       ( 4 )
-        NXT_BEN       ( 5 );
+        NXT1                ( 1 )
+        NXT2                ( 2 )
+        ARDUINO             ( 3 )
+        LEDCUBE             ( 4 )
+        NXT_BEN             ( 5 );
         ZUMO_ADAFRUIT_32B0 ( 6 );
-        SPHERO_PYP (7);
+        SPHERO_ORANGE      ( 7 );
+        SPHERO_BLUE        ( 8 );
     end
 end
