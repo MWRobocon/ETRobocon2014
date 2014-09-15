@@ -10,7 +10,9 @@ sph = comms.SpheroStore.get(RobotID.SPHERO_ORANGE);
 sph.Color = 'k';
 
 vid = imaq.VideoDevice('winvideo');
-vid.VideoFormat = 'MJPG_640x480';
+vid.VideoFormat = 'RGB24_640x480';
+
+% vid.VideoFormat = 'MJPG_640x480';
 vid.ReturnedDataType = 'single';
 vid.DeviceProperties.FocusMode = 'manual';
 
