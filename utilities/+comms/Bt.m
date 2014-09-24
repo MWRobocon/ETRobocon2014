@@ -26,8 +26,9 @@ classdef Bt
         end
         
         function init(this)
-            fprintf('Start Initializing\n');
-            comms.BluetoothStore.init(this.robotId);
+           % Remove this code because it is now done in 
+           %fprintf('Start Initializing\n'); 
+           %comms.BluetoothStore.init(this.robotId);
             b = comms.BluetoothStore.get(this.robotId);
             if(~strcmp(b.Status,'open'))
                 fprintf('Opening connection\n');

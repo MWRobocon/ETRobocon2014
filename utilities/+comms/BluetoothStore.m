@@ -79,6 +79,7 @@ classdef BluetoothStore < handle
         
         function registerRobotImpl(this,robotId,deviceName,channelNum)
             this.robotRegistry(int32(robotId)) = {deviceName,channelNum};
+            this.initRobotImpl(robotId);
         end
         
         function viewRegistryImpl(this)
